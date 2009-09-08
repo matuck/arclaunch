@@ -82,15 +82,15 @@ namespace ArcLaunch {
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			this->Settings = (gcnew System::Windows::Forms::Button());
 			this->Servers = (gcnew System::Windows::Forms::Button());
-			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->splitContainer1->Panel1->SuspendLayout();
 			this->splitContainer1->Panel2->SuspendLayout();
 			this->splitContainer1->SuspendLayout();
-			this->panel1->SuspendLayout();
 			this->panel2->SuspendLayout();
+			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// splitContainer1
@@ -106,8 +106,8 @@ namespace ArcLaunch {
 			// 
 			// splitContainer1.Panel2
 			// 
-			this->splitContainer1->Panel2->Controls->Add(this->panel1);
 			this->splitContainer1->Panel2->Controls->Add(this->panel2);
+			this->splitContainer1->Panel2->Controls->Add(this->panel1);
 			this->splitContainer1->Size = System::Drawing::Size(601, 323);
 			this->splitContainer1->SplitterDistance = 178;
 			this->splitContainer1->TabIndex = 0;
@@ -132,6 +132,25 @@ namespace ArcLaunch {
 			this->Servers->UseVisualStyleBackColor = true;
 			this->Servers->Click += gcnew System::EventHandler(this, &Form1::servers_Click);
 			// 
+			// panel2
+			// 
+			this->panel2->Controls->Add(this->label2);
+			this->panel2->Location = System::Drawing::Point(3, 3);
+			this->panel2->Name = L"panel2";
+			this->panel2->Size = System::Drawing::Size(416, 320);
+			this->panel2->TabIndex = 1;
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(3, 9);
+			this->label2->Name = L"label2";
+			this->label2->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
+			this->label2->Size = System::Drawing::Size(83, 13);
+			this->label2->TabIndex = 0;
+			this->label2->Text = L"Enter Path Here";
+			this->label2->Click += gcnew System::EventHandler(this, &Form1::label2_Click);
+			// 
 			// panel1
 			// 
 			this->panel1->Controls->Add(this->label1);
@@ -149,23 +168,6 @@ namespace ArcLaunch {
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"label1";
 			// 
-			// panel2
-			// 
-			this->panel2->Controls->Add(this->label2);
-			this->panel2->Location = System::Drawing::Point(3, 3);
-			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(416, 320);
-			this->panel2->TabIndex = 1;
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(82, 99);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(35, 13);
-			this->label2->TabIndex = 0;
-			this->label2->Text = L"label2";
-			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -178,10 +180,10 @@ namespace ArcLaunch {
 			this->splitContainer1->Panel1->ResumeLayout(false);
 			this->splitContainer1->Panel2->ResumeLayout(false);
 			this->splitContainer1->ResumeLayout(false);
-			this->panel1->ResumeLayout(false);
-			this->panel1->PerformLayout();
 			this->panel2->ResumeLayout(false);
 			this->panel2->PerformLayout();
+			this->panel1->ResumeLayout(false);
+			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
@@ -201,6 +203,8 @@ private: System::Void hideallpanels() {
 			  panel2->Hide();
 		 }
 private: System::Void tabPage1_Click(System::Object^  sender, System::EventArgs^  e) {
+		 }
+private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
 		 }
 };
 }
