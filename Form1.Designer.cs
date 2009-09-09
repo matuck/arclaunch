@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Arclaunch));
             this.splitlayout = new System.Windows.Forms.SplitContainer();
             this.serverspnl = new System.Windows.Forms.Panel();
             this.settingspnl = new System.Windows.Forms.Panel();
@@ -60,6 +61,8 @@
             // 
             // splitlayout.Panel2
             // 
+            this.splitlayout.Panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("splitlayout.Panel2.BackgroundImage")));
+            this.splitlayout.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.splitlayout.Panel2.Controls.Add(this.serverspnl);
             this.splitlayout.Panel2.Controls.Add(this.logpnl);
             this.splitlayout.Panel2.Controls.Add(this.settingspnl);
@@ -69,6 +72,7 @@
             // 
             // serverspnl
             // 
+            this.serverspnl.BackColor = System.Drawing.Color.Transparent;
             this.serverspnl.Controls.Add(this.serverslbl);
             this.serverspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverspnl.Location = new System.Drawing.Point(0, 0);
@@ -78,6 +82,7 @@
             // 
             // settingspnl
             // 
+            this.settingspnl.BackColor = System.Drawing.Color.Transparent;
             this.settingspnl.Controls.Add(this.settingslbl);
             this.settingspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingspnl.Location = new System.Drawing.Point(0, 0);
@@ -87,6 +92,7 @@
             // 
             // logpnl
             // 
+            this.logpnl.BackColor = System.Drawing.Color.Transparent;
             this.logpnl.Controls.Add(this.logslbl);
             this.logpnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logpnl.Location = new System.Drawing.Point(0, 0);
@@ -158,9 +164,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Desktop;
             this.ClientSize = new System.Drawing.Size(670, 376);
             this.Controls.Add(this.splitlayout);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(686, 412);
+            this.MinimumSize = new System.Drawing.Size(686, 412);
             this.Name = "Arclaunch";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "ArcLaunch";
             this.splitlayout.Panel1.ResumeLayout(false);
             this.splitlayout.Panel2.ResumeLayout(false);
