@@ -35,20 +35,24 @@
             this.logsbtn = new System.Windows.Forms.Button();
             this.settingsbtn = new System.Windows.Forms.Button();
             this.serversbtn = new System.Windows.Forms.Button();
+            this.settingspnl = new System.Windows.Forms.Panel();
+            this.settingslbl = new System.Windows.Forms.Label();
             this.serverspnl = new System.Windows.Forms.Panel();
             this.serverslbl = new System.Windows.Forms.Label();
             this.logpnl = new System.Windows.Forms.Panel();
             this.logslbl = new System.Windows.Forms.Label();
-            this.settingspnl = new System.Windows.Forms.Panel();
-            this.settingslbl = new System.Windows.Forms.Label();
+            this.defaltlgolbl = new System.Windows.Forms.Label();
+            this.defaultlogbox = new System.Windows.Forms.TextBox();
+            this.browsedeflog = new System.Windows.Forms.Button();
+            this.openfiledialog = new System.Windows.Forms.OpenFileDialog();
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.settingspnl.SuspendLayout();
             this.serverspnl.SuspendLayout();
             this.logpnl.SuspendLayout();
-            this.settingspnl.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitlayout
@@ -71,9 +75,9 @@
             // 
             this.splitlayout.Panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("splitlayout.Panel2.BackgroundImage")));
             this.splitlayout.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.splitlayout.Panel2.Controls.Add(this.settingspnl);
             this.splitlayout.Panel2.Controls.Add(this.serverspnl);
             this.splitlayout.Panel2.Controls.Add(this.logpnl);
-            this.splitlayout.Panel2.Controls.Add(this.settingspnl);
             this.splitlayout.Size = new System.Drawing.Size(670, 376);
             this.splitlayout.SplitterDistance = 192;
             this.splitlayout.TabIndex = 0;
@@ -156,6 +160,29 @@
             this.serversbtn.UseVisualStyleBackColor = true;
             this.serversbtn.Click += new System.EventHandler(this.serversbtn_Click);
             // 
+            // settingspnl
+            // 
+            this.settingspnl.BackColor = System.Drawing.Color.Transparent;
+            this.settingspnl.Controls.Add(this.browsedeflog);
+            this.settingspnl.Controls.Add(this.defaultlogbox);
+            this.settingspnl.Controls.Add(this.defaltlgolbl);
+            this.settingspnl.Controls.Add(this.settingslbl);
+            this.settingspnl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.settingspnl.Location = new System.Drawing.Point(0, 0);
+            this.settingspnl.Name = "settingspnl";
+            this.settingspnl.Size = new System.Drawing.Size(474, 376);
+            this.settingspnl.TabIndex = 0;
+            // 
+            // settingslbl
+            // 
+            this.settingslbl.AutoSize = true;
+            this.settingslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.settingslbl.Location = new System.Drawing.Point(12, 12);
+            this.settingslbl.Name = "settingslbl";
+            this.settingslbl.Size = new System.Drawing.Size(90, 25);
+            this.settingslbl.TabIndex = 1;
+            this.settingslbl.Text = "Settings";
+            // 
             // serverspnl
             // 
             this.serverspnl.BackColor = System.Drawing.Color.Transparent;
@@ -196,25 +223,33 @@
             this.logslbl.TabIndex = 1;
             this.logslbl.Text = "Logs";
             // 
-            // settingspnl
+            // defaltlgolbl
             // 
-            this.settingspnl.BackColor = System.Drawing.Color.Transparent;
-            this.settingspnl.Controls.Add(this.settingslbl);
-            this.settingspnl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.settingspnl.Location = new System.Drawing.Point(0, 0);
-            this.settingspnl.Name = "settingspnl";
-            this.settingspnl.Size = new System.Drawing.Size(474, 376);
-            this.settingspnl.TabIndex = 0;
+            this.defaltlgolbl.AutoSize = true;
+            this.defaltlgolbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.defaltlgolbl.Location = new System.Drawing.Point(3, 62);
+            this.defaltlgolbl.Name = "defaltlgolbl";
+            this.defaltlgolbl.Size = new System.Drawing.Size(160, 20);
+            this.defaltlgolbl.TabIndex = 2;
+            this.defaltlgolbl.Text = "Default Logon Server";
             // 
-            // settingslbl
+            // defaultlogbox
             // 
-            this.settingslbl.AutoSize = true;
-            this.settingslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.settingslbl.Location = new System.Drawing.Point(12, 12);
-            this.settingslbl.Name = "settingslbl";
-            this.settingslbl.Size = new System.Drawing.Size(90, 25);
-            this.settingslbl.TabIndex = 1;
-            this.settingslbl.Text = "Settings";
+            this.defaultlogbox.Location = new System.Drawing.Point(159, 62);
+            this.defaultlogbox.Name = "defaultlogbox";
+            this.defaultlogbox.Size = new System.Drawing.Size(207, 20);
+            this.defaultlogbox.TabIndex = 3;
+            this.defaultlogbox.Text = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
+            // 
+            // browsedeflog
+            // 
+            this.browsedeflog.Location = new System.Drawing.Point(372, 62);
+            this.browsedeflog.Name = "browsedeflog";
+            this.browsedeflog.Size = new System.Drawing.Size(75, 23);
+            this.browsedeflog.TabIndex = 4;
+            this.browsedeflog.Text = "Browse";
+            this.browsedeflog.UseVisualStyleBackColor = true;
+            this.browsedeflog.Click += new System.EventHandler(this.browsedeflog_Click);
             // 
             // Arclaunch
             // 
@@ -235,12 +270,12 @@
             this.splitlayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.settingspnl.ResumeLayout(false);
+            this.settingspnl.PerformLayout();
             this.serverspnl.ResumeLayout(false);
             this.serverspnl.PerformLayout();
             this.logpnl.ResumeLayout(false);
             this.logpnl.PerformLayout();
-            this.settingspnl.ResumeLayout(false);
-            this.settingspnl.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -259,6 +294,10 @@
         private System.Windows.Forms.Label settingslbl;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox defaultlogbox;
+        private System.Windows.Forms.Label defaltlgolbl;
+        private System.Windows.Forms.Button browsedeflog;
+        private System.Windows.Forms.OpenFileDialog openfiledialog;
     }
 }
 

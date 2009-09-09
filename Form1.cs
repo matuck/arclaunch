@@ -39,5 +39,23 @@ namespace Arclaunch
             settingspnl.Hide();
             logpnl.Hide();
         }
+
+        private void browsedeflog_Click(object sender, EventArgs e)
+        {
+            openfiledialog.FileName = "arcemu_logonserver.exe";
+            openfiledialog.Filter = "|*.exe";
+            if (System.IO.Directory.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv) || System.IO.File.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv))
+            {
+                openfiledialog.InitialDirectory = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
+            }
+            else
+            {
+                openfiledialog.InitialDirectory = "c:\\";
+            }
+            if (openfiledialog.ShowDialog() == DialogResult.OK)
+            {
+                this.defaultlogbox.Text = openfiledialog.FileName;
+            }
+        }
     }
 }
