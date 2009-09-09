@@ -1,6 +1,6 @@
 ﻿namespace Arclaunch
 {
-    partial class Form1
+    partial class Arclaunch
     {
         /// <summary>
         /// Required designer variable.
@@ -154,14 +154,14 @@
             this.logslbl.TabIndex = 1;
             this.logslbl.Text = "Logs";
             // 
-            // Form1
+            // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(670, 376);
             this.Controls.Add(this.splitlayout);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "Arclaunch";
+            this.Text = "ArcLaunch";
             this.splitlayout.Panel1.ResumeLayout(false);
             this.splitlayout.Panel2.ResumeLayout(false);
             this.splitlayout.ResumeLayout(false);

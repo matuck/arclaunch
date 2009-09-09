@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace Arclaunch
 {
-    public partial class Form1 : Form
+    public partial class Arclaunch : Form
     {
-        public Form1()
+        public Arclaunch()
         {
             InitializeComponent();
         }
@@ -25,7 +25,7 @@ namespace Arclaunch
         private void settingsbtn_Click(object sender, EventArgs e)
         {
             hidealltoppanels();
-            settingsbtn.Show();
+            settingspnl.Show();
         }
 
         private void logsbtn_Click(object sender, EventArgs e)
