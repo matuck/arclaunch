@@ -6,7 +6,7 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
+        
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -35,23 +35,32 @@
             this.logsbtn = new System.Windows.Forms.Button();
             this.settingsbtn = new System.Windows.Forms.Button();
             this.serversbtn = new System.Windows.Forms.Button();
-            this.settingspnl = new System.Windows.Forms.Panel();
-            this.settingslbl = new System.Windows.Forms.Label();
             this.serverspnl = new System.Windows.Forms.Panel();
+            this.restartworldsrvbtn = new System.Windows.Forms.Button();
+            this.stopworldsrvbtn = new System.Windows.Forms.Button();
+            this.startworldsrvbtn = new System.Windows.Forms.Button();
+            this.delworldsrvbtn = new System.Windows.Forms.Button();
+            this.addsrvbtn = new System.Windows.Forms.Button();
+            this.logonlbl = new System.Windows.Forms.Label();
+            this.logonlist = new System.Windows.Forms.ListBox();
+            this.worldlbl = new System.Windows.Forms.Label();
+            this.worldlist = new System.Windows.Forms.ListBox();
             this.serverslbl = new System.Windows.Forms.Label();
+            this.settingspnl = new System.Windows.Forms.Panel();
+            this.browsedeflog = new System.Windows.Forms.Button();
+            this.defaultlogbox = new System.Windows.Forms.TextBox();
+            this.defaltlgolbl = new System.Windows.Forms.Label();
+            this.settingslbl = new System.Windows.Forms.Label();
             this.logpnl = new System.Windows.Forms.Panel();
             this.logslbl = new System.Windows.Forms.Label();
-            this.defaltlgolbl = new System.Windows.Forms.Label();
-            this.defaultlogbox = new System.Windows.Forms.TextBox();
-            this.browsedeflog = new System.Windows.Forms.Button();
             this.openfiledialog = new System.Windows.Forms.OpenFileDialog();
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.settingspnl.SuspendLayout();
             this.serverspnl.SuspendLayout();
+            this.settingspnl.SuspendLayout();
             this.logpnl.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,8 +84,8 @@
             // 
             this.splitlayout.Panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("splitlayout.Panel2.BackgroundImage")));
             this.splitlayout.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.splitlayout.Panel2.Controls.Add(this.settingspnl);
             this.splitlayout.Panel2.Controls.Add(this.serverspnl);
+            this.splitlayout.Panel2.Controls.Add(this.settingspnl);
             this.splitlayout.Panel2.Controls.Add(this.logpnl);
             this.splitlayout.Size = new System.Drawing.Size(670, 376);
             this.splitlayout.SplitterDistance = 192;
@@ -160,6 +169,121 @@
             this.serversbtn.UseVisualStyleBackColor = true;
             this.serversbtn.Click += new System.EventHandler(this.serversbtn_Click);
             // 
+            // serverspnl
+            // 
+            this.serverspnl.BackColor = System.Drawing.Color.Transparent;
+            this.serverspnl.Controls.Add(this.restartworldsrvbtn);
+            this.serverspnl.Controls.Add(this.stopworldsrvbtn);
+            this.serverspnl.Controls.Add(this.startworldsrvbtn);
+            this.serverspnl.Controls.Add(this.delworldsrvbtn);
+            this.serverspnl.Controls.Add(this.addsrvbtn);
+            this.serverspnl.Controls.Add(this.logonlbl);
+            this.serverspnl.Controls.Add(this.logonlist);
+            this.serverspnl.Controls.Add(this.worldlbl);
+            this.serverspnl.Controls.Add(this.worldlist);
+            this.serverspnl.Controls.Add(this.serverslbl);
+            this.serverspnl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serverspnl.Location = new System.Drawing.Point(0, 0);
+            this.serverspnl.Name = "serverspnl";
+            this.serverspnl.Size = new System.Drawing.Size(474, 376);
+            this.serverspnl.TabIndex = 0;
+            // 
+            // restartworldsrvbtn
+            // 
+            this.restartworldsrvbtn.Location = new System.Drawing.Point(251, 147);
+            this.restartworldsrvbtn.Name = "restartworldsrvbtn";
+            this.restartworldsrvbtn.Size = new System.Drawing.Size(104, 23);
+            this.restartworldsrvbtn.TabIndex = 10;
+            this.restartworldsrvbtn.Text = "Restart Server";
+            this.restartworldsrvbtn.UseVisualStyleBackColor = true;
+            this.restartworldsrvbtn.Click += new System.EventHandler(this.restartworldsrvbtn_Click);
+            // 
+            // stopworldsrvbtn
+            // 
+            this.stopworldsrvbtn.Location = new System.Drawing.Point(311, 118);
+            this.stopworldsrvbtn.Name = "stopworldsrvbtn";
+            this.stopworldsrvbtn.Size = new System.Drawing.Size(104, 23);
+            this.stopworldsrvbtn.TabIndex = 9;
+            this.stopworldsrvbtn.Text = "Stop Server";
+            this.stopworldsrvbtn.UseVisualStyleBackColor = true;
+            this.stopworldsrvbtn.Click += new System.EventHandler(this.stopworldsrvbtn_Click);
+            // 
+            // startworldsrvbtn
+            // 
+            this.startworldsrvbtn.Location = new System.Drawing.Point(200, 118);
+            this.startworldsrvbtn.Name = "startworldsrvbtn";
+            this.startworldsrvbtn.Size = new System.Drawing.Size(104, 23);
+            this.startworldsrvbtn.TabIndex = 8;
+            this.startworldsrvbtn.Text = "Start Server";
+            this.startworldsrvbtn.UseVisualStyleBackColor = true;
+            this.startworldsrvbtn.Click += new System.EventHandler(this.startworldsrvbtn_Click);
+            // 
+            // delworldsrvbtn
+            // 
+            this.delworldsrvbtn.Location = new System.Drawing.Point(311, 88);
+            this.delworldsrvbtn.Name = "delworldsrvbtn";
+            this.delworldsrvbtn.Size = new System.Drawing.Size(104, 23);
+            this.delworldsrvbtn.TabIndex = 7;
+            this.delworldsrvbtn.Text = "Delete Server";
+            this.delworldsrvbtn.UseVisualStyleBackColor = true;
+            this.delworldsrvbtn.Click += new System.EventHandler(this.delworldsrvbtn_Click);
+            // 
+            // addsrvbtn
+            // 
+            this.addsrvbtn.Location = new System.Drawing.Point(201, 89);
+            this.addsrvbtn.Name = "addsrvbtn";
+            this.addsrvbtn.Size = new System.Drawing.Size(104, 23);
+            this.addsrvbtn.TabIndex = 6;
+            this.addsrvbtn.Text = "Add Server";
+            this.addsrvbtn.UseVisualStyleBackColor = true;
+            this.addsrvbtn.Click += new System.EventHandler(this.addsrvbtn_Click);
+            // 
+            // logonlbl
+            // 
+            this.logonlbl.AutoSize = true;
+            this.logonlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logonlbl.Location = new System.Drawing.Point(17, 208);
+            this.logonlbl.Name = "logonlbl";
+            this.logonlbl.Size = new System.Drawing.Size(46, 16);
+            this.logonlbl.TabIndex = 5;
+            this.logonlbl.Text = "Logon";
+            // 
+            // logonlist
+            // 
+            this.logonlist.FormattingEnabled = true;
+            this.logonlist.Location = new System.Drawing.Point(17, 227);
+            this.logonlist.Name = "logonlist";
+            this.logonlist.Size = new System.Drawing.Size(177, 95);
+            this.logonlist.TabIndex = 4;
+            // 
+            // worldlbl
+            // 
+            this.worldlbl.AutoSize = true;
+            this.worldlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.worldlbl.Location = new System.Drawing.Point(14, 62);
+            this.worldlbl.Name = "worldlbl";
+            this.worldlbl.Size = new System.Drawing.Size(44, 16);
+            this.worldlbl.TabIndex = 3;
+            this.worldlbl.Text = "World";
+            // 
+            // worldlist
+            // 
+            this.worldlist.FormattingEnabled = true;
+            this.worldlist.Location = new System.Drawing.Point(17, 85);
+            this.worldlist.Name = "worldlist";
+            this.worldlist.Size = new System.Drawing.Size(177, 108);
+            this.worldlist.TabIndex = 2;
+            // 
+            // serverslbl
+            // 
+            this.serverslbl.AutoSize = true;
+            this.serverslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverslbl.Location = new System.Drawing.Point(12, 12);
+            this.serverslbl.Name = "serverslbl";
+            this.serverslbl.Size = new System.Drawing.Size(86, 25);
+            this.serverslbl.TabIndex = 0;
+            this.serverslbl.Text = "Servers";
+            // 
             // settingspnl
             // 
             this.settingspnl.BackColor = System.Drawing.Color.Transparent;
@@ -173,6 +297,34 @@
             this.settingspnl.Size = new System.Drawing.Size(474, 376);
             this.settingspnl.TabIndex = 0;
             // 
+            // browsedeflog
+            // 
+            this.browsedeflog.Location = new System.Drawing.Point(372, 62);
+            this.browsedeflog.Name = "browsedeflog";
+            this.browsedeflog.Size = new System.Drawing.Size(75, 23);
+            this.browsedeflog.TabIndex = 4;
+            this.browsedeflog.Text = "Browse";
+            this.browsedeflog.UseVisualStyleBackColor = true;
+            this.browsedeflog.Click += new System.EventHandler(this.browsedeflog_Click);
+            // 
+            // defaultlogbox
+            // 
+            this.defaultlogbox.Location = new System.Drawing.Point(159, 62);
+            this.defaultlogbox.Name = "defaultlogbox";
+            this.defaultlogbox.Size = new System.Drawing.Size(207, 20);
+            this.defaultlogbox.TabIndex = 3;
+            this.defaultlogbox.Text = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
+            // 
+            // defaltlgolbl
+            // 
+            this.defaltlgolbl.AutoSize = true;
+            this.defaltlgolbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.defaltlgolbl.Location = new System.Drawing.Point(3, 62);
+            this.defaltlgolbl.Name = "defaltlgolbl";
+            this.defaltlgolbl.Size = new System.Drawing.Size(160, 20);
+            this.defaltlgolbl.TabIndex = 2;
+            this.defaltlgolbl.Text = "Default Logon Server";
+            // 
             // settingslbl
             // 
             this.settingslbl.AutoSize = true;
@@ -182,26 +334,6 @@
             this.settingslbl.Size = new System.Drawing.Size(90, 25);
             this.settingslbl.TabIndex = 1;
             this.settingslbl.Text = "Settings";
-            // 
-            // serverspnl
-            // 
-            this.serverspnl.BackColor = System.Drawing.Color.Transparent;
-            this.serverspnl.Controls.Add(this.serverslbl);
-            this.serverspnl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverspnl.Location = new System.Drawing.Point(0, 0);
-            this.serverspnl.Name = "serverspnl";
-            this.serverspnl.Size = new System.Drawing.Size(474, 376);
-            this.serverspnl.TabIndex = 0;
-            // 
-            // serverslbl
-            // 
-            this.serverslbl.AutoSize = true;
-            this.serverslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serverslbl.Location = new System.Drawing.Point(12, 12);
-            this.serverslbl.Name = "serverslbl";
-            this.serverslbl.Size = new System.Drawing.Size(86, 25);
-            this.serverslbl.TabIndex = 0;
-            this.serverslbl.Text = "Servers";
             // 
             // logpnl
             // 
@@ -223,34 +355,6 @@
             this.logslbl.TabIndex = 1;
             this.logslbl.Text = "Logs";
             // 
-            // defaltlgolbl
-            // 
-            this.defaltlgolbl.AutoSize = true;
-            this.defaltlgolbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.defaltlgolbl.Location = new System.Drawing.Point(3, 62);
-            this.defaltlgolbl.Name = "defaltlgolbl";
-            this.defaltlgolbl.Size = new System.Drawing.Size(160, 20);
-            this.defaltlgolbl.TabIndex = 2;
-            this.defaltlgolbl.Text = "Default Logon Server";
-            // 
-            // defaultlogbox
-            // 
-            this.defaultlogbox.Location = new System.Drawing.Point(159, 62);
-            this.defaultlogbox.Name = "defaultlogbox";
-            this.defaultlogbox.Size = new System.Drawing.Size(207, 20);
-            this.defaultlogbox.TabIndex = 3;
-            this.defaultlogbox.Text = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
-            // 
-            // browsedeflog
-            // 
-            this.browsedeflog.Location = new System.Drawing.Point(372, 62);
-            this.browsedeflog.Name = "browsedeflog";
-            this.browsedeflog.Size = new System.Drawing.Size(75, 23);
-            this.browsedeflog.TabIndex = 4;
-            this.browsedeflog.Text = "Browse";
-            this.browsedeflog.UseVisualStyleBackColor = true;
-            this.browsedeflog.Click += new System.EventHandler(this.browsedeflog_Click);
-            // 
             // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -270,10 +374,10 @@
             this.splitlayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.settingspnl.ResumeLayout(false);
-            this.settingspnl.PerformLayout();
             this.serverspnl.ResumeLayout(false);
             this.serverspnl.PerformLayout();
+            this.settingspnl.ResumeLayout(false);
+            this.settingspnl.PerformLayout();
             this.logpnl.ResumeLayout(false);
             this.logpnl.PerformLayout();
             this.ResumeLayout(false);
@@ -298,6 +402,15 @@
         private System.Windows.Forms.Label defaltlgolbl;
         private System.Windows.Forms.Button browsedeflog;
         private System.Windows.Forms.OpenFileDialog openfiledialog;
+        private System.Windows.Forms.ListBox worldlist;
+        private System.Windows.Forms.Label logonlbl;
+        private System.Windows.Forms.ListBox logonlist;
+        private System.Windows.Forms.Label worldlbl;
+        private System.Windows.Forms.Button restartworldsrvbtn;
+        private System.Windows.Forms.Button stopworldsrvbtn;
+        private System.Windows.Forms.Button startworldsrvbtn;
+        private System.Windows.Forms.Button delworldsrvbtn;
+        private System.Windows.Forms.Button addsrvbtn;
     }
 }
 

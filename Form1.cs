@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
+using System.Xml;
 
 namespace Arclaunch
 {
@@ -14,6 +16,8 @@ namespace Arclaunch
         public Arclaunch()
         {
             InitializeComponent();
+            addlogonlistbox();
+            addworldlistbox();
         }
 
         private void serversbtn_Click(object sender, EventArgs e)
@@ -39,7 +43,40 @@ namespace Arclaunch
             settingspnl.Hide();
             logpnl.Hide();
         }
-
+        private string[,] serverarray(string path)
+        {
+            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(fs);
+            XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Server");
+            string[,] strArray = new string[xmlnode.Count,2];
+            int count = 0;;
+            while (count < xmlnode.Count)
+            {
+                strArray[count,0] = xmlnode[count].FirstChild.InnerText;
+                strArray[count,1] = xmlnode[count].LastChild.InnerText;
+                count++;
+            };
+            return strArray;
+        }
+        public void addworldlistbox()
+        {
+            string[,] servers = this.serverarray("world.xml");
+            for (int i = 0; i < servers.Length / 2; i++)
+            {
+                string s1 = servers[i, 0];
+                this.worldlist.Items.Add(s1);
+            }
+        }
+        public void addlogonlistbox()
+        {
+            string[,] logservers = this.serverarray("logon.xml");
+            for (int i = 0; i < logservers.Length / 2; i++)
+            {
+                string sl1 = logservers[i, 0];
+                this.logonlist.Items.Add(sl1);
+            }
+        }
         private void browsedeflog_Click(object sender, EventArgs e)
         {
             openfiledialog.FileName = "arcemu_logonserver.exe";
@@ -56,6 +93,36 @@ namespace Arclaunch
             {
                 this.defaultlogbox.Text = openfiledialog.FileName;
             }
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addsrvbtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void delworldsrvbtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void stopworldsrvbtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void startworldsrvbtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void restartworldsrvbtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
