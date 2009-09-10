@@ -37,6 +37,11 @@
             this.settingsbtn = new System.Windows.Forms.Button();
             this.serversbtn = new System.Windows.Forms.Button();
             this.serverspnl = new System.Windows.Forms.Panel();
+            this.restartlogsrvbtn = new System.Windows.Forms.Button();
+            this.stoplogsrvbtn = new System.Windows.Forms.Button();
+            this.startlogsrvbtn = new System.Windows.Forms.Button();
+            this.dellogsrvbtn = new System.Windows.Forms.Button();
+            this.addlogsrvbtn = new System.Windows.Forms.Button();
             this.restartworldsrvbtn = new System.Windows.Forms.Button();
             this.stopworldsrvbtn = new System.Windows.Forms.Button();
             this.startworldsrvbtn = new System.Windows.Forms.Button();
@@ -187,13 +192,18 @@
             this.serversbtn.Padding = new System.Windows.Forms.Padding(1);
             this.serversbtn.Size = new System.Drawing.Size(167, 23);
             this.serversbtn.TabIndex = 0;
-            this.serversbtn.Text = "Servers";
+            this.serversbtn.Text = "Arc Servers";
             this.serversbtn.UseVisualStyleBackColor = true;
             this.serversbtn.Click += new System.EventHandler(this.serversbtn_Click);
             // 
             // serverspnl
             // 
             this.serverspnl.BackColor = System.Drawing.Color.Transparent;
+            this.serverspnl.Controls.Add(this.restartlogsrvbtn);
+            this.serverspnl.Controls.Add(this.stoplogsrvbtn);
+            this.serverspnl.Controls.Add(this.startlogsrvbtn);
+            this.serverspnl.Controls.Add(this.dellogsrvbtn);
+            this.serverspnl.Controls.Add(this.addlogsrvbtn);
             this.serverspnl.Controls.Add(this.restartworldsrvbtn);
             this.serverspnl.Controls.Add(this.stopworldsrvbtn);
             this.serverspnl.Controls.Add(this.startworldsrvbtn);
@@ -209,6 +219,51 @@
             this.serverspnl.Name = "serverspnl";
             this.serverspnl.Size = new System.Drawing.Size(474, 376);
             this.serverspnl.TabIndex = 0;
+            // 
+            // restartlogsrvbtn
+            // 
+            this.restartlogsrvbtn.Location = new System.Drawing.Point(251, 285);
+            this.restartlogsrvbtn.Name = "restartlogsrvbtn";
+            this.restartlogsrvbtn.Size = new System.Drawing.Size(104, 23);
+            this.restartlogsrvbtn.TabIndex = 15;
+            this.restartlogsrvbtn.Text = "Restart Server";
+            this.restartlogsrvbtn.UseVisualStyleBackColor = true;
+            // 
+            // stoplogsrvbtn
+            // 
+            this.stoplogsrvbtn.Location = new System.Drawing.Point(311, 256);
+            this.stoplogsrvbtn.Name = "stoplogsrvbtn";
+            this.stoplogsrvbtn.Size = new System.Drawing.Size(104, 23);
+            this.stoplogsrvbtn.TabIndex = 14;
+            this.stoplogsrvbtn.Text = "Stop Server";
+            this.stoplogsrvbtn.UseVisualStyleBackColor = true;
+            // 
+            // startlogsrvbtn
+            // 
+            this.startlogsrvbtn.Location = new System.Drawing.Point(200, 256);
+            this.startlogsrvbtn.Name = "startlogsrvbtn";
+            this.startlogsrvbtn.Size = new System.Drawing.Size(104, 23);
+            this.startlogsrvbtn.TabIndex = 13;
+            this.startlogsrvbtn.Text = "Start Server";
+            this.startlogsrvbtn.UseVisualStyleBackColor = true;
+            // 
+            // dellogsrvbtn
+            // 
+            this.dellogsrvbtn.Location = new System.Drawing.Point(311, 226);
+            this.dellogsrvbtn.Name = "dellogsrvbtn";
+            this.dellogsrvbtn.Size = new System.Drawing.Size(104, 23);
+            this.dellogsrvbtn.TabIndex = 12;
+            this.dellogsrvbtn.Text = "Delete Server";
+            this.dellogsrvbtn.UseVisualStyleBackColor = true;
+            // 
+            // addlogsrvbtn
+            // 
+            this.addlogsrvbtn.Location = new System.Drawing.Point(201, 227);
+            this.addlogsrvbtn.Name = "addlogsrvbtn";
+            this.addlogsrvbtn.Size = new System.Drawing.Size(104, 23);
+            this.addlogsrvbtn.TabIndex = 11;
+            this.addlogsrvbtn.Text = "Add Server";
+            this.addlogsrvbtn.UseVisualStyleBackColor = true;
             // 
             // restartworldsrvbtn
             // 
@@ -434,6 +489,11 @@
         private System.Windows.Forms.Button delworldsrvbtn;
         private System.Windows.Forms.Button addsrvbtn;
         private System.Windows.Forms.Button aboutbtn;
+        private System.Windows.Forms.Button restartlogsrvbtn;
+        private System.Windows.Forms.Button stoplogsrvbtn;
+        private System.Windows.Forms.Button startlogsrvbtn;
+        private System.Windows.Forms.Button dellogsrvbtn;
+        private System.Windows.Forms.Button addlogsrvbtn;
     }
 }
 
