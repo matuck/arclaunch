@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Servers>
+  <Server ID="1">
+    <name>Test</name>
+    <path>c:\users\matuck\Desktop\arcemu\arcemu_world.exe</path>
+  </Server>
+
+  <Server ID="2">
+    <name>Test2</name>
+    <path>c:\users\matuck\Desktop\arcemu\arcemu_world.exe</path>
+  </Server>
+</Servers>
