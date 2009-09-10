@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Arclaunch")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("To easily control and edit your arcemu servers from one locaton")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Arclaunch")]

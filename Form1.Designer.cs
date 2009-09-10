@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Arclaunch));
             this.splitlayout = new System.Windows.Forms.SplitContainer();
+            this.aboutbtn = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.logsbtn = new System.Windows.Forms.Button();
@@ -74,6 +75,7 @@
             // 
             this.splitlayout.Panel1.BackColor = System.Drawing.Color.Transparent;
             this.splitlayout.Panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("splitlayout.Panel1.BackgroundImage")));
+            this.splitlayout.Panel1.Controls.Add(this.aboutbtn);
             this.splitlayout.Panel1.Controls.Add(this.pictureBox2);
             this.splitlayout.Panel1.Controls.Add(this.pictureBox1);
             this.splitlayout.Panel1.Controls.Add(this.logsbtn);
@@ -90,6 +92,26 @@
             this.splitlayout.Size = new System.Drawing.Size(670, 376);
             this.splitlayout.SplitterDistance = 192;
             this.splitlayout.TabIndex = 0;
+            // 
+            // aboutbtn
+            // 
+            this.aboutbtn.BackColor = System.Drawing.Color.Transparent;
+            this.aboutbtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("aboutbtn.BackgroundImage")));
+            this.aboutbtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.aboutbtn.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.aboutbtn.FlatAppearance.BorderSize = 0;
+            this.aboutbtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.aboutbtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.aboutbtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.aboutbtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.aboutbtn.Location = new System.Drawing.Point(12, 341);
+            this.aboutbtn.Name = "aboutbtn";
+            this.aboutbtn.Padding = new System.Windows.Forms.Padding(1);
+            this.aboutbtn.Size = new System.Drawing.Size(167, 23);
+            this.aboutbtn.TabIndex = 5;
+            this.aboutbtn.Text = "About";
+            this.aboutbtn.UseVisualStyleBackColor = true;
+            this.aboutbtn.Click += new System.EventHandler(this.aboutbtn_Click);
             // 
             // pictureBox2
             // 
@@ -411,6 +433,7 @@
         private System.Windows.Forms.Button startworldsrvbtn;
         private System.Windows.Forms.Button delworldsrvbtn;
         private System.Windows.Forms.Button addsrvbtn;
+        private System.Windows.Forms.Button aboutbtn;
     }
 }
 

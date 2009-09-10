@@ -124,5 +124,11 @@ namespace Arclaunch
         {
 
         }
+
+        private void aboutbtn_Click(object sender, EventArgs e)
+        {
+            aboutarclaunch about = new aboutarclaunch();
+            about.Show();
+        }
     }
 }
