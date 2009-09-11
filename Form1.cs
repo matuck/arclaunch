@@ -13,6 +13,7 @@ namespace Arclaunch
 {
     public partial class Arclaunch : Form
     {
+        const int serverkeys = 2;
         public Arclaunch()
         {
             InitializeComponent();
@@ -49,7 +50,7 @@ namespace Arclaunch
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.Load(fs);
             XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Server");
-            string[,] strArray = new string[xmlnode.Count,2];
+            string[,] strArray = new string[xmlnode.Count,serverkeys];
             int count = 0;;
             while (count < xmlnode.Count)
             {
@@ -62,7 +63,7 @@ namespace Arclaunch
         public void addworldlistbox()
         {
             string[,] servers = this.serverarray("world.xml");
-            for (int i = 0; i < servers.Length / 2; i++)
+            for (int i = 0; i < servers.Length / serverkeys; i++)
             {
                 string s1 = servers[i, 0];
                 this.worldlist.Items.Add(s1);
@@ -71,7 +72,7 @@ namespace Arclaunch
         public void addlogonlistbox()
         {
             string[,] logservers = this.serverarray("logon.xml");
-            for (int i = 0; i < logservers.Length / 2; i++)
+            for (int i = 0; i < logservers.Length / serverkeys; i++)
             {
                 string sl1 = logservers[i, 0];
                 this.logonlist.Items.Add(sl1);
@@ -97,7 +98,8 @@ namespace Arclaunch
 
         private void addsrvbtn_Click(object sender, EventArgs e)
         {
-
+            addsrv addsrv = new addsrv();
+            addsrv.Show();
         }
 
         private void delworldsrvbtn_Click(object sender, EventArgs e)
@@ -112,7 +114,35 @@ namespace Arclaunch
 
         private void startworldsrvbtn_Click(object sender, EventArgs e)
         {
-
+            if (worldlist.SelectedItem != null)
+            {
+                string[,] servers = serverarray("world.xml");
+                bool mytrue = true;
+                int i = 0;
+                while (mytrue == true && i < (servers.Length / serverkeys))
+                {
+                    if (servers[i, 0] == worldlist.SelectedItem.ToString())
+                    {
+                        mytrue = false;
+                    }
+                    if (mytrue)
+                    {
+                        i++;
+                    }
+                }
+                if (mytrue)
+                {
+                    MessageBox.Show("Server Doesn't exist. Please delete this server");
+                }
+                else
+                {
+                    MessageBox.Show((string)servers[i, 1]);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Server Selected");
+            }
         }
 
         private void restartworldsrvbtn_Click(object sender, EventArgs e)

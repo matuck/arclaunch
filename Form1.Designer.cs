@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Arclaunch));
             this.splitlayout = new System.Windows.Forms.SplitContainer();
             this.aboutbtn = new System.Windows.Forms.Button();
@@ -60,6 +61,7 @@
             this.logpnl = new System.Windows.Forms.Panel();
             this.logslbl = new System.Windows.Forms.Label();
             this.openfiledialog = new System.Windows.Forms.OpenFileDialog();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
@@ -432,6 +434,12 @@
             this.logslbl.TabIndex = 1;
             this.logslbl.Text = "Logs";
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "ArcLaucnh";
+            this.notifyIcon1.Visible = true;
+            // 
             // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -494,6 +502,7 @@
         private System.Windows.Forms.Button startlogsrvbtn;
         private System.Windows.Forms.Button dellogsrvbtn;
         private System.Windows.Forms.Button addlogsrvbtn;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 
