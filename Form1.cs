@@ -155,5 +155,10 @@ namespace Arclaunch
             aboutarclaunch about = new aboutarclaunch();
             about.Show();
         }
+
+        private void systrayexit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

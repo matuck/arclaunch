@@ -29,7 +29,71 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addsrv));
+            this.srvnamelbl = new System.Windows.Forms.Label();
+            this.srvnamebox = new System.Windows.Forms.TextBox();
+            this.browsedeflog = new System.Windows.Forms.Button();
+            this.srvpathbox = new System.Windows.Forms.TextBox();
+            this.openfiledialog = new System.Windows.Forms.OpenFileDialog();
+            this.srvpathlbl = new System.Windows.Forms.Label();
+            this.addsrvbtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // srvnamelbl
+            // 
+            this.srvnamelbl.AutoSize = true;
+            this.srvnamelbl.BackColor = System.Drawing.Color.Transparent;
+            this.srvnamelbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.srvnamelbl.Location = new System.Drawing.Point(12, 26);
+            this.srvnamelbl.Name = "srvnamelbl";
+            this.srvnamelbl.Size = new System.Drawing.Size(88, 16);
+            this.srvnamelbl.TabIndex = 4;
+            this.srvnamelbl.Text = "Server Name";
+            // 
+            // srvnamebox
+            // 
+            this.srvnamebox.Location = new System.Drawing.Point(56, 46);
+            this.srvnamebox.Name = "srvnamebox";
+            this.srvnamebox.Size = new System.Drawing.Size(180, 20);
+            this.srvnamebox.TabIndex = 5;
+            // 
+            // browsedeflog
+            // 
+            this.browsedeflog.Location = new System.Drawing.Point(197, 153);
+            this.browsedeflog.Name = "browsedeflog";
+            this.browsedeflog.Size = new System.Drawing.Size(75, 23);
+            this.browsedeflog.TabIndex = 7;
+            this.browsedeflog.Text = "Browse";
+            this.browsedeflog.UseVisualStyleBackColor = true;
+            this.browsedeflog.Click += new System.EventHandler(this.browsedeflog_Click);
+            // 
+            // srvpathbox
+            // 
+            this.srvpathbox.Location = new System.Drawing.Point(29, 127);
+            this.srvpathbox.Name = "srvpathbox";
+            this.srvpathbox.Size = new System.Drawing.Size(207, 20);
+            this.srvpathbox.TabIndex = 6;
+            this.srvpathbox.Text = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
+            // 
+            // srvpathlbl
+            // 
+            this.srvpathlbl.AutoSize = true;
+            this.srvpathlbl.BackColor = System.Drawing.Color.Transparent;
+            this.srvpathlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.srvpathlbl.Location = new System.Drawing.Point(12, 108);
+            this.srvpathlbl.Name = "srvpathlbl";
+            this.srvpathlbl.Size = new System.Drawing.Size(90, 16);
+            this.srvpathlbl.TabIndex = 8;
+            this.srvpathlbl.Text = "Path to server";
+            // 
+            // addsrvbtn
+            // 
+            this.addsrvbtn.Location = new System.Drawing.Point(56, 218);
+            this.addsrvbtn.Name = "addsrvbtn";
+            this.addsrvbtn.Size = new System.Drawing.Size(166, 23);
+            this.addsrvbtn.TabIndex = 9;
+            this.addsrvbtn.Text = "Add Server";
+            this.addsrvbtn.UseVisualStyleBackColor = true;
+            this.addsrvbtn.Click += new System.EventHandler(this.addsrvbtn_Click);
             // 
             // addsrv
             // 
@@ -38,6 +102,12 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(284, 264);
+            this.Controls.Add(this.addsrvbtn);
+            this.Controls.Add(this.srvpathlbl);
+            this.Controls.Add(this.browsedeflog);
+            this.Controls.Add(this.srvpathbox);
+            this.Controls.Add(this.srvnamebox);
+            this.Controls.Add(this.srvnamelbl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(300, 300);
@@ -47,9 +117,18 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Add World Server";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Label srvnamelbl;
+        private System.Windows.Forms.TextBox srvnamebox;
+        private System.Windows.Forms.Button browsedeflog;
+        private System.Windows.Forms.TextBox srvpathbox;
+        private System.Windows.Forms.OpenFileDialog openfiledialog;
+        private System.Windows.Forms.Label srvpathlbl;
+        private System.Windows.Forms.Button addsrvbtn;
     }
 }

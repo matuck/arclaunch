@@ -62,6 +62,8 @@
             this.logslbl = new System.Windows.Forms.Label();
             this.openfiledialog = new System.Windows.Forms.OpenFileDialog();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.systraymenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.systrayexit = new System.Windows.Forms.ToolStripMenuItem();
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
@@ -70,6 +72,7 @@
             this.serverspnl.SuspendLayout();
             this.settingspnl.SuspendLayout();
             this.logpnl.SuspendLayout();
+            this.systraymenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitlayout
@@ -436,9 +439,24 @@
             // 
             // notifyIcon1
             // 
+            this.notifyIcon1.ContextMenuStrip = this.systraymenu;
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "ArcLaucnh";
             this.notifyIcon1.Visible = true;
+            // 
+            // systraymenu
+            // 
+            this.systraymenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.systrayexit});
+            this.systraymenu.Name = "systraymenu";
+            this.systraymenu.Size = new System.Drawing.Size(93, 26);
+            // 
+            // systrayexit
+            // 
+            this.systrayexit.Name = "systrayexit";
+            this.systrayexit.Size = new System.Drawing.Size(92, 22);
+            this.systrayexit.Text = "Exit";
+            this.systrayexit.Click += new System.EventHandler(this.systrayexit_Click);
             // 
             // Arclaunch
             // 
@@ -465,6 +483,7 @@
             this.settingspnl.PerformLayout();
             this.logpnl.ResumeLayout(false);
             this.logpnl.PerformLayout();
+            this.systraymenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -487,9 +506,7 @@
         private System.Windows.Forms.Label defaltlgolbl;
         private System.Windows.Forms.Button browsedeflog;
         private System.Windows.Forms.OpenFileDialog openfiledialog;
-        private System.Windows.Forms.ListBox worldlist;
         private System.Windows.Forms.Label logonlbl;
-        private System.Windows.Forms.ListBox logonlist;
         private System.Windows.Forms.Label worldlbl;
         private System.Windows.Forms.Button restartworldsrvbtn;
         private System.Windows.Forms.Button stopworldsrvbtn;
@@ -503,6 +520,10 @@
         private System.Windows.Forms.Button dellogsrvbtn;
         private System.Windows.Forms.Button addlogsrvbtn;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ContextMenuStrip systraymenu;
+        private System.Windows.Forms.ToolStripMenuItem systrayexit;
+        private System.Windows.Forms.ListBox worldlist;
+        private System.Windows.Forms.ListBox logonlist;
     }
 }
 
