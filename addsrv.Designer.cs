@@ -115,7 +115,7 @@
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "addsrv";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "Add World Server";
+            this.Text = "Server type was not set properly";
             this.ResumeLayout(false);
             this.PerformLayout();
 

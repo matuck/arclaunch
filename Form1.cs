@@ -62,6 +62,7 @@ namespace Arclaunch
         }
         public void addworldlistbox()
         {
+            this.worldlist.Items.Clear();
             string[,] servers = this.serverarray("world.xml");
             for (int i = 0; i < servers.Length / serverkeys; i++)
             {
@@ -99,7 +100,9 @@ namespace Arclaunch
         private void addsrvbtn_Click(object sender, EventArgs e)
         {
             addsrv addsrv = new addsrv();
-            addsrv.addnewserverdialog();
+            addsrv.setservertype("world");
+            addsrv.ShowDialog();
+            addworldlistbox();
         }
 
         private void delworldsrvbtn_Click(object sender, EventArgs e)

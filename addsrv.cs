@@ -9,76 +9,108 @@ using System.Windows.Forms;
 using System.Xml;
 using System.IO;
 
+
 namespace Arclaunch
 {
     public partial class addsrv : Form
     {
+        private string servertype;
         public addsrv()
         {
             InitializeComponent();
+            this.ShowInTaskbar = false;
         }
-
-        public bool addnewserverdialog()
+        public void setservertype(string type)
         {
-            this.Show();
-
-            return true;
+            switch (type)
+            {
+                case "world":
+                    this.servertype = type;
+                    this.Text = "Add World Server";
+                    break;
+                case "logon":
+                    this.servertype = type;
+                    this.Text = "Add Logon Server";
+                    break;
+                default:
+                    this.servertype = null;
+                    this.Text = "Server type Wasn't specified";
+                    break;
+            }
         }
         private void browsedeflog_Click(object sender, EventArgs e)
         {
-            openfiledialog.FileName = "arcemu_logonserver.exe";
-            openfiledialog.Filter = "|*.exe";
-            if (System.IO.Directory.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv) || System.IO.File.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv))
+            if (this.servertype != null && this.servertype == "world" || this.servertype == "logon")
             {
-                openfiledialog.InitialDirectory = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
+                if (this.servertype == "world")
+                {
+                    openfiledialog.FileName = "arcemu_world.exe";
+                }
+                else
+                {
+                    openfiledialog.FileName = "arcemu_logonserver.exe";
+                }
+                openfiledialog.Filter = "|*.exe";
+                if (System.IO.Directory.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv) || System.IO.File.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv))
+                {
+                    openfiledialog.InitialDirectory = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
+                }
+                else
+                {
+                    openfiledialog.InitialDirectory = "c:\\";
+                }
+                if (openfiledialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.srvpathbox.Text = openfiledialog.FileName;
+                }
             }
-            else
+            else 
             {
-                openfiledialog.InitialDirectory = "c:\\";
-            }
-            if (openfiledialog.ShowDialog() == DialogResult.OK)
-            {
-                this.srvpathbox.Text = openfiledialog.FileName;
+                MessageBox.Show("Server type was not set properly");
             }
         }
 
         private void addsrvbtn_Click(object sender, EventArgs e)
         {
-            FileStream fs = new FileStream("world.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            XmlDocument xmldoc = new XmlDocument();
-            xmldoc.Load(fs);
-            XmlElement newserver = xmldoc.CreateElement("Server");
+            if (this.servertype != null && this.servertype == "world" || this.servertype == "logon")
+            {
+                FileStream fs = new FileStream(this.servertype + ".xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                XmlDocument xmldoc = new XmlDocument();
+                xmldoc.Load(fs);
+                XmlElement newserver = xmldoc.CreateElement("Server");
 
-            // First Element - Book - Created
-            XmlElement nameelement = xmldoc.CreateElement("Name");
-            // Value given for the first element
-            nameelement.InnerText = srvnamebox.Text;
-            // Append the newly created element as a child element
-            newserver.AppendChild(nameelement);
+                // First Element - Book - Created
+                XmlElement nameelement = xmldoc.CreateElement("Name");
+                // Value given for the first element
+                nameelement.InnerText = srvnamebox.Text;
+                // Append the newly created element as a child element
+                newserver.AppendChild(nameelement);
 
 
-            // Second Element - Publisher - Created
-            XmlElement pathelement = xmldoc.CreateElement("Path");
-            // Value given for the second element
-            pathelement.InnerText = srvpathbox.Text;
-            // Append the newly created element as a child element
-            newserver.AppendChild(pathelement);
+                // Second Element - Publisher - Created
+                XmlElement pathelement = xmldoc.CreateElement("Path");
+                // Value given for the second element
+                pathelement.InnerText = srvpathbox.Text;
+                // Append the newly created element as a child element
+                newserver.AppendChild(pathelement);
 
-            // New XML element inserted into the document
-            xmldoc.DocumentElement.InsertAfter(newserver,
-                                               xmldoc.DocumentElement.LastChild);
+                // New XML element inserted into the document
+                xmldoc.DocumentElement.InsertAfter(newserver,xmldoc.DocumentElement.LastChild);
 
-            // An instance of FileStream class created
-            // The first parameter is the path to the XML file - Catalog.xml
+                // An instance of FileStream class created
+                // The first parameter is the path to the XML file - Catalog.xml
 
-            FileStream fsxml = new FileStream("world.xml", FileMode.Truncate,
-                                              FileAccess.Write,
-                                              FileShare.ReadWrite);
+                FileStream fsxml = new FileStream(this.servertype + ".xml", FileMode.Truncate, FileAccess.Write, FileShare.ReadWrite);
 
-            // XML Document Saved
-            xmldoc.Save(fsxml);
-            
-            Close();
+                // XML Document Saved
+                xmldoc.Save(fsxml);
+                
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Server type was not set properly");
+            }
         }
     }
 }
