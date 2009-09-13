@@ -99,7 +99,7 @@ namespace Arclaunch
         private void addsrvbtn_Click(object sender, EventArgs e)
         {
             addsrv addsrv = new addsrv();
-            addsrv.Show();
+            addsrv.addnewserverdialog();
         }
 
         private void delworldsrvbtn_Click(object sender, EventArgs e)

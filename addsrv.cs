@@ -18,6 +18,12 @@ namespace Arclaunch
             InitializeComponent();
         }
 
+        public bool addnewserverdialog()
+        {
+            this.Show();
+
+            return true;
+        }
         private void browsedeflog_Click(object sender, EventArgs e)
         {
             openfiledialog.FileName = "arcemu_logonserver.exe";
