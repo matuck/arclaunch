@@ -51,7 +51,7 @@ namespace Arclaunch
             xmldoc.Load(fs);
             XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Server");
             string[,] strArray = new string[xmlnode.Count,serverkeys];
-            int count = 0;;
+            int count = 0;
             while (count < xmlnode.Count)
             {
                 strArray[count,0] = xmlnode[count].FirstChild.InnerText;
@@ -72,6 +72,7 @@ namespace Arclaunch
         }
         public void addlogonlistbox()
         {
+            this.logonlist.Items.Clear();
             string[,] logservers = this.serverarray("logon.xml");
             for (int i = 0; i < logservers.Length / serverkeys; i++)
             {
@@ -162,6 +163,14 @@ namespace Arclaunch
         private void systrayexit_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void addlogsrvbtn_Click(object sender, EventArgs e)
+        {
+            addsrv addsrv = new addsrv();
+            addsrv.setservertype("logon");
+            addsrv.ShowDialog();
+            addlogonlistbox();
         }
     }
 }

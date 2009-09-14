@@ -269,6 +269,7 @@
             this.addlogsrvbtn.TabIndex = 11;
             this.addlogsrvbtn.Text = "Add Server";
             this.addlogsrvbtn.UseVisualStyleBackColor = true;
+            this.addlogsrvbtn.Click += new System.EventHandler(this.addlogsrvbtn_Click);
             // 
             // restartworldsrvbtn
             // 
