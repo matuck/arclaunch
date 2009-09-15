@@ -116,7 +116,16 @@ namespace Arclaunch
 
         private void delworldsrvbtn_Click(object sender, EventArgs e)
         {
-
+            if (worldlist.SelectedItem != null)
+            {
+                deleteaserver("world", worldlist.SelectedItem.ToString());
+                MessageBox.Show(worldlist.SelectedItem.ToString() + " Deleted");
+                addworldlistbox();
+            }
+            else
+            {
+                MessageBox.Show("No Server Selected");
+            }
         }
 
         private void stopworldsrvbtn_Click(object sender, EventArgs e)
@@ -186,12 +195,38 @@ namespace Arclaunch
             xmlWriter.Formatting = Formatting.Indented;
             xmlWriter.WriteProcessingInstruction("xml", "version='1.0' encoding='utf-8' ");
             xmlWriter.WriteStartElement("Servers");
-            //If WriteProcessingInstruction is used as above,
-            //Do not use WriteEndElement() here
-            //xmlWriter.WriteEndElement();
-            //it will cause the &ltRoot></Root> to be &ltRoot />
             xmlWriter.Close();
 
+        }
+        private bool deleteaserver(string type, string name)
+        {
+            XmlDocument docs = new XmlDocument();
+
+            docs.Load(Application.StartupPath + "\\" + type + ".xml");
+            XmlNodeList delnode = docs.SelectNodes("/Servers/Server");
+            foreach (XmlNode mynode in delnode)
+            {
+                if (mynode["Name"].InnerText == name)
+                {
+                    mynode.ParentNode.RemoveChild(mynode);
+                }
+            }
+            docs.Save(Application.StartupPath + "\\" + type + ".xml");
+            return true;
+        }
+
+        private void dellogsrvbtn_Click(object sender, EventArgs e)
+        {
+            if (logonlist.SelectedItem != null)
+            {
+                deleteaserver("logon", logonlist.SelectedItem.ToString());
+                MessageBox.Show(logonlist.SelectedItem.ToString() + " Deleted");
+                addlogonlistbox();
+            }
+            else
+            {
+                MessageBox.Show("No Server Selected");
+            }
         }
     }
 }

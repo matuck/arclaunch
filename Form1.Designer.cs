@@ -99,7 +99,7 @@
             this.splitlayout.Panel2.Controls.Add(this.serverspnl);
             this.splitlayout.Panel2.Controls.Add(this.settingspnl);
             this.splitlayout.Panel2.Controls.Add(this.logpnl);
-            this.splitlayout.Size = new System.Drawing.Size(670, 376);
+            this.splitlayout.Size = new System.Drawing.Size(670, 374);
             this.splitlayout.SplitterDistance = 192;
             this.splitlayout.TabIndex = 0;
             // 
@@ -222,7 +222,7 @@
             this.serverspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverspnl.Location = new System.Drawing.Point(0, 0);
             this.serverspnl.Name = "serverspnl";
-            this.serverspnl.Size = new System.Drawing.Size(474, 376);
+            this.serverspnl.Size = new System.Drawing.Size(474, 374);
             this.serverspnl.TabIndex = 0;
             // 
             // restartlogsrvbtn
@@ -260,6 +260,7 @@
             this.dellogsrvbtn.TabIndex = 12;
             this.dellogsrvbtn.Text = "Delete Server";
             this.dellogsrvbtn.UseVisualStyleBackColor = true;
+            this.dellogsrvbtn.Click += new System.EventHandler(this.dellogsrvbtn_Click);
             // 
             // addlogsrvbtn
             // 
@@ -377,7 +378,7 @@
             this.settingspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingspnl.Location = new System.Drawing.Point(0, 0);
             this.settingspnl.Name = "settingspnl";
-            this.settingspnl.Size = new System.Drawing.Size(474, 376);
+            this.settingspnl.Size = new System.Drawing.Size(474, 374);
             this.settingspnl.TabIndex = 0;
             // 
             // browsedeflog
@@ -425,7 +426,7 @@
             this.logpnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logpnl.Location = new System.Drawing.Point(0, 0);
             this.logpnl.Name = "logpnl";
-            this.logpnl.Size = new System.Drawing.Size(474, 376);
+            this.logpnl.Size = new System.Drawing.Size(474, 374);
             this.logpnl.TabIndex = 0;
             // 
             // logslbl
@@ -464,7 +465,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
-            this.ClientSize = new System.Drawing.Size(670, 376);
+            this.ClientSize = new System.Drawing.Size(670, 374);
             this.Controls.Add(this.splitlayout);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
