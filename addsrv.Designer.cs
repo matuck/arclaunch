@@ -73,6 +73,7 @@
             this.srvpathbox.Size = new System.Drawing.Size(207, 20);
             this.srvpathbox.TabIndex = 6;
             this.srvpathbox.Text = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
+            this.srvpathbox.Click += new System.EventHandler(this.browsedeflog_Click);
             // 
             // srvpathlbl
             // 
@@ -101,7 +102,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(284, 264);
+            this.ClientSize = new System.Drawing.Size(284, 262);
             this.Controls.Add(this.addsrvbtn);
             this.Controls.Add(this.srvpathlbl);
             this.Controls.Add(this.browsedeflog);

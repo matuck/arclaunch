@@ -51,7 +51,7 @@ namespace Arclaunch
                     openfiledialog.FileName = "arcemu_logonserver.exe";
                 }
                 openfiledialog.Filter = "|*.exe";
-                if (System.IO.Directory.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv) || System.IO.File.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv))
+                if (Directory.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv) || File.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv))
                 {
                     openfiledialog.InitialDirectory = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
                 }
@@ -81,6 +81,7 @@ namespace Arclaunch
                 //check to see if server name or path exists.
                 bool nameexists = false;
                 bool pathexists = false;
+                bool validpath = false;
                 XmlNodeList node = xmldoc.SelectNodes("/Servers/Server");
                 foreach (XmlNode mynode in node)
                 {
@@ -93,7 +94,11 @@ namespace Arclaunch
                         pathexists = true;
                     }
                 }
-                if (!nameexists && !pathexists)
+                if (File.Exists(srvpathbox.Text))
+                {
+                    validpath = true;
+                }
+                if (!nameexists && !pathexists && validpath)
                 {
                     XmlElement newserver = xmldoc.CreateElement("Server");
                     // First Element - Name created
@@ -129,7 +134,11 @@ namespace Arclaunch
                     }
                     if (pathexists == true)
                     {
-                        msg += "The path already exists.  Please choose another.";
+                        msg += "The path already exists.  Please choose another. \n";
+                    }
+                    if (validpath == false)
+                    {
+                        msg += "The path entered is invalid. Please correct.";
                     }
                     MessageBox.Show(msg);
                 }
