@@ -77,35 +77,62 @@ namespace Arclaunch
                 FileStream fs = new FileStream(Application.StartupPath + "\\" + this.servertype + ".xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 XmlDocument xmldoc = new XmlDocument();
                 xmldoc.Load(fs);
-                XmlElement newserver = xmldoc.CreateElement("Server");
+                fs.Close();
+                //check to see if server name or path exists.
+                bool nameexists = false;
+                bool pathexists = false;
+                XmlNodeList node = xmldoc.SelectNodes("/Servers/Server");
+                foreach (XmlNode mynode in node)
+                {
+                    if (mynode["Name"].InnerText == srvnamebox.Text)
+                    {
+                        nameexists = true;
+                    }
+                    if (mynode["Path"].InnerText == srvpathbox.Text)
+                    {
+                        pathexists = true;
+                    }
+                }
+                if (!nameexists && !pathexists)
+                {
+                    XmlElement newserver = xmldoc.CreateElement("Server");
+                    // First Element - Name created
+                    XmlElement nameelement = xmldoc.CreateElement("Name");
+                    // Value given for the first element
+                    nameelement.InnerText = srvnamebox.Text;
+                    // Append the newly created element as a child element
+                    newserver.AppendChild(nameelement);
 
-                // First Element - Book - Created
-                XmlElement nameelement = xmldoc.CreateElement("Name");
-                // Value given for the first element
-                nameelement.InnerText = srvnamebox.Text;
-                // Append the newly created element as a child element
-                newserver.AppendChild(nameelement);
+                    // Second Element - Path - Created
+                    XmlElement pathelement = xmldoc.CreateElement("Path");
+                    // Value given for the second element
+                    pathelement.InnerText = srvpathbox.Text;
+                    // Append the newly created element as a child element
+                    newserver.AppendChild(pathelement);
+                    // New XML element inserted into the document
+                    xmldoc.DocumentElement.InsertAfter(newserver, xmldoc.DocumentElement.LastChild);
 
-
-                // Second Element - Publisher - Created
-                XmlElement pathelement = xmldoc.CreateElement("Path");
-                // Value given for the second element
-                pathelement.InnerText = srvpathbox.Text;
-                // Append the newly created element as a child element
-                newserver.AppendChild(pathelement);
-
-                // New XML element inserted into the document
-                xmldoc.DocumentElement.InsertAfter(newserver,xmldoc.DocumentElement.LastChild);
-
-                // An instance of FileStream class created
-                // The first parameter is the path to the XML file - Catalog.xml
-
-                FileStream fsxml = new FileStream(Application.StartupPath + "\\" + this.servertype + ".xml", FileMode.Truncate, FileAccess.Write, FileShare.ReadWrite);
-
-                // XML Document Saved
-                xmldoc.Save(fsxml);
-                
-                Close();
+                    // An instance of FileStream class created
+                    // The first parameter is the path to the XML file
+                    FileStream fsxml = new FileStream(Application.StartupPath + "\\" + this.servertype + ".xml", FileMode.Truncate, FileAccess.Write, FileShare.ReadWrite);
+                    // XML Document Saved
+                    xmldoc.Save(fsxml);
+                    fsxml.Close();
+                    Close();
+                }
+                else
+                {
+                    string msg = "";
+                    if (nameexists == true)
+                    {
+                        msg += "The name already exists.  Please choose another. \n";
+                    }
+                    if (pathexists == true)
+                    {
+                        msg += "The path already exists.  Please choose another.";
+                    }
+                    MessageBox.Show(msg);
+                }
             }
             else
             {

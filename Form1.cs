@@ -57,6 +57,7 @@ namespace Arclaunch
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.Load(fs);
+            fs.Close();
             XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Server");
             string[,] strArray = new string[xmlnode.Count,serverkeys];
             int count = 0;
