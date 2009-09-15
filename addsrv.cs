@@ -74,7 +74,7 @@ namespace Arclaunch
         {
             if (this.servertype != null && this.servertype == "world" || this.servertype == "logon")
             {
-                FileStream fs = new FileStream(this.servertype + ".xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                FileStream fs = new FileStream(Application.StartupPath + "\\" + this.servertype + ".xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 XmlDocument xmldoc = new XmlDocument();
                 xmldoc.Load(fs);
                 XmlElement newserver = xmldoc.CreateElement("Server");
@@ -100,7 +100,7 @@ namespace Arclaunch
                 // An instance of FileStream class created
                 // The first parameter is the path to the XML file - Catalog.xml
 
-                FileStream fsxml = new FileStream(this.servertype + ".xml", FileMode.Truncate, FileAccess.Write, FileShare.ReadWrite);
+                FileStream fsxml = new FileStream(Application.StartupPath + "\\" + this.servertype + ".xml", FileMode.Truncate, FileAccess.Write, FileShare.ReadWrite);
 
                 // XML Document Saved
                 xmldoc.Save(fsxml);

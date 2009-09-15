@@ -17,6 +17,14 @@ namespace Arclaunch
         public Arclaunch()
         {
             InitializeComponent();
+            if (!File.Exists("world.xml"))
+            {
+                createserverxml("world");
+            }
+            if (!File.Exists("logon.xml"))
+            {
+                createserverxml("logon");
+            }
             addlogonlistbox();
             addworldlistbox();
         }
@@ -63,7 +71,7 @@ namespace Arclaunch
         public void addworldlistbox()
         {
             this.worldlist.Items.Clear();
-            string[,] servers = this.serverarray("world.xml");
+            string[,] servers = this.serverarray(Application.StartupPath + "\\world.xml");
             for (int i = 0; i < servers.Length / serverkeys; i++)
             {
                 string s1 = servers[i, 0];
@@ -73,7 +81,7 @@ namespace Arclaunch
         public void addlogonlistbox()
         {
             this.logonlist.Items.Clear();
-            string[,] logservers = this.serverarray("logon.xml");
+            string[,] logservers = this.serverarray(Application.StartupPath +"\\logon.xml");
             for (int i = 0; i < logservers.Length / serverkeys; i++)
             {
                 string sl1 = logservers[i, 0];
@@ -171,6 +179,19 @@ namespace Arclaunch
             addsrv.setservertype("logon");
             addsrv.ShowDialog();
             addlogonlistbox();
+        }
+        private void createserverxml(string type)
+        {
+            XmlTextWriter xmlWriter = new XmlTextWriter(type +".xml", System.Text.Encoding.UTF8);
+            xmlWriter.Formatting = Formatting.Indented;
+            xmlWriter.WriteProcessingInstruction("xml", "version='1.0' encoding='utf-8' ");
+            xmlWriter.WriteStartElement("Servers");
+            //If WriteProcessingInstruction is used as above,
+            //Do not use WriteEndElement() here
+            //xmlWriter.WriteEndElement();
+            //it will cause the &ltRoot></Root> to be &ltRoot />
+            xmlWriter.Close();
+
         }
     }
 }
