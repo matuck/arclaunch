@@ -209,7 +209,8 @@ namespace Arclaunch
 
         private void restartworldsrvbtn_Click(object sender, EventArgs e)
         {
-
+            stopworldsrvbtn_Click(sender, e);
+            startworldsrvbtn_Click(sender, e);
         }
 
         private void aboutbtn_Click(object sender, EventArgs e)
