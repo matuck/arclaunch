@@ -274,6 +274,7 @@ namespace Arclaunch
         private void timer1_Tick(object sender, EventArgs e)
         {
             checkserverbuttons();
+            checklogbuttons();
         }
         private void checkserverbuttons()
         {
@@ -313,6 +314,48 @@ namespace Arclaunch
                     catch (ArgumentException)
                     {
                         
+                    }
+                }
+            }
+        }//end of checkserverbuttons
+        private void checklogbuttons()
+        {
+            string[,] servers = serverarray(Application.StartupPath + "\\logon.xml");
+            bool istrue = true;
+            int i = 0;
+            startlogsrvbtn.Enabled = true;
+            stoplogsrvbtn.Enabled = false;
+            restartlogsrvbtn.Enabled = false;
+            if (logonlist.SelectedItem != null)
+            {
+                while (istrue == true && i < (servers.Length / serverkeys))
+                {
+                    if (servers[i, 0] == logonlist.SelectedItem.ToString())
+                    {
+                        istrue = false;
+                    }
+                    if (istrue)
+                    {
+                        i++;
+                    }
+                }
+
+                if (File.Exists(Path.GetDirectoryName(servers[i, 1]) + "\\logonserver.pid"))
+                {
+                    string pidfile = Path.GetDirectoryName(servers[i, 1]) + "\\logonserver.pid";
+                    StreamReader re = File.OpenText(pidfile);
+                    string pid = re.ReadLine();
+                    re.Close();
+                    try
+                    {
+                        Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
+                        startlogsrvbtn.Enabled = false;
+                        stoplogsrvbtn.Enabled = true;
+                        restartlogsrvbtn.Enabled = true;
+                    }
+                    catch (ArgumentException)
+                    {
+
                     }
                 }
             }
