@@ -9,12 +9,20 @@ using System.Windows.Forms;
 using System.IO;
 using System.Xml;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace Arclaunch
 {
     public partial class Arclaunch : Form
     {
         const int serverkeys = 2;
+        private const int SW_HIDE = 0;
+        private const int SW_SHOW = 1;
+        [DllImport("User32")] 
+        private static extern int ShowWindow(int hwnd, int nCmdShow);
+        [DllImport("user32.dll")]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
         public Arclaunch()
         {
             InitializeComponent();
@@ -441,6 +449,66 @@ namespace Arclaunch
         {
             stoplogsrvbtn_Click(sender, e);
             startlogsrvbtn_Click(sender, e);
+        }
+
+        private void showwnds_Click(object sender, EventArgs e)
+        {
+            FileStream fs = new FileStream("world.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(fs);
+            fs.Close();
+            XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Server");
+            string[,] servers = new string[xmlnode.Count, serverkeys];
+            int count = 0;
+            while (count < xmlnode.Count)
+            {
+                string pidfile = Path.GetDirectoryName(xmlnode[count].LastChild.InnerText) + "\\arcemu.pid";
+                StreamReader re = File.OpenText(pidfile);
+                string pid = re.ReadLine();
+                re.Close();
+                Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
+                int hWnd = thisproc.MainWindowHandle.ToInt32();
+                ShowWindow(hWnd, SW_SHOW);
+                MessageBox.Show(hWnd.ToString());
+                try
+                {
+                   
+                }
+                catch (ArgumentException)
+                {
+
+                }
+                count++;
+            }
+        }
+
+        private void hidewnds_Click(object sender, EventArgs e)
+        {
+            FileStream fs = new FileStream("world.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(fs);
+            fs.Close();
+            XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Server");
+            string[,] servers = new string[xmlnode.Count, serverkeys];
+            int count = 0;
+            while (count < xmlnode.Count)
+            {
+                string pidfile = Path.GetDirectoryName(xmlnode[count].LastChild.InnerText) + "\\arcemu.pid";
+                StreamReader re = File.OpenText(pidfile);
+                string pid = re.ReadLine();
+                re.Close();
+                try
+                {
+                    Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
+                    int hWnd = thisproc.MainWindowHandle.ToInt32();
+                    ShowWindow(hWnd, SW_HIDE);
+                }
+                catch (ArgumentException)
+                {
+
+                }
+                count++;
+            }
         } 
     }
 }
