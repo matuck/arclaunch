@@ -11,6 +11,7 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        ///
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -64,6 +65,7 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.systraymenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.systrayexit = new System.Windows.Forms.ToolStripMenuItem();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
@@ -460,6 +462,11 @@
             this.systrayexit.Text = "Exit";
             this.systrayexit.Click += new System.EventHandler(this.systrayexit_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 3000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -526,6 +533,7 @@
         private System.Windows.Forms.ToolStripMenuItem systrayexit;
         private System.Windows.Forms.ListBox worldlist;
         private System.Windows.Forms.ListBox logonlist;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml;
+using System.Diagnostics;
 
 namespace Arclaunch
 {
@@ -27,6 +28,7 @@ namespace Arclaunch
             }
             addlogonlistbox();
             addworldlistbox();
+            timer1.Enabled = true;
         }
 
         private void serversbtn_Click(object sender, EventArgs e)
@@ -131,7 +133,40 @@ namespace Arclaunch
 
         private void stopworldsrvbtn_Click(object sender, EventArgs e)
         {
+            string[,] servers = serverarray(Application.StartupPath + "\\world.xml");
+            bool istrue = true;
+            int i = 0;
+            if (worldlist.SelectedItem != null)
+            {
+                while (istrue == true && i < (servers.Length / serverkeys))
+                {
+                    if (servers[i, 0] == worldlist.SelectedItem.ToString())
+                    {
+                        istrue = false;
+                    }
+                    if (istrue)
+                    {
+                        i++;
+                    }
+                }
 
+                if (File.Exists(Path.GetDirectoryName(servers[i, 1]) + "\\arcemu.pid"))
+                {
+                    string pidfile = Path.GetDirectoryName(servers[i, 1]) + "\\arcemu.pid";
+                    StreamReader re = File.OpenText(pidfile);
+                    string pid = re.ReadLine();
+                    re.Close();
+                    try
+                    {
+                        Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
+                        thisproc.Kill();
+                    }
+                    catch (ArgumentException)
+                    {
+
+                    }
+                }
+            }
         }
 
         private void startworldsrvbtn_Click(object sender, EventArgs e)
@@ -158,7 +193,12 @@ namespace Arclaunch
                 }
                 else
                 {
-                    MessageBox.Show((string)servers[i, 1]);
+                    Process server = new Process();
+                    server.StartInfo.FileName = servers[i, 1];
+                    string tempdir = Environment.CurrentDirectory;
+                    Environment.CurrentDirectory = Path.GetDirectoryName(servers[i, 1]);
+                    server.Start();
+                    Environment.CurrentDirectory = tempdir;
                 }
             }
             else
@@ -229,5 +269,52 @@ namespace Arclaunch
                 MessageBox.Show("No Server Selected");
             }
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            checkserverbuttons();
+        }
+        private void checkserverbuttons()
+        {
+            string[,] servers = serverarray(Application.StartupPath+"\\world.xml");
+            bool istrue = true;
+            int i = 0;
+            startworldsrvbtn.Enabled = true;
+            stopworldsrvbtn.Enabled = false;
+            restartworldsrvbtn.Enabled = false;
+            if (worldlist.SelectedItem != null)
+            {
+                while (istrue == true && i < (servers.Length / serverkeys))
+                {
+                    if (servers[i, 0] == worldlist.SelectedItem.ToString())
+                    {
+                        istrue = false;
+                    }
+                    if (istrue)
+                    {
+                        i++;
+                    }
+                }
+                
+                if (File.Exists(Path.GetDirectoryName(servers[i, 1]) + "\\arcemu.pid"))
+                {
+                    string pidfile = Path.GetDirectoryName(servers[i, 1]) + "\\arcemu.pid";
+                    StreamReader re = File.OpenText(pidfile);
+                    string pid = re.ReadLine();
+                    re.Close();
+                    try
+                    {
+                        Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
+                        startworldsrvbtn.Enabled = false;
+                        stopworldsrvbtn.Enabled = true;
+                        restartworldsrvbtn.Enabled = true;
+                    }
+                    catch (ArgumentException)
+                    {
+                        
+                    }
+                }
+            }
+        } //end of checkserverbuttons
     }
 }
