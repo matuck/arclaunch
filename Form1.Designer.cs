@@ -235,6 +235,7 @@
             this.restartlogsrvbtn.TabIndex = 15;
             this.restartlogsrvbtn.Text = "Restart Server";
             this.restartlogsrvbtn.UseVisualStyleBackColor = true;
+            this.restartlogsrvbtn.Click += new System.EventHandler(this.restartlogsrvbtn_Click);
             // 
             // stoplogsrvbtn
             // 
@@ -244,6 +245,7 @@
             this.stoplogsrvbtn.TabIndex = 14;
             this.stoplogsrvbtn.Text = "Stop Server";
             this.stoplogsrvbtn.UseVisualStyleBackColor = true;
+            this.stoplogsrvbtn.Click += new System.EventHandler(this.stoplogsrvbtn_Click);
             // 
             // startlogsrvbtn
             // 
@@ -253,6 +255,7 @@
             this.startlogsrvbtn.TabIndex = 13;
             this.startlogsrvbtn.Text = "Start Server";
             this.startlogsrvbtn.UseVisualStyleBackColor = true;
+            this.startlogsrvbtn.Click += new System.EventHandler(this.startlogsrvbtn_Click);
             // 
             // dellogsrvbtn
             // 

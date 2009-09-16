@@ -316,6 +316,88 @@ namespace Arclaunch
                     }
                 }
             }
-        } //end of checkserverbuttons
+        }//end of checkserverbuttons
+
+        private void startlogsrvbtn_Click(object sender, EventArgs e)
+        {
+            if (logonlist.SelectedItem != null)
+            {
+                string[,] servers = serverarray("logon.xml");
+                bool mytrue = true;
+                int i = 0;
+                while (mytrue == true && i < (servers.Length / serverkeys))
+                {
+                    if (servers[i, 0] == logonlist.SelectedItem.ToString())
+                    {
+                        mytrue = false;
+                    }
+                    if (mytrue)
+                    {
+                        i++;
+                    }
+                }
+                if (mytrue)
+                {
+                    MessageBox.Show("Server Doesn't exist. Please delete this server");
+                }
+                else
+                {
+                    Process server = new Process();
+                    server.StartInfo.FileName = servers[i, 1];
+                    string tempdir = Environment.CurrentDirectory;
+                    Environment.CurrentDirectory = Path.GetDirectoryName(servers[i, 1]);
+                    server.Start();
+                    Environment.CurrentDirectory = tempdir;
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Server Selected");
+            }
+        }
+
+        private void stoplogsrvbtn_Click(object sender, EventArgs e)
+        {
+            string[,] servers = serverarray(Application.StartupPath + "\\logon.xml");
+            bool istrue = true;
+            int i = 0;
+            if (logonlist.SelectedItem != null)
+            {
+                while (istrue == true && i < (servers.Length / serverkeys))
+                {
+                    if (servers[i, 0] == logonlist.SelectedItem.ToString())
+                    {
+                        istrue = false;
+                    }
+                    if (istrue)
+                    {
+                        i++;
+                    }
+                }
+
+                if (File.Exists(Path.GetDirectoryName(servers[i, 1]) + "\\logonserver.pid"))
+                {
+                    string pidfile = Path.GetDirectoryName(servers[i, 1]) + "\\logonserver.pid";
+                    StreamReader re = File.OpenText(pidfile);
+                    string pid = re.ReadLine();
+                    re.Close();
+                    try
+                    {
+                        Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
+                        thisproc.Kill();
+                    }
+                    catch (ArgumentException)
+                    {
+
+                    }
+                }
+            }
+        }
+
+        private void restartlogsrvbtn_Click(object sender, EventArgs e)
+        {
+            stoplogsrvbtn_Click(sender, e);
+            startlogsrvbtn_Click(sender, e);
+        } 
     }
 }
