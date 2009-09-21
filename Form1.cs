@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -15,14 +16,18 @@ namespace Arclaunch
 {
     public partial class Arclaunch : Form
     {
+        #region Variables and imports
         const int serverkeys = 2;
         private const int SW_HIDE = 0;
         private const int SW_SHOW = 1;
+        Hashtable worldservers = new Hashtable();//key will be server name. value will be instance of server class.
+        Hashtable logonservers = new Hashtable();
+
         [DllImport("User32")] 
         private static extern int ShowWindow(int hwnd, int nCmdShow);
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
+        #endregion
         public Arclaunch()
         {
             InitializeComponent();
@@ -34,11 +39,15 @@ namespace Arclaunch
             {
                 createserverxml("logon");
             }
+            loadhashtables();
             addlogonlistbox();
             addworldlistbox();
+            checkserverbuttons();
+            checklogbuttons();
             timer1.Enabled = true;
         }
 
+        #region Hide and Show panel
         private void serversbtn_Click(object sender, EventArgs e)
         {
             hidealltoppanels();
@@ -62,43 +71,26 @@ namespace Arclaunch
             settingspnl.Hide();
             logpnl.Hide();
         }
-        private string[,] serverarray(string path)
-        {
-            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            XmlDocument xmldoc = new XmlDocument();
-            xmldoc.Load(fs);
-            fs.Close();
-            XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Server");
-            string[,] strArray = new string[xmlnode.Count,serverkeys];
-            int count = 0;
-            while (count < xmlnode.Count)
-            {
-                strArray[count,0] = xmlnode[count].FirstChild.InnerText;
-                strArray[count,1] = xmlnode[count].LastChild.InnerText;
-                count++;
-            };
-            return strArray;
-        }
-        public void addworldlistbox()
+        #endregion
+        #region Build listboxes
+        private void addworldlistbox()
         {
             this.worldlist.Items.Clear();
-            string[,] servers = this.serverarray(Application.StartupPath + "\\world.xml");
-            for (int i = 0; i < servers.Length / serverkeys; i++)
+            foreach (Server myserv in worldservers.Values)
             {
-                string s1 = servers[i, 0];
-                this.worldlist.Items.Add(s1);
+                this.worldlist.Items.Add(myserv.name);
             }
         }
-        public void addlogonlistbox()
+        private void addlogonlistbox()
         {
             this.logonlist.Items.Clear();
-            string[,] logservers = this.serverarray(Application.StartupPath +"\\logon.xml");
-            for (int i = 0; i < logservers.Length / serverkeys; i++)
+            foreach (Server myserv in logonservers.Values)
             {
-                string sl1 = logservers[i, 0];
-                this.logonlist.Items.Add(sl1);
+                this.logonlist.Items.Add(myserv.name);
             }
         }
+        #endregion 
+        #region Action Functions
         private void browsedeflog_Click(object sender, EventArgs e)
         {
             openfiledialog.FileName = "arcemu_logonserver.exe";
@@ -116,20 +108,26 @@ namespace Arclaunch
                 this.defaultlogbox.Text = openfiledialog.FileName;
             }
         }
-
         private void addsrvbtn_Click(object sender, EventArgs e)
         {
             addsrv addsrv = new addsrv();
             addsrv.setservertype("world");
             addsrv.ShowDialog();
+            Server thisserver = new Server();
+            thisserver.name = addsrv.name;
+            thisserver.path = addsrv.path;
+            thisserver.pid = 0;
+            thisserver.window = 0;
+            thisserver.type = "world";
+            worldservers.Add(thisserver.name, thisserver);
             addworldlistbox();
         }
-
         private void delworldsrvbtn_Click(object sender, EventArgs e)
         {
             if (worldlist.SelectedItem != null)
             {
                 deleteaserver("world", worldlist.SelectedItem.ToString());
+                worldservers.Remove(worldlist.SelectedItem.ToString());
                 MessageBox.Show(worldlist.SelectedItem.ToString() + " Deleted");
                 addworldlistbox();
             }
@@ -138,75 +136,64 @@ namespace Arclaunch
                 MessageBox.Show("No Server Selected");
             }
         }
-
         private void stopworldsrvbtn_Click(object sender, EventArgs e)
         {
-            string[,] servers = serverarray(Application.StartupPath + "\\world.xml");
-            bool istrue = true;
-            int i = 0;
             if (worldlist.SelectedItem != null)
             {
-                while (istrue == true && i < (servers.Length / serverkeys))
+                Server myserv = null;
+                try
                 {
-                    if (servers[i, 0] == worldlist.SelectedItem.ToString())
-                    {
-                        istrue = false;
-                    }
-                    if (istrue)
-                    {
-                        i++;
-                    }
+                    myserv = (Server)worldservers[worldlist.SelectedItem.ToString()];
                 }
-
-                if (File.Exists(Path.GetDirectoryName(servers[i, 1]) + "\\arcemu.pid"))
+                catch (ArgumentException)
                 {
-                    string pidfile = Path.GetDirectoryName(servers[i, 1]) + "\\arcemu.pid";
-                    StreamReader re = File.OpenText(pidfile);
-                    string pid = re.ReadLine();
-                    re.Close();
+                    MessageBox.Show("Server does not exist!");
+                }
+                if (myserv != null)
+                {
                     try
                     {
-                        Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
+                        Process thisproc = Process.GetProcessById(myserv.pid);
                         thisproc.Kill();
                     }
                     catch (ArgumentException)
                     {
-
+                        MessageBox.Show("Server is not running");
                     }
                 }
             }
+            else
+            {
+                MessageBox.Show("No Server Selected!");
+            }
         }
-
         private void startworldsrvbtn_Click(object sender, EventArgs e)
         {
             if (worldlist.SelectedItem != null)
             {
-                string[,] servers = serverarray("world.xml");
-                bool mytrue = true;
-                int i = 0;
-                while (mytrue == true && i < (servers.Length / serverkeys))
+                Server myserv = null;
+                try
                 {
-                    if (servers[i, 0] == worldlist.SelectedItem.ToString())
-                    {
-                        mytrue = false;
-                    }
-                    if (mytrue)
-                    {
-                        i++;
-                    }
+                    myserv = (Server)worldservers[worldlist.SelectedItem.ToString()];
                 }
-                if (mytrue)
+                catch (ArgumentException)
                 {
-                    MessageBox.Show("Server Doesn't exist. Please delete this server");
+                }
+                if (myserv != null)
+                {
+                    Process server = new Process();
+                    server.StartInfo.FileName = myserv.path;
+                    string tempdir = Environment.CurrentDirectory;
+                    Environment.CurrentDirectory = Path.GetDirectoryName(myserv.path);
+                    server.Start();
+                    myserv.pid = server.Id;
+                    myserv.window = server.MainWindowHandle.ToInt32();
+                    Environment.CurrentDirectory = tempdir;
+                    worldservers[worldlist.SelectedItem.ToString()] = myserv;
                 }
                 else
                 {
-                    Process server = new Process();
-                    server.StartInfo.FileName = servers[i, 1];
-                    string tempdir = Environment.CurrentDirectory;
-                    Environment.CurrentDirectory = Path.GetDirectoryName(servers[i, 1]);
-                    server.Start();
-                    Environment.CurrentDirectory = tempdir;
+                    MessageBox.Show("Server Doesn't exist. Please delete this server");
                 }
             }
             else
@@ -214,39 +201,239 @@ namespace Arclaunch
                 MessageBox.Show("No Server Selected");
             }
         }
-
         private void restartworldsrvbtn_Click(object sender, EventArgs e)
         {
             stopworldsrvbtn_Click(sender, e);
             startworldsrvbtn_Click(sender, e);
         }
-
         private void aboutbtn_Click(object sender, EventArgs e)
         {
             aboutarclaunch about = new aboutarclaunch();
             about.Show();
         }
-
         private void systrayexit_Click(object sender, EventArgs e)
         {
             Close();
         }
-
         private void addlogsrvbtn_Click(object sender, EventArgs e)
         {
             addsrv addsrv = new addsrv();
             addsrv.setservertype("logon");
             addsrv.ShowDialog();
+            Server thisserver = new Server();
+            thisserver.name = addsrv.name;
+            thisserver.path = addsrv.path;
+            thisserver.pid = 0;
+            thisserver.window = 0;
+            thisserver.type = "logon";
+            logonservers.Add(thisserver.name, thisserver);
             addlogonlistbox();
         }
+        private void dellogsrvbtn_Click(object sender, EventArgs e)
+        {
+            if (logonlist.SelectedItem != null)
+            {
+                deleteaserver("logon", logonlist.SelectedItem.ToString());
+                logonservers.Remove(logonlist.SelectedItem.ToString());
+                MessageBox.Show(logonlist.SelectedItem.ToString() + " Deleted");
+                addlogonlistbox();
+            }
+            else
+            {
+                MessageBox.Show("No Server Selected");
+            }
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            checkserverbuttons();
+            checklogbuttons();
+        }
+        private void startlogsrvbtn_Click(object sender, EventArgs e)
+        {
+            if (logonlist.SelectedItem != null)
+            {
+                Server myserv = null;
+                try
+                {
+                    myserv = (Server)logonservers[logonlist.SelectedItem.ToString()];
+                }
+                catch (ArgumentException)
+                {
+                }
+                if (myserv != null)
+                {
+                    Process server = new Process();
+                    server.StartInfo.FileName = myserv.path;
+                    string tempdir = Environment.CurrentDirectory;
+                    Environment.CurrentDirectory = Path.GetDirectoryName(myserv.path);
+                    server.Start();
+                    myserv.pid = server.Id;
+                    myserv.window = server.MainWindowHandle.ToInt32();
+                    Environment.CurrentDirectory = tempdir;
+                    logonservers[logonlist.SelectedItem.ToString()] = myserv;
+                }
+                else
+                {
+                    MessageBox.Show("Server Doesn't exist. Please delete this server");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Server Selected");
+            }
+        }
+        private void stoplogsrvbtn_Click(object sender, EventArgs e)
+        {
+            if (logonlist.SelectedItem != null)
+            {
+                Server myserv = null;
+                try
+                {
+                    myserv = (Server)logonservers[logonlist.SelectedItem.ToString()];
+                }
+                catch (ArgumentException)
+                {
+                    MessageBox.Show("Server does not exist!");
+                }
+                if (myserv != null)
+                {
+                    try
+                    {
+                        Process thisproc = Process.GetProcessById(myserv.pid);
+                        thisproc.Kill();
+                    }
+                    catch (ArgumentException)
+                    {
+                        MessageBox.Show("Server is not running");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Server Selected!");
+            }
+        }
+        private void restartlogsrvbtn_Click(object sender, EventArgs e)
+        {
+            stoplogsrvbtn_Click(sender, e);
+            startlogsrvbtn_Click(sender, e);
+        }
+        #endregion
+        #region Show and Hide all windows.
+        private void showwnds_Click(object sender, EventArgs e)
+        {
+            foreach (Server myserv in worldservers.Values)
+            {
+                ShowWindow(myserv.window, SW_SHOW);
+            }
+        }
+        private void hidewnds_Click(object sender, EventArgs e)
+        {
+            foreach (Server myserv in logonservers.Values)
+            {
+                ShowWindow(myserv.window, SW_HIDE);
+            }
+        }
+        #endregion
+        #region Support Functions
         private void createserverxml(string type)
         {
-            XmlTextWriter xmlWriter = new XmlTextWriter(type +".xml", System.Text.Encoding.UTF8);
+            XmlTextWriter xmlWriter = new XmlTextWriter(type + ".xml", System.Text.Encoding.UTF8);
             xmlWriter.Formatting = Formatting.Indented;
             xmlWriter.WriteProcessingInstruction("xml", "version='1.0' encoding='utf-8' ");
             xmlWriter.WriteStartElement("Servers");
             xmlWriter.Close();
+        }
+        private void loadhashtables()
+        {
+            FileStream fs = new FileStream(Application.StartupPath +"\\world.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(fs);
+            fs.Close();
+            XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Server");
+            int count = 0;
+            while (count < xmlnode.Count)
+            {
+                Server myserver = new Server();
+                myserver.name = xmlnode[count].FirstChild.InnerText;
+                myserver.path = xmlnode[count].LastChild.InnerText;
+                myserver.type = "world";
+                worldservers.Add(xmlnode[count].FirstChild.InnerText, myserver);
+                count++;
+            }
+            FileStream fslog = new FileStream(Application.StartupPath + "\\logon.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            XmlDocument xmllogdoc = new XmlDocument();
+            xmllogdoc.Load(fslog);
+            fslog.Close();
+            XmlNodeList xmllognode = xmllogdoc.GetElementsByTagName("Server");
+            count = 0;
+            while (count < xmllognode.Count)
+            {
+                Server mylogserver = new Server();
+                mylogserver.name = xmllognode[count].FirstChild.InnerText;
+                mylogserver.path = xmllognode[count].LastChild.InnerText;
+                logonservers.Add(mylogserver.name, mylogserver);
+                count++;
+            }
+        }
+        //still need to do checks on processes
+        private void checklogbuttons()
+        {
+            if (logonlist.SelectedItem != null)
+            {
+                foreach (Server myserv in logonservers.Values)
+                {
+                    try
+                    {
+                        Process thisproc = Process.GetProcessById(Convert.ToInt32(myserv.pid));
+                        startlogsrvbtn.Enabled = false;
+                        stoplogsrvbtn.Enabled = true;
+                        restartlogsrvbtn.Enabled = true;
+                    }
+                    catch (ArgumentException)
+                    {
+                        startlogsrvbtn.Enabled = true;
+                        stoplogsrvbtn.Enabled = false;
+                        restartlogsrvbtn.Enabled = false;
+                    }
+                }
+            }
+            else
+            {
+                startlogsrvbtn.Enabled = false;
+                stoplogsrvbtn.Enabled = false;
+                restartlogsrvbtn.Enabled = false;
+            }
+        }
+        //still need checks on processes.
+        private void checkserverbuttons()
+        {
 
+            if (worldlist.SelectedItem != null)
+            {
+                foreach (Server myserv in worldservers.Values)
+                {
+                    try
+                    {
+                        Process thisproc = Process.GetProcessById(Convert.ToInt32(myserv.pid));
+                        startworldsrvbtn.Enabled = false;
+                        stopworldsrvbtn.Enabled = true;
+                        restartworldsrvbtn.Enabled = true;
+                    }
+                    catch (ArgumentException)
+                    {
+                        startworldsrvbtn.Enabled = true;
+                        stopworldsrvbtn.Enabled = false;
+                        restartworldsrvbtn.Enabled = false;
+                    }
+                }
+            }
+            else
+            {
+                startworldsrvbtn.Enabled = false;
+                stopworldsrvbtn.Enabled = false;
+                restartworldsrvbtn.Enabled = false;
+            }
         }
         private bool deleteaserver(string type, string name)
         {
@@ -264,251 +451,6 @@ namespace Arclaunch
             docs.Save(Application.StartupPath + "\\" + type + ".xml");
             return true;
         }
-
-        private void dellogsrvbtn_Click(object sender, EventArgs e)
-        {
-            if (logonlist.SelectedItem != null)
-            {
-                deleteaserver("logon", logonlist.SelectedItem.ToString());
-                MessageBox.Show(logonlist.SelectedItem.ToString() + " Deleted");
-                addlogonlistbox();
-            }
-            else
-            {
-                MessageBox.Show("No Server Selected");
-            }
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            checkserverbuttons();
-            checklogbuttons();
-        }
-        private void checkserverbuttons()
-        {
-            string[,] servers = serverarray(Application.StartupPath+"\\world.xml");
-            bool istrue = true;
-            int i = 0;
-            startworldsrvbtn.Enabled = true;
-            stopworldsrvbtn.Enabled = false;
-            restartworldsrvbtn.Enabled = false;
-            if (worldlist.SelectedItem != null)
-            {
-                while (istrue == true && i < (servers.Length / serverkeys))
-                {
-                    if (servers[i, 0] == worldlist.SelectedItem.ToString())
-                    {
-                        istrue = false;
-                    }
-                    if (istrue)
-                    {
-                        i++;
-                    }
-                }
-                
-                if (File.Exists(Path.GetDirectoryName(servers[i, 1]) + "\\arcemu.pid"))
-                {
-                    string pidfile = Path.GetDirectoryName(servers[i, 1]) + "\\arcemu.pid";
-                    StreamReader re = File.OpenText(pidfile);
-                    string pid = re.ReadLine();
-                    re.Close();
-                    try
-                    {
-                        Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
-                        startworldsrvbtn.Enabled = false;
-                        stopworldsrvbtn.Enabled = true;
-                        restartworldsrvbtn.Enabled = true;
-                    }
-                    catch (ArgumentException)
-                    {
-                        
-                    }
-                }
-            }
-        }//end of checkserverbuttons
-        private void checklogbuttons()
-        {
-            string[,] servers = serverarray(Application.StartupPath + "\\logon.xml");
-            bool istrue = true;
-            int i = 0;
-            startlogsrvbtn.Enabled = true;
-            stoplogsrvbtn.Enabled = false;
-            restartlogsrvbtn.Enabled = false;
-            if (logonlist.SelectedItem != null)
-            {
-                while (istrue == true && i < (servers.Length / serverkeys))
-                {
-                    if (servers[i, 0] == logonlist.SelectedItem.ToString())
-                    {
-                        istrue = false;
-                    }
-                    if (istrue)
-                    {
-                        i++;
-                    }
-                }
-
-                if (File.Exists(Path.GetDirectoryName(servers[i, 1]) + "\\logonserver.pid"))
-                {
-                    string pidfile = Path.GetDirectoryName(servers[i, 1]) + "\\logonserver.pid";
-                    StreamReader re = File.OpenText(pidfile);
-                    string pid = re.ReadLine();
-                    re.Close();
-                    try
-                    {
-                        Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
-                        startlogsrvbtn.Enabled = false;
-                        stoplogsrvbtn.Enabled = true;
-                        restartlogsrvbtn.Enabled = true;
-                    }
-                    catch (ArgumentException)
-                    {
-
-                    }
-                }
-            }
-        }//end of checkserverbuttons
-
-        private void startlogsrvbtn_Click(object sender, EventArgs e)
-        {
-            if (logonlist.SelectedItem != null)
-            {
-                string[,] servers = serverarray("logon.xml");
-                bool mytrue = true;
-                int i = 0;
-                while (mytrue == true && i < (servers.Length / serverkeys))
-                {
-                    if (servers[i, 0] == logonlist.SelectedItem.ToString())
-                    {
-                        mytrue = false;
-                    }
-                    if (mytrue)
-                    {
-                        i++;
-                    }
-                }
-                if (mytrue)
-                {
-                    MessageBox.Show("Server Doesn't exist. Please delete this server");
-                }
-                else
-                {
-                    Process server = new Process();
-                    server.StartInfo.FileName = servers[i, 1];
-                    string tempdir = Environment.CurrentDirectory;
-                    Environment.CurrentDirectory = Path.GetDirectoryName(servers[i, 1]);
-                    server.Start();
-                    Environment.CurrentDirectory = tempdir;
-                }
-            }
-            else
-            {
-                MessageBox.Show("No Server Selected");
-            }
-        }
-
-        private void stoplogsrvbtn_Click(object sender, EventArgs e)
-        {
-            string[,] servers = serverarray(Application.StartupPath + "\\logon.xml");
-            bool istrue = true;
-            int i = 0;
-            if (logonlist.SelectedItem != null)
-            {
-                while (istrue == true && i < (servers.Length / serverkeys))
-                {
-                    if (servers[i, 0] == logonlist.SelectedItem.ToString())
-                    {
-                        istrue = false;
-                    }
-                    if (istrue)
-                    {
-                        i++;
-                    }
-                }
-
-                if (File.Exists(Path.GetDirectoryName(servers[i, 1]) + "\\logonserver.pid"))
-                {
-                    string pidfile = Path.GetDirectoryName(servers[i, 1]) + "\\logonserver.pid";
-                    StreamReader re = File.OpenText(pidfile);
-                    string pid = re.ReadLine();
-                    re.Close();
-                    try
-                    {
-                        Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
-                        thisproc.Kill();
-                    }
-                    catch (ArgumentException)
-                    {
-
-                    }
-                }
-            }
-        }
-
-        private void restartlogsrvbtn_Click(object sender, EventArgs e)
-        {
-            stoplogsrvbtn_Click(sender, e);
-            startlogsrvbtn_Click(sender, e);
-        }
-
-        private void showwnds_Click(object sender, EventArgs e)
-        {
-            FileStream fs = new FileStream("world.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            XmlDocument xmldoc = new XmlDocument();
-            xmldoc.Load(fs);
-            fs.Close();
-            XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Server");
-            string[,] servers = new string[xmlnode.Count, serverkeys];
-            int count = 0;
-            while (count < xmlnode.Count)
-            {
-                string pidfile = Path.GetDirectoryName(xmlnode[count].LastChild.InnerText) + "\\arcemu.pid";
-                StreamReader re = File.OpenText(pidfile);
-                string pid = re.ReadLine();
-                re.Close();
-                Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
-                int hWnd = thisproc.MainWindowHandle.ToInt32();
-                ShowWindow(hWnd, SW_SHOW);
-                MessageBox.Show(hWnd.ToString());
-                try
-                {
-                   
-                }
-                catch (ArgumentException)
-                {
-
-                }
-                count++;
-            }
-        }
-
-        private void hidewnds_Click(object sender, EventArgs e)
-        {
-            FileStream fs = new FileStream("world.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            XmlDocument xmldoc = new XmlDocument();
-            xmldoc.Load(fs);
-            fs.Close();
-            XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Server");
-            string[,] servers = new string[xmlnode.Count, serverkeys];
-            int count = 0;
-            while (count < xmlnode.Count)
-            {
-                string pidfile = Path.GetDirectoryName(xmlnode[count].LastChild.InnerText) + "\\arcemu.pid";
-                StreamReader re = File.OpenText(pidfile);
-                string pid = re.ReadLine();
-                re.Close();
-                try
-                {
-                    Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
-                    int hWnd = thisproc.MainWindowHandle.ToInt32();
-                    ShowWindow(hWnd, SW_HIDE);
-                }
-                catch (ArgumentException)
-                {
-
-                }
-                count++;
-            }
-        } 
+        #endregion
     }
 }

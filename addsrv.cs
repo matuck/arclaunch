@@ -15,6 +15,8 @@ namespace Arclaunch
     public partial class addsrv : Form
     {
         private string servertype;
+        public string name;
+        public string path;
         public addsrv()
         {
             InitializeComponent();
@@ -123,6 +125,8 @@ namespace Arclaunch
                     // XML Document Saved
                     xmldoc.Save(fsxml);
                     fsxml.Close();
+                    name = srvnamebox.Text;
+                    path = srvpathbox.Text;
                     Close();
                 }
                 else
