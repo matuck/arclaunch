@@ -357,6 +357,23 @@ namespace Arclaunch
                 Server myserver = new Server();
                 myserver.name = xmlnode[count].FirstChild.InnerText;
                 myserver.path = xmlnode[count].LastChild.InnerText;
+                string pid = System.IO.File.ReadAllText(Path.GetDirectoryName(myserver.path)+"\\arcemu.pid");
+                try
+                {
+                    Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
+                    if (thisproc.ProcessName == Path.GetFileNameWithoutExtension(myserver.path))
+                    {
+                        myserver.pid = Convert.ToInt32(pid);
+                    }
+                    else
+                    {
+                        myserver.pid = 0;
+                    }
+                }
+                catch
+                {
+                    myserver.pid = 0;
+                }
                 myserver.type = "world";
                 worldservers.Add(xmlnode[count].FirstChild.InnerText, myserver);
                 count++;
@@ -372,23 +389,49 @@ namespace Arclaunch
                 Server mylogserver = new Server();
                 mylogserver.name = xmllognode[count].FirstChild.InnerText;
                 mylogserver.path = xmllognode[count].LastChild.InnerText;
+                string pid = System.IO.File.ReadAllText(Path.GetDirectoryName(mylogserver.path) + "\\logonserver.pid");
+                try
+                {
+                    Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
+                    if (thisproc.ProcessName == Path.GetFileNameWithoutExtension(mylogserver.path))
+                    {
+                        mylogserver.pid = Convert.ToInt32(pid);
+                    }
+                    else
+                    {
+                        mylogserver.pid = 0;
+                    }
+                }
+                catch
+                {
+                    mylogserver.pid = 0;
+                }
                 logonservers.Add(mylogserver.name, mylogserver);
                 count++;
             }
         }
-        //still need to do checks on processes
         private void checklogbuttons()
         {
             if (logonlist.SelectedItem != null)
             {
-                foreach (Server myserv in logonservers.Values)
+                Server myserv = (Server)logonservers[logonlist.SelectedItem.ToString()];
+                if (myserv.pid != 0)
                 {
                     try
                     {
                         Process thisproc = Process.GetProcessById(Convert.ToInt32(myserv.pid));
-                        startlogsrvbtn.Enabled = false;
-                        stoplogsrvbtn.Enabled = true;
-                        restartlogsrvbtn.Enabled = true;
+                        if (thisproc.ProcessName == Path.GetFileNameWithoutExtension(myserv.path))
+                        {
+                            startlogsrvbtn.Enabled = false;
+                            stoplogsrvbtn.Enabled = true;
+                            restartlogsrvbtn.Enabled = true;
+                        }
+                        else
+                        {
+                            startlogsrvbtn.Enabled = true;
+                            stoplogsrvbtn.Enabled = false;
+                            restartlogsrvbtn.Enabled = false;
+                        }
                     }
                     catch (ArgumentException)
                     {
@@ -397,6 +440,13 @@ namespace Arclaunch
                         restartlogsrvbtn.Enabled = false;
                     }
                 }
+                else
+                {
+                    startlogsrvbtn.Enabled = true;
+                    stoplogsrvbtn.Enabled = false;
+                    restartlogsrvbtn.Enabled = false;
+                }
+
             }
             else
             {
@@ -405,20 +455,28 @@ namespace Arclaunch
                 restartlogsrvbtn.Enabled = false;
             }
         }
-        //still need checks on processes.
         private void checkserverbuttons()
         {
-
             if (worldlist.SelectedItem != null)
             {
-                foreach (Server myserv in worldservers.Values)
+                Server myserv = (Server)worldservers[worldlist.SelectedItem.ToString()];
+                if (myserv.pid != 0)
                 {
                     try
                     {
                         Process thisproc = Process.GetProcessById(Convert.ToInt32(myserv.pid));
-                        startworldsrvbtn.Enabled = false;
-                        stopworldsrvbtn.Enabled = true;
-                        restartworldsrvbtn.Enabled = true;
+                        if (thisproc.ProcessName == Path.GetFileNameWithoutExtension(myserv.path))
+                        {
+                            startworldsrvbtn.Enabled = false;
+                            stopworldsrvbtn.Enabled = true;
+                            restartworldsrvbtn.Enabled = true;
+                        }
+                        else
+                        {
+                            startworldsrvbtn.Enabled = true;
+                            stopworldsrvbtn.Enabled = false;
+                            restartworldsrvbtn.Enabled = false;
+                        }
                     }
                     catch (ArgumentException)
                     {
@@ -427,6 +485,13 @@ namespace Arclaunch
                         restartworldsrvbtn.Enabled = false;
                     }
                 }
+                else
+                {
+                    startworldsrvbtn.Enabled = true;
+                    stopworldsrvbtn.Enabled = false;
+                    restartworldsrvbtn.Enabled = false;
+                }
+                
             }
             else
             {
