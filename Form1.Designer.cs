@@ -40,6 +40,12 @@
             this.logsbtn = new System.Windows.Forms.Button();
             this.settingsbtn = new System.Windows.Forms.Button();
             this.serversbtn = new System.Windows.Forms.Button();
+            this.settingspnl = new System.Windows.Forms.Panel();
+            this.savesettings = new System.Windows.Forms.Button();
+            this.browsedeflog = new System.Windows.Forms.Button();
+            this.defaultpathbox = new System.Windows.Forms.TextBox();
+            this.defaltpathlbl = new System.Windows.Forms.Label();
+            this.settingslbl = new System.Windows.Forms.Label();
             this.serverspnl = new System.Windows.Forms.Panel();
             this.restartlogsrvbtn = new System.Windows.Forms.Button();
             this.stoplogsrvbtn = new System.Windows.Forms.Button();
@@ -56,26 +62,20 @@
             this.worldlbl = new System.Windows.Forms.Label();
             this.worldlist = new System.Windows.Forms.ListBox();
             this.serverslbl = new System.Windows.Forms.Label();
-            this.settingspnl = new System.Windows.Forms.Panel();
-            this.browsedeflog = new System.Windows.Forms.Button();
-            this.defaultpathbox = new System.Windows.Forms.TextBox();
-            this.defaltpathlbl = new System.Windows.Forms.Label();
-            this.settingslbl = new System.Windows.Forms.Label();
             this.logpnl = new System.Windows.Forms.Panel();
             this.logslbl = new System.Windows.Forms.Label();
-            this.openfiledialog = new System.Windows.Forms.OpenFileDialog();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.systraymenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.systrayexit = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.savesettings = new System.Windows.Forms.Button();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.serverspnl.SuspendLayout();
             this.settingspnl.SuspendLayout();
+            this.serverspnl.SuspendLayout();
             this.logpnl.SuspendLayout();
             this.systraymenu.SuspendLayout();
             this.SuspendLayout();
@@ -245,6 +245,68 @@
             this.serversbtn.Text = "Arc Servers";
             this.serversbtn.UseVisualStyleBackColor = true;
             this.serversbtn.Click += new System.EventHandler(this.serversbtn_Click);
+            // 
+            // settingspnl
+            // 
+            this.settingspnl.BackColor = System.Drawing.Color.Transparent;
+            this.settingspnl.Controls.Add(this.savesettings);
+            this.settingspnl.Controls.Add(this.browsedeflog);
+            this.settingspnl.Controls.Add(this.defaultpathbox);
+            this.settingspnl.Controls.Add(this.defaltpathlbl);
+            this.settingspnl.Controls.Add(this.settingslbl);
+            this.settingspnl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.settingspnl.Location = new System.Drawing.Point(0, 0);
+            this.settingspnl.Name = "settingspnl";
+            this.settingspnl.Size = new System.Drawing.Size(474, 376);
+            this.settingspnl.TabIndex = 0;
+            // 
+            // savesettings
+            // 
+            this.savesettings.Location = new System.Drawing.Point(188, 328);
+            this.savesettings.Name = "savesettings";
+            this.savesettings.Size = new System.Drawing.Size(75, 23);
+            this.savesettings.TabIndex = 5;
+            this.savesettings.Text = "Save";
+            this.savesettings.UseVisualStyleBackColor = true;
+            this.savesettings.Click += new System.EventHandler(this.savesettings_Click);
+            // 
+            // browsedeflog
+            // 
+            this.browsedeflog.Location = new System.Drawing.Point(372, 62);
+            this.browsedeflog.Name = "browsedeflog";
+            this.browsedeflog.Size = new System.Drawing.Size(75, 23);
+            this.browsedeflog.TabIndex = 4;
+            this.browsedeflog.Text = "Browse";
+            this.browsedeflog.UseVisualStyleBackColor = true;
+            this.browsedeflog.Click += new System.EventHandler(this.browsedeflog_Click);
+            // 
+            // defaultpathbox
+            // 
+            this.defaultpathbox.Location = new System.Drawing.Point(107, 63);
+            this.defaultpathbox.Name = "defaultpathbox";
+            this.defaultpathbox.Size = new System.Drawing.Size(259, 20);
+            this.defaultpathbox.TabIndex = 3;
+            this.defaultpathbox.Click += new System.EventHandler(this.browsedeflog_Click);
+            // 
+            // defaltpathlbl
+            // 
+            this.defaltpathlbl.AutoSize = true;
+            this.defaltpathlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.defaltpathlbl.Location = new System.Drawing.Point(3, 62);
+            this.defaltpathlbl.Name = "defaltpathlbl";
+            this.defaltpathlbl.Size = new System.Drawing.Size(98, 20);
+            this.defaltpathlbl.TabIndex = 2;
+            this.defaltpathlbl.Text = "Default Path";
+            // 
+            // settingslbl
+            // 
+            this.settingslbl.AutoSize = true;
+            this.settingslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.settingslbl.Location = new System.Drawing.Point(12, 12);
+            this.settingslbl.Name = "settingslbl";
+            this.settingslbl.Size = new System.Drawing.Size(90, 25);
+            this.settingslbl.TabIndex = 1;
+            this.settingslbl.Text = "Settings";
             // 
             // serverspnl
             // 
@@ -418,59 +480,6 @@
             this.serverslbl.TabIndex = 0;
             this.serverslbl.Text = "Servers";
             // 
-            // settingspnl
-            // 
-            this.settingspnl.BackColor = System.Drawing.Color.Transparent;
-            this.settingspnl.Controls.Add(this.savesettings);
-            this.settingspnl.Controls.Add(this.browsedeflog);
-            this.settingspnl.Controls.Add(this.defaultpathbox);
-            this.settingspnl.Controls.Add(this.defaltpathlbl);
-            this.settingspnl.Controls.Add(this.settingslbl);
-            this.settingspnl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.settingspnl.Location = new System.Drawing.Point(0, 0);
-            this.settingspnl.Name = "settingspnl";
-            this.settingspnl.Size = new System.Drawing.Size(474, 376);
-            this.settingspnl.TabIndex = 0;
-            // 
-            // browsedeflog
-            // 
-            this.browsedeflog.Location = new System.Drawing.Point(372, 62);
-            this.browsedeflog.Name = "browsedeflog";
-            this.browsedeflog.Size = new System.Drawing.Size(75, 23);
-            this.browsedeflog.TabIndex = 4;
-            this.browsedeflog.Text = "Browse";
-            this.browsedeflog.UseVisualStyleBackColor = true;
-            this.browsedeflog.Click += new System.EventHandler(this.browsedeflog_Click);
-            // 
-            // defaultpathbox
-            // 
-            this.defaultpathbox.Location = new System.Drawing.Point(107, 63);
-            this.defaultpathbox.Name = "defaultpathbox";
-            this.defaultpathbox.Size = new System.Drawing.Size(259, 20);
-            this.defaultpathbox.TabIndex = 3;
-            this.defaultpathbox.Text = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
-            this.defaultpathbox.Click += new System.EventHandler(this.browsedeflog_Click);
-            // 
-            // defaltpathlbl
-            // 
-            this.defaltpathlbl.AutoSize = true;
-            this.defaltpathlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.defaltpathlbl.Location = new System.Drawing.Point(3, 62);
-            this.defaltpathlbl.Name = "defaltpathlbl";
-            this.defaltpathlbl.Size = new System.Drawing.Size(98, 20);
-            this.defaltpathlbl.TabIndex = 2;
-            this.defaltpathlbl.Text = "Default Path";
-            // 
-            // settingslbl
-            // 
-            this.settingslbl.AutoSize = true;
-            this.settingslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.settingslbl.Location = new System.Drawing.Point(12, 12);
-            this.settingslbl.Name = "settingslbl";
-            this.settingslbl.Size = new System.Drawing.Size(90, 25);
-            this.settingslbl.TabIndex = 1;
-            this.settingslbl.Text = "Settings";
-            // 
             // logpnl
             // 
             this.logpnl.BackColor = System.Drawing.Color.Transparent;
@@ -517,16 +526,6 @@
             this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // savesettings
-            // 
-            this.savesettings.Location = new System.Drawing.Point(188, 328);
-            this.savesettings.Name = "savesettings";
-            this.savesettings.Size = new System.Drawing.Size(75, 23);
-            this.savesettings.TabIndex = 5;
-            this.savesettings.Text = "Save";
-            this.savesettings.UseVisualStyleBackColor = true;
-            this.savesettings.Click += new System.EventHandler(this.savesettings_Click);
-            // 
             // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -546,10 +545,10 @@
             this.splitlayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.serverspnl.ResumeLayout(false);
-            this.serverspnl.PerformLayout();
             this.settingspnl.ResumeLayout(false);
             this.settingspnl.PerformLayout();
+            this.serverspnl.ResumeLayout(false);
+            this.serverspnl.PerformLayout();
             this.logpnl.ResumeLayout(false);
             this.logpnl.PerformLayout();
             this.systraymenu.ResumeLayout(false);
@@ -574,7 +573,6 @@
         private System.Windows.Forms.TextBox defaultpathbox;
         private System.Windows.Forms.Label defaltpathlbl;
         private System.Windows.Forms.Button browsedeflog;
-        private System.Windows.Forms.OpenFileDialog openfiledialog;
         private System.Windows.Forms.Label logonlbl;
         private System.Windows.Forms.Label worldlbl;
         private System.Windows.Forms.Button restartworldsrvbtn;
@@ -597,6 +595,7 @@
         private System.Windows.Forms.Button hidewnds;
         private System.Windows.Forms.Button showwnds;
         private System.Windows.Forms.Button savesettings;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
     }
 }
 

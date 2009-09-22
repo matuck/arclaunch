@@ -21,6 +21,7 @@ namespace Arclaunch
         private const int SW_SHOW = 1;
         Hashtable worldservers = new Hashtable();//key will be server name. value will be instance of server class.
         Hashtable logonservers = new Hashtable();
+        Hashtable settings = new Hashtable();
 
         [DllImport("User32")] 
         private static extern int ShowWindow(int hwnd, int nCmdShow);
@@ -38,6 +39,11 @@ namespace Arclaunch
             {
                 createserverxml("logon");
             }
+            if (!File.Exists("config.xml"))
+            {
+                createconfigxml();
+            }
+            loadsettings();
             loadhashtables();
             addlogonlistbox();
             addworldlistbox();
@@ -92,34 +98,32 @@ namespace Arclaunch
         #region Action Functions
         private void browsedeflog_Click(object sender, EventArgs e)
         {
-            openfiledialog.FileName = "arcemu_logonserver.exe";
-            openfiledialog.Filter = "|*.exe";
-            if (System.IO.Directory.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv) || System.IO.File.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv))
+            if (System.IO.Directory.Exists(settings["defaultpath"].ToString()))
             {
-                openfiledialog.InitialDirectory = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
+                folderBrowserDialog.SelectedPath = settings["defaultpath"].ToString();
             }
-            else
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                openfiledialog.InitialDirectory = "c:\\";
-            }
-            if (openfiledialog.ShowDialog() == DialogResult.OK)
-            {
-                this.defaultpathbox.Text = openfiledialog.FileName;
+                this.defaultpathbox.Text = folderBrowserDialog.SelectedPath;
             }
         }
         private void addsrvbtn_Click(object sender, EventArgs e)
         {
             addsrv addsrv = new addsrv();
             addsrv.setservertype("world");
+            addsrv.settings = settings;
             addsrv.ShowDialog();
             Server thisserver = new Server();
-            thisserver.name = addsrv.name;
-            thisserver.path = addsrv.path;
-            thisserver.pid = 0;
-            thisserver.window = 0;
-            thisserver.type = "world";
-            worldservers.Add(thisserver.name, thisserver);
-            addworldlistbox();
+            if (addsrv.name != null)
+            {
+                thisserver.name = addsrv.name;
+                thisserver.path = addsrv.path;
+                thisserver.pid = 0;
+                thisserver.window = 0;
+                thisserver.type = "world";
+                worldservers.Add(thisserver.name, thisserver);
+                addworldlistbox();
+            }
         }
         private void delworldsrvbtn_Click(object sender, EventArgs e)
         {
@@ -219,15 +223,19 @@ namespace Arclaunch
         {
             addsrv addsrv = new addsrv();
             addsrv.setservertype("logon");
+            addsrv.settings = settings;
             addsrv.ShowDialog();
             Server thisserver = new Server();
-            thisserver.name = addsrv.name;
-            thisserver.path = addsrv.path;
-            thisserver.pid = 0;
-            thisserver.window = 0;
-            thisserver.type = "logon";
-            logonservers.Add(thisserver.name, thisserver);
-            addlogonlistbox();
+            if(addsrv.name != null)
+            {
+                thisserver.name = addsrv.name;
+                thisserver.path = addsrv.path;
+                thisserver.pid = 0;
+                thisserver.window = 0;
+                thisserver.type = "logon";
+                logonservers.Add(thisserver.name, thisserver);
+                addlogonlistbox();
+            }
         }
         private void dellogsrvbtn_Click(object sender, EventArgs e)
         {
@@ -359,6 +367,14 @@ namespace Arclaunch
             xmlWriter.Formatting = Formatting.Indented;
             xmlWriter.WriteProcessingInstruction("xml", "version='1.0' encoding='utf-8' ");
             xmlWriter.WriteStartElement("Servers");
+            xmlWriter.Close();
+        }
+        private void createconfigxml()
+        {
+            XmlTextWriter xmlWriter = new XmlTextWriter("config.xml", System.Text.Encoding.UTF8);
+            xmlWriter.Formatting = Formatting.Indented;
+            xmlWriter.WriteProcessingInstruction("xml", "version='1.0' encoding='utf-8' ");
+            xmlWriter.WriteStartElement("Settings");
             xmlWriter.Close();
         }
         private void loadhashtables()
@@ -535,11 +551,69 @@ namespace Arclaunch
             docs.Save(Application.StartupPath + "\\" + type + ".xml");
             return true;
         }
+        private void saveaconfigsetting(string name, string value)
+        {
+            FileStream fs = new FileStream("config.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(fs);
+            fs.Close();
+            XmlElement root = xmldoc.DocumentElement;
+            XmlNode oldsetting = root.SelectSingleNode("/Settings/Setting[Name='" + name + "']");
+
+            XmlElement newsetting = xmldoc.CreateElement("Setting");
+            // First Element - Name created
+            XmlElement nameelement = xmldoc.CreateElement("Name");
+            // Value given for the first element
+            nameelement.InnerText = name;
+            // Append the newly created element as a child element
+            newsetting.AppendChild(nameelement);
+
+            // Second Element - Path - Created
+            XmlElement pathelement = xmldoc.CreateElement("Value");
+            // Value given for the second element
+            pathelement.InnerText = value;
+            // Append the newly created element as a child element
+            newsetting.AppendChild(pathelement);
+            // New XML element inserted into the document
+            //root.ReplaceChild(newsetting, oldsetting);
+            try
+            {
+                root.ReplaceChild(newsetting, oldsetting);
+            }
+            catch
+            {
+                xmldoc.DocumentElement.InsertAfter(newsetting, xmldoc.DocumentElement.LastChild);
+            }
+            // An instance of FileStream class created
+            // The first parameter is the path to the XML file
+            FileStream fsxml = new FileStream("config.xml", FileMode.Truncate, FileAccess.Write, FileShare.ReadWrite);
+            // XML Document Saved
+            xmldoc.Save(fsxml);
+            fsxml.Close();
+        }
+        private void loadsettings()
+        {
+            settings.Clear();
+            FileStream fs = new FileStream(Application.StartupPath + "\\config.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(fs);
+            fs.Close();
+            XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Setting");
+            int count = 0;
+            while (count < xmlnode.Count)
+            {
+                settings.Add(xmlnode[count].FirstChild.InnerText, xmlnode[count].LastChild.InnerText);
+                count++;
+            }
+            defaultpathbox.Text = settings["defaultpath"].ToString();
+        }
         #endregion
 
         private void savesettings_Click(object sender, EventArgs e)
         {
-
+            saveaconfigsetting("defaultpath", defaultpathbox.Text);
+            MessageBox.Show("Settings Saved!");
+            loadsettings();
         }
     }
 }

@@ -36,6 +36,7 @@
             this.openfiledialog = new System.Windows.Forms.OpenFileDialog();
             this.srvpathlbl = new System.Windows.Forms.Label();
             this.addsrvbtn = new System.Windows.Forms.Button();
+            this.cancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // srvnamelbl
@@ -72,7 +73,6 @@
             this.srvpathbox.Name = "srvpathbox";
             this.srvpathbox.Size = new System.Drawing.Size(207, 20);
             this.srvpathbox.TabIndex = 6;
-            this.srvpathbox.Text = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
             this.srvpathbox.Click += new System.EventHandler(this.browsedeflog_Click);
             // 
             // srvpathlbl
@@ -88,13 +88,23 @@
             // 
             // addsrvbtn
             // 
-            this.addsrvbtn.Location = new System.Drawing.Point(56, 218);
+            this.addsrvbtn.Location = new System.Drawing.Point(12, 229);
             this.addsrvbtn.Name = "addsrvbtn";
-            this.addsrvbtn.Size = new System.Drawing.Size(166, 23);
+            this.addsrvbtn.Size = new System.Drawing.Size(133, 23);
             this.addsrvbtn.TabIndex = 9;
             this.addsrvbtn.Text = "Add Server";
             this.addsrvbtn.UseVisualStyleBackColor = true;
             this.addsrvbtn.Click += new System.EventHandler(this.addsrvbtn_Click);
+            // 
+            // cancel
+            // 
+            this.cancel.Location = new System.Drawing.Point(151, 229);
+            this.cancel.Name = "cancel";
+            this.cancel.Size = new System.Drawing.Size(121, 23);
+            this.cancel.TabIndex = 10;
+            this.cancel.Text = "Cancel";
+            this.cancel.UseVisualStyleBackColor = true;
+            this.cancel.Click += new System.EventHandler(this.cancel_Click);
             // 
             // addsrv
             // 
@@ -102,7 +112,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(284, 264);
+            this.ControlBox = false;
+            this.Controls.Add(this.cancel);
             this.Controls.Add(this.addsrvbtn);
             this.Controls.Add(this.srvpathlbl);
             this.Controls.Add(this.browsedeflog);
@@ -117,6 +129,7 @@
             this.Name = "addsrv";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Server type was not set properly";
+            this.Load += new System.EventHandler(this.addsrv_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -131,5 +144,6 @@
         private System.Windows.Forms.OpenFileDialog openfiledialog;
         private System.Windows.Forms.Label srvpathlbl;
         private System.Windows.Forms.Button addsrvbtn;
+        private System.Windows.Forms.Button cancel;
     }
 }

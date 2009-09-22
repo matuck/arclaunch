@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -17,6 +18,7 @@ namespace Arclaunch
         private string servertype;
         public string name;
         public string path;
+        public Hashtable settings = new Hashtable();
         public addsrv()
         {
             InitializeComponent();
@@ -53,9 +55,9 @@ namespace Arclaunch
                     openfiledialog.FileName = "arcemu_logonserver.exe";
                 }
                 openfiledialog.Filter = "|*.exe";
-                if (Directory.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv) || File.Exists(global::Arclaunch.Properties.Settings.Default.deflogonsrv))
+                if (Directory.Exists(settings["defaultpath"].ToString()))
                 {
-                    openfiledialog.InitialDirectory = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
+                    openfiledialog.InitialDirectory = settings["defaultpath"].ToString();
                 }
                 else
                 {
@@ -151,6 +153,16 @@ namespace Arclaunch
             {
                 MessageBox.Show("Server type was not set properly");
             }
+        }
+
+        private void addsrv_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
