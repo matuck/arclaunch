@@ -69,6 +69,8 @@
             this.systrayexit = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.crashrestartlbl = new System.Windows.Forms.Label();
+            this.crashrestart = new System.Windows.Forms.CheckBox();
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
@@ -249,6 +251,8 @@
             // settingspnl
             // 
             this.settingspnl.BackColor = System.Drawing.Color.Transparent;
+            this.settingspnl.Controls.Add(this.crashrestart);
+            this.settingspnl.Controls.Add(this.crashrestartlbl);
             this.settingspnl.Controls.Add(this.savesettings);
             this.settingspnl.Controls.Add(this.browsedeflog);
             this.settingspnl.Controls.Add(this.defaultpathbox);
@@ -526,6 +530,25 @@
             this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // crashrestartlbl
+            // 
+            this.crashrestartlbl.AutoSize = true;
+            this.crashrestartlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.crashrestartlbl.Location = new System.Drawing.Point(4, 101);
+            this.crashrestartlbl.Name = "crashrestartlbl";
+            this.crashrestartlbl.Size = new System.Drawing.Size(127, 20);
+            this.crashrestartlbl.TabIndex = 6;
+            this.crashrestartlbl.Text = "Restart on crash";
+            // 
+            // crashrestart
+            // 
+            this.crashrestart.AutoSize = true;
+            this.crashrestart.Location = new System.Drawing.Point(138, 103);
+            this.crashrestart.Name = "crashrestart";
+            this.crashrestart.Size = new System.Drawing.Size(15, 14);
+            this.crashrestart.TabIndex = 7;
+            this.crashrestart.UseVisualStyleBackColor = true;
+            // 
             // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -596,6 +619,8 @@
         private System.Windows.Forms.Button showwnds;
         private System.Windows.Forms.Button savesettings;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.CheckBox crashrestart;
+        private System.Windows.Forms.Label crashrestartlbl;
     }
 }
 

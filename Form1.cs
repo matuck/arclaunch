@@ -605,14 +605,47 @@ namespace Arclaunch
                 settings.Add(xmlnode[count].FirstChild.InnerText, xmlnode[count].LastChild.InnerText);
                 count++;
             }
-            defaultpathbox.Text = settings["defaultpath"].ToString();
+            try
+            {
+                defaultpathbox.Text = settings["defaultpath"].ToString();
+            }
+            catch
+            {
+                defaultpathbox.Text = "Enter Path Here";
+                settings.Add("defaultpath", "Enter Path Here");
+            }
+            try
+            {
+                if (settings["crashrestart"].ToString() == "Checked")
+                {
+                    crashrestart.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    crashrestart.CheckState = CheckState.Unchecked;
+                }
+            }
+            catch
+            {
+                crashrestart.CheckState = 0;
+                settings.Add("crashrestart", 0);
+            }
         }
         #endregion
 
         private void savesettings_Click(object sender, EventArgs e)
         {
-            saveaconfigsetting("defaultpath", defaultpathbox.Text);
+            if (Directory.Exists(defaultpathbox.Text.ToString()))
+            {
+                saveaconfigsetting("defaultpath", defaultpathbox.Text);
+            }
+            else
+            {
+                MessageBox.Show("Folder selected is invalid. \n All other settings will be saved.");
+            }
+            saveaconfigsetting("crashrestart", crashrestart.CheckState.ToString());
             MessageBox.Show("Settings Saved!");
+            
             loadsettings();
         }
     }

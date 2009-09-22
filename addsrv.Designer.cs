@@ -113,7 +113,6 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(284, 264);
-            this.ControlBox = false;
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.addsrvbtn);
             this.Controls.Add(this.srvpathlbl);
