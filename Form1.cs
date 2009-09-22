@@ -319,6 +319,14 @@ namespace Arclaunch
             stoplogsrvbtn_Click(sender, e);
             startlogsrvbtn_Click(sender, e);
         }
+        private void worldlist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            checkserverbuttons();
+        }
+        private void logonlist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            checklogbuttons();
+        }
         #endregion
         #region Show and Hide all windows.
         private void showwnds_Click(object sender, EventArgs e)

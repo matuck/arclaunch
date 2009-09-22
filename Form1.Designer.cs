@@ -32,6 +32,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Arclaunch));
             this.splitlayout = new System.Windows.Forms.SplitContainer();
+            this.hidewnds = new System.Windows.Forms.Button();
+            this.showwnds = new System.Windows.Forms.Button();
             this.aboutbtn = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -66,8 +68,6 @@
             this.systraymenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.systrayexit = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.showwnds = new System.Windows.Forms.Button();
-            this.hidewnds = new System.Windows.Forms.Button();
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
@@ -105,9 +105,47 @@
             this.splitlayout.Panel2.Controls.Add(this.serverspnl);
             this.splitlayout.Panel2.Controls.Add(this.settingspnl);
             this.splitlayout.Panel2.Controls.Add(this.logpnl);
-            this.splitlayout.Size = new System.Drawing.Size(670, 374);
+            this.splitlayout.Size = new System.Drawing.Size(670, 376);
             this.splitlayout.SplitterDistance = 192;
             this.splitlayout.TabIndex = 0;
+            // 
+            // hidewnds
+            // 
+            this.hidewnds.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("hidewnds.BackgroundImage")));
+            this.hidewnds.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.hidewnds.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.hidewnds.FlatAppearance.BorderSize = 0;
+            this.hidewnds.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.hidewnds.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.hidewnds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.hidewnds.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.hidewnds.Location = new System.Drawing.Point(12, 184);
+            this.hidewnds.Name = "hidewnds";
+            this.hidewnds.Padding = new System.Windows.Forms.Padding(1);
+            this.hidewnds.Size = new System.Drawing.Size(167, 23);
+            this.hidewnds.TabIndex = 7;
+            this.hidewnds.Text = "Hide Windows";
+            this.hidewnds.UseVisualStyleBackColor = true;
+            this.hidewnds.Click += new System.EventHandler(this.hidewnds_Click);
+            // 
+            // showwnds
+            // 
+            this.showwnds.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("showwnds.BackgroundImage")));
+            this.showwnds.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.showwnds.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.showwnds.FlatAppearance.BorderSize = 0;
+            this.showwnds.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.showwnds.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.showwnds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showwnds.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.showwnds.Location = new System.Drawing.Point(12, 155);
+            this.showwnds.Name = "showwnds";
+            this.showwnds.Padding = new System.Windows.Forms.Padding(1);
+            this.showwnds.Size = new System.Drawing.Size(167, 23);
+            this.showwnds.TabIndex = 6;
+            this.showwnds.Text = "Show Windows";
+            this.showwnds.UseVisualStyleBackColor = true;
+            this.showwnds.Click += new System.EventHandler(this.showwnds_Click);
             // 
             // aboutbtn
             // 
@@ -228,7 +266,7 @@
             this.serverspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverspnl.Location = new System.Drawing.Point(0, 0);
             this.serverspnl.Name = "serverspnl";
-            this.serverspnl.Size = new System.Drawing.Size(474, 374);
+            this.serverspnl.Size = new System.Drawing.Size(474, 376);
             this.serverspnl.TabIndex = 0;
             // 
             // restartlogsrvbtn
@@ -348,6 +386,7 @@
             this.logonlist.Name = "logonlist";
             this.logonlist.Size = new System.Drawing.Size(177, 95);
             this.logonlist.TabIndex = 4;
+            this.logonlist.SelectedIndexChanged += new System.EventHandler(this.logonlist_SelectedIndexChanged);
             // 
             // worldlbl
             // 
@@ -366,6 +405,7 @@
             this.worldlist.Name = "worldlist";
             this.worldlist.Size = new System.Drawing.Size(177, 108);
             this.worldlist.TabIndex = 2;
+            this.worldlist.SelectedIndexChanged += new System.EventHandler(this.worldlist_SelectedIndexChanged);
             // 
             // serverslbl
             // 
@@ -387,7 +427,7 @@
             this.settingspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingspnl.Location = new System.Drawing.Point(0, 0);
             this.settingspnl.Name = "settingspnl";
-            this.settingspnl.Size = new System.Drawing.Size(474, 374);
+            this.settingspnl.Size = new System.Drawing.Size(474, 376);
             this.settingspnl.TabIndex = 0;
             // 
             // browsedeflog
@@ -435,7 +475,7 @@
             this.logpnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logpnl.Location = new System.Drawing.Point(0, 0);
             this.logpnl.Name = "logpnl";
-            this.logpnl.Size = new System.Drawing.Size(474, 374);
+            this.logpnl.Size = new System.Drawing.Size(474, 376);
             this.logpnl.TabIndex = 0;
             // 
             // logslbl
@@ -474,50 +514,12 @@
             this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // showwnds
-            // 
-            this.showwnds.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("showwnds.BackgroundImage")));
-            this.showwnds.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.showwnds.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.showwnds.FlatAppearance.BorderSize = 0;
-            this.showwnds.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.showwnds.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.showwnds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.showwnds.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.showwnds.Location = new System.Drawing.Point(12, 155);
-            this.showwnds.Name = "showwnds";
-            this.showwnds.Padding = new System.Windows.Forms.Padding(1);
-            this.showwnds.Size = new System.Drawing.Size(167, 23);
-            this.showwnds.TabIndex = 6;
-            this.showwnds.Text = "Show Windows";
-            this.showwnds.UseVisualStyleBackColor = true;
-            this.showwnds.Click += new System.EventHandler(this.showwnds_Click);
-            // 
-            // hidewnds
-            // 
-            this.hidewnds.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("hidewnds.BackgroundImage")));
-            this.hidewnds.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.hidewnds.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.hidewnds.FlatAppearance.BorderSize = 0;
-            this.hidewnds.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.hidewnds.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.hidewnds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.hidewnds.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.hidewnds.Location = new System.Drawing.Point(12, 184);
-            this.hidewnds.Name = "hidewnds";
-            this.hidewnds.Padding = new System.Windows.Forms.Padding(1);
-            this.hidewnds.Size = new System.Drawing.Size(167, 23);
-            this.hidewnds.TabIndex = 7;
-            this.hidewnds.Text = "Hide Windows";
-            this.hidewnds.UseVisualStyleBackColor = true;
-            this.hidewnds.Click += new System.EventHandler(this.hidewnds_Click);
-            // 
             // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
-            this.ClientSize = new System.Drawing.Size(670, 374);
+            this.ClientSize = new System.Drawing.Size(670, 376);
             this.Controls.Add(this.splitlayout);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
