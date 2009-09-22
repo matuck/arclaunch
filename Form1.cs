@@ -186,6 +186,7 @@ namespace Arclaunch
                     Environment.CurrentDirectory = Path.GetDirectoryName(myserv.path);
                     server.Start();
                     myserv.pid = server.Id;
+                    System.Threading.Thread.Sleep(500);
                     myserv.window = server.MainWindowHandle.ToInt32();
                     Environment.CurrentDirectory = tempdir;
                     worldservers[worldlist.SelectedItem.ToString()] = myserv;
@@ -267,6 +268,7 @@ namespace Arclaunch
                     Environment.CurrentDirectory = Path.GetDirectoryName(myserv.path);
                     server.Start();
                     myserv.pid = server.Id;
+                    System.Threading.Thread.Sleep(500);
                     myserv.window = server.MainWindowHandle.ToInt32();
                     Environment.CurrentDirectory = tempdir;
                     logonservers[logonlist.SelectedItem.ToString()] = myserv;
