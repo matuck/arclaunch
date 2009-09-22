@@ -364,6 +364,7 @@ namespace Arclaunch
                     if (thisproc.ProcessName == Path.GetFileNameWithoutExtension(myserver.path))
                     {
                         myserver.pid = Convert.ToInt32(pid);
+                        myserver.window = thisproc.MainWindowHandle.ToInt32();
                     }
                     else
                     {
@@ -396,6 +397,7 @@ namespace Arclaunch
                     if (thisproc.ProcessName == Path.GetFileNameWithoutExtension(mylogserver.path))
                     {
                         mylogserver.pid = Convert.ToInt32(pid);
+                        mylogserver.window = thisproc.MainWindowHandle.ToInt32();
                     }
                     else
                     {
