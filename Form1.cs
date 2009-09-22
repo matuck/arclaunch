@@ -17,7 +17,6 @@ namespace Arclaunch
     public partial class Arclaunch : Form
     {
         #region Variables and imports
-        const int serverkeys = 2;
         private const int SW_HIDE = 0;
         private const int SW_SHOW = 1;
         Hashtable worldservers = new Hashtable();//key will be server name. value will be instance of server class.
@@ -326,9 +325,17 @@ namespace Arclaunch
             {
                 ShowWindow(myserv.window, SW_SHOW);
             }
+            foreach (Server myserv in logonservers.Values)
+            {
+                ShowWindow(myserv.window, SW_SHOW);
+            }
         }
         private void hidewnds_Click(object sender, EventArgs e)
         {
+            foreach (Server myserv in worldservers.Values)
+            {
+                ShowWindow(myserv.window, SW_HIDE);
+            }
             foreach (Server myserv in logonservers.Values)
             {
                 ShowWindow(myserv.window, SW_HIDE);
