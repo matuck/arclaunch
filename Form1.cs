@@ -104,7 +104,7 @@ namespace Arclaunch
             }
             if (openfiledialog.ShowDialog() == DialogResult.OK)
             {
-                this.defaultlogbox.Text = openfiledialog.FileName;
+                this.defaultpathbox.Text = openfiledialog.FileName;
             }
         }
         private void addsrvbtn_Click(object sender, EventArgs e)
@@ -536,5 +536,10 @@ namespace Arclaunch
             return true;
         }
         #endregion
+
+        private void savesettings_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

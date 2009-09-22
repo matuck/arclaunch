@@ -58,8 +58,8 @@
             this.serverslbl = new System.Windows.Forms.Label();
             this.settingspnl = new System.Windows.Forms.Panel();
             this.browsedeflog = new System.Windows.Forms.Button();
-            this.defaultlogbox = new System.Windows.Forms.TextBox();
-            this.defaltlgolbl = new System.Windows.Forms.Label();
+            this.defaultpathbox = new System.Windows.Forms.TextBox();
+            this.defaltpathlbl = new System.Windows.Forms.Label();
             this.settingslbl = new System.Windows.Forms.Label();
             this.logpnl = new System.Windows.Forms.Panel();
             this.logslbl = new System.Windows.Forms.Label();
@@ -68,6 +68,7 @@
             this.systraymenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.systrayexit = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.savesettings = new System.Windows.Forms.Button();
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
@@ -102,8 +103,8 @@
             // 
             this.splitlayout.Panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("splitlayout.Panel2.BackgroundImage")));
             this.splitlayout.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.splitlayout.Panel2.Controls.Add(this.serverspnl);
             this.splitlayout.Panel2.Controls.Add(this.settingspnl);
+            this.splitlayout.Panel2.Controls.Add(this.serverspnl);
             this.splitlayout.Panel2.Controls.Add(this.logpnl);
             this.splitlayout.Size = new System.Drawing.Size(670, 376);
             this.splitlayout.SplitterDistance = 192;
@@ -420,9 +421,10 @@
             // settingspnl
             // 
             this.settingspnl.BackColor = System.Drawing.Color.Transparent;
+            this.settingspnl.Controls.Add(this.savesettings);
             this.settingspnl.Controls.Add(this.browsedeflog);
-            this.settingspnl.Controls.Add(this.defaultlogbox);
-            this.settingspnl.Controls.Add(this.defaltlgolbl);
+            this.settingspnl.Controls.Add(this.defaultpathbox);
+            this.settingspnl.Controls.Add(this.defaltpathlbl);
             this.settingspnl.Controls.Add(this.settingslbl);
             this.settingspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingspnl.Location = new System.Drawing.Point(0, 0);
@@ -440,23 +442,24 @@
             this.browsedeflog.UseVisualStyleBackColor = true;
             this.browsedeflog.Click += new System.EventHandler(this.browsedeflog_Click);
             // 
-            // defaultlogbox
+            // defaultpathbox
             // 
-            this.defaultlogbox.Location = new System.Drawing.Point(159, 62);
-            this.defaultlogbox.Name = "defaultlogbox";
-            this.defaultlogbox.Size = new System.Drawing.Size(207, 20);
-            this.defaultlogbox.TabIndex = 3;
-            this.defaultlogbox.Text = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
+            this.defaultpathbox.Location = new System.Drawing.Point(107, 63);
+            this.defaultpathbox.Name = "defaultpathbox";
+            this.defaultpathbox.Size = new System.Drawing.Size(259, 20);
+            this.defaultpathbox.TabIndex = 3;
+            this.defaultpathbox.Text = global::Arclaunch.Properties.Settings.Default.deflogonsrv;
+            this.defaultpathbox.Click += new System.EventHandler(this.browsedeflog_Click);
             // 
-            // defaltlgolbl
+            // defaltpathlbl
             // 
-            this.defaltlgolbl.AutoSize = true;
-            this.defaltlgolbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.defaltlgolbl.Location = new System.Drawing.Point(3, 62);
-            this.defaltlgolbl.Name = "defaltlgolbl";
-            this.defaltlgolbl.Size = new System.Drawing.Size(160, 20);
-            this.defaltlgolbl.TabIndex = 2;
-            this.defaltlgolbl.Text = "Default Logon Server";
+            this.defaltpathlbl.AutoSize = true;
+            this.defaltpathlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.defaltpathlbl.Location = new System.Drawing.Point(3, 62);
+            this.defaltpathlbl.Name = "defaltpathlbl";
+            this.defaltpathlbl.Size = new System.Drawing.Size(98, 20);
+            this.defaltpathlbl.TabIndex = 2;
+            this.defaltpathlbl.Text = "Default Path";
             // 
             // settingslbl
             // 
@@ -514,6 +517,16 @@
             this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // savesettings
+            // 
+            this.savesettings.Location = new System.Drawing.Point(188, 328);
+            this.savesettings.Name = "savesettings";
+            this.savesettings.Size = new System.Drawing.Size(75, 23);
+            this.savesettings.TabIndex = 5;
+            this.savesettings.Text = "Save";
+            this.savesettings.UseVisualStyleBackColor = true;
+            this.savesettings.Click += new System.EventHandler(this.savesettings_Click);
+            // 
             // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -558,8 +571,8 @@
         private System.Windows.Forms.Label settingslbl;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox defaultlogbox;
-        private System.Windows.Forms.Label defaltlgolbl;
+        private System.Windows.Forms.TextBox defaultpathbox;
+        private System.Windows.Forms.Label defaltpathlbl;
         private System.Windows.Forms.Button browsedeflog;
         private System.Windows.Forms.OpenFileDialog openfiledialog;
         private System.Windows.Forms.Label logonlbl;
@@ -583,6 +596,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button hidewnds;
         private System.Windows.Forms.Button showwnds;
+        private System.Windows.Forms.Button savesettings;
     }
 }
 
