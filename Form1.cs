@@ -11,6 +11,8 @@ using System.IO;
 using System.Xml;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
+
 
 namespace Arclaunch
 {
@@ -19,6 +21,12 @@ namespace Arclaunch
         #region Variables and imports
         private const int SW_HIDE = 0;
         private const int SW_SHOW = 1;
+        const int minsinhour = 60;
+        const int secsinmin = 60;
+        private int countdowntimer = 86400;
+        private const int maxsecsinday = 86400;
+        private int restarttimeinsecs;
+        
         Hashtable worldservers = new Hashtable();//key will be server name. value will be instance of server class.
         Hashtable logonservers = new Hashtable();
         Hashtable settings = new Hashtable();
@@ -47,6 +55,8 @@ namespace Arclaunch
             loadhashtables();
             addlogonlistbox();
             addworldlistbox();
+            hidealltoppanels();
+            serverspnl.Show();
             checkserverbuttons();
             checklogbuttons();
             timer1.Enabled = true;
@@ -255,6 +265,7 @@ namespace Arclaunch
         {
             checkserverbuttons();
             checklogbuttons();
+            counttorestart();
         }
         private void startlogsrvbtn_Click(object sender, EventArgs e)
         {
@@ -334,6 +345,21 @@ namespace Arclaunch
         private void logonlist_SelectedIndexChanged(object sender, EventArgs e)
         {
             checklogbuttons();
+        }
+        private void autorestartsrvs_CheckedChanged(object sender, EventArgs e)
+        {
+            if (autorestartsrvs.CheckState.ToString() == "Checked")
+            {
+                settingspnl.Enabled = true;
+                ttrlbl.Enabled = true;
+                ttrhelp.Enabled = true;
+            }
+            else
+            {
+                ttrbox.Enabled = false;
+                ttrlbl.Enabled = false;
+                ttrhelp.Enabled = false;
+            }
         }
         #endregion
         #region Show and Hide all windows.
@@ -614,6 +640,7 @@ namespace Arclaunch
                 defaultpathbox.Text = "Enter Path Here";
                 settings.Add("defaultpath", "Enter Path Here");
             }
+            //check to see if restart on crash is checked
             try
             {
                 if (settings["crashrestart"].ToString() == "Checked")
@@ -628,7 +655,86 @@ namespace Arclaunch
             catch
             {
                 crashrestart.CheckState = 0;
-                settings.Add("crashrestart", 0);
+                settings.Add("crashrestart", "Unchecked");
+            }
+            //test to see if autorestart box should be checked
+            try
+            {
+                if (settings["autorestart"].ToString() == "Checked")
+                {
+                    autorestartsrvs.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    autorestartsrvs.CheckState = CheckState.Unchecked;
+                }
+            }
+            catch
+            {
+                autorestartsrvs.CheckState = 0;
+                settings.Add("autorestart", "Unchecked");
+            }
+            //set the time to restart box
+            try
+            {
+                ttrbox.Text = settings["restarttime"].ToString();
+            }
+            catch
+            {
+            }
+            restartinsecs();
+        }
+        private int curtimeinsecs()
+        {
+            DateTime dt = DateTime.Now;
+            int seconds = dt.Second;
+            int minutes = dt.Minute;
+            int hours = dt.Hour;
+
+            //convert hours to minutes
+            hours = hours * minsinhour;
+            //add hours minutes to regular minutes
+            minutes = minutes + hours;
+            //convert minutes to seconds
+            minutes = minutes * secsinmin;
+            //add minutes secods to regular seconds.
+            seconds = minutes + seconds;
+            return seconds;
+        }
+        private void restartinsecs()
+        {
+            string[] restartime;
+            try
+            {
+                restartime = Regex.Split((string)settings["restarttime"], ":");
+                int hours = Convert.ToInt16(restartime[0]);
+                int minutes = Convert.ToInt16(restartime[1]);
+                hours = hours * minsinhour;
+                minutes = minutes + hours;
+                restarttimeinsecs = minutes * secsinmin;
+            }
+            catch
+            {
+            }
+
+        }
+        private void counttorestart()
+        {
+            if (countdowntimer != null)
+            {
+                if ((countdowntimer - 3) < 0)
+                {
+                    autorestartservers();
+                }
+            }
+            if (restarttimeinsecs < curtimeinsecs())
+            {
+                int secstoadd = maxsecsinday - curtimeinsecs();
+                countdowntimer = secstoadd + restarttimeinsecs;
+            }
+            else
+            {
+                countdowntimer = restarttimeinsecs - curtimeinsecs();
             }
         }
         #endregion
@@ -644,9 +750,16 @@ namespace Arclaunch
                 MessageBox.Show("Folder selected is invalid. \n All other settings will be saved.");
             }
             saveaconfigsetting("crashrestart", crashrestart.CheckState.ToString());
+            saveaconfigsetting("autorestart", autorestartsrvs.CheckState.ToString());
+            saveaconfigsetting("restarttime", ttrbox.Text);
             MessageBox.Show("Settings Saved!");
             
             loadsettings();
+        }
+        
+        private void autorestartservers()
+        {
+
         }
     }
 }

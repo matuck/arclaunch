@@ -41,6 +41,12 @@
             this.settingsbtn = new System.Windows.Forms.Button();
             this.serversbtn = new System.Windows.Forms.Button();
             this.settingspnl = new System.Windows.Forms.Panel();
+            this.ttrhelp = new System.Windows.Forms.Label();
+            this.ttrlbl = new System.Windows.Forms.Label();
+            this.autorestartsrvslbl = new System.Windows.Forms.Label();
+            this.autorestartsrvs = new System.Windows.Forms.CheckBox();
+            this.crashrestart = new System.Windows.Forms.CheckBox();
+            this.crashrestartlbl = new System.Windows.Forms.Label();
             this.savesettings = new System.Windows.Forms.Button();
             this.browsedeflog = new System.Windows.Forms.Button();
             this.defaultpathbox = new System.Windows.Forms.TextBox();
@@ -69,8 +75,7 @@
             this.systrayexit = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.crashrestartlbl = new System.Windows.Forms.Label();
-            this.crashrestart = new System.Windows.Forms.CheckBox();
+            this.ttrbox = new System.Windows.Forms.MaskedTextBox();
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
@@ -108,7 +113,7 @@
             this.splitlayout.Panel2.Controls.Add(this.settingspnl);
             this.splitlayout.Panel2.Controls.Add(this.serverspnl);
             this.splitlayout.Panel2.Controls.Add(this.logpnl);
-            this.splitlayout.Size = new System.Drawing.Size(670, 376);
+            this.splitlayout.Size = new System.Drawing.Size(670, 374);
             this.splitlayout.SplitterDistance = 192;
             this.splitlayout.TabIndex = 0;
             // 
@@ -251,6 +256,11 @@
             // settingspnl
             // 
             this.settingspnl.BackColor = System.Drawing.Color.Transparent;
+            this.settingspnl.Controls.Add(this.ttrbox);
+            this.settingspnl.Controls.Add(this.ttrhelp);
+            this.settingspnl.Controls.Add(this.ttrlbl);
+            this.settingspnl.Controls.Add(this.autorestartsrvslbl);
+            this.settingspnl.Controls.Add(this.autorestartsrvs);
             this.settingspnl.Controls.Add(this.crashrestart);
             this.settingspnl.Controls.Add(this.crashrestartlbl);
             this.settingspnl.Controls.Add(this.savesettings);
@@ -261,8 +271,65 @@
             this.settingspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingspnl.Location = new System.Drawing.Point(0, 0);
             this.settingspnl.Name = "settingspnl";
-            this.settingspnl.Size = new System.Drawing.Size(474, 376);
+            this.settingspnl.Size = new System.Drawing.Size(474, 374);
             this.settingspnl.TabIndex = 0;
+            // 
+            // ttrhelp
+            // 
+            this.ttrhelp.AutoSize = true;
+            this.ttrhelp.Location = new System.Drawing.Point(243, 160);
+            this.ttrhelp.Name = "ttrhelp";
+            this.ttrhelp.Size = new System.Drawing.Size(123, 13);
+            this.ttrhelp.TabIndex = 12;
+            this.ttrhelp.Text = "Entrer time in 24H format";
+            // 
+            // ttrlbl
+            // 
+            this.ttrlbl.AutoSize = true;
+            this.ttrlbl.Location = new System.Drawing.Point(110, 160);
+            this.ttrlbl.Name = "ttrlbl";
+            this.ttrlbl.Size = new System.Drawing.Size(74, 13);
+            this.ttrlbl.TabIndex = 10;
+            this.ttrlbl.Text = "Time to restart";
+            // 
+            // autorestartsrvslbl
+            // 
+            this.autorestartsrvslbl.AutoSize = true;
+            this.autorestartsrvslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.autorestartsrvslbl.Location = new System.Drawing.Point(5, 132);
+            this.autorestartsrvslbl.Name = "autorestartsrvslbl";
+            this.autorestartsrvslbl.Size = new System.Drawing.Size(158, 20);
+            this.autorestartsrvslbl.TabIndex = 9;
+            this.autorestartsrvslbl.Text = "Auto Restart Servers";
+            // 
+            // autorestartsrvs
+            // 
+            this.autorestartsrvs.AutoSize = true;
+            this.autorestartsrvs.Location = new System.Drawing.Point(169, 136);
+            this.autorestartsrvs.Name = "autorestartsrvs";
+            this.autorestartsrvs.Size = new System.Drawing.Size(15, 14);
+            this.autorestartsrvs.TabIndex = 8;
+            this.autorestartsrvs.UseVisualStyleBackColor = true;
+            this.autorestartsrvs.CheckedChanged += new System.EventHandler(this.autorestartsrvs_CheckedChanged);
+            // 
+            // crashrestart
+            // 
+            this.crashrestart.AutoSize = true;
+            this.crashrestart.Location = new System.Drawing.Point(138, 103);
+            this.crashrestart.Name = "crashrestart";
+            this.crashrestart.Size = new System.Drawing.Size(15, 14);
+            this.crashrestart.TabIndex = 7;
+            this.crashrestart.UseVisualStyleBackColor = true;
+            // 
+            // crashrestartlbl
+            // 
+            this.crashrestartlbl.AutoSize = true;
+            this.crashrestartlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.crashrestartlbl.Location = new System.Drawing.Point(4, 101);
+            this.crashrestartlbl.Name = "crashrestartlbl";
+            this.crashrestartlbl.Size = new System.Drawing.Size(127, 20);
+            this.crashrestartlbl.TabIndex = 6;
+            this.crashrestartlbl.Text = "Restart on crash";
             // 
             // savesettings
             // 
@@ -333,7 +400,7 @@
             this.serverspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverspnl.Location = new System.Drawing.Point(0, 0);
             this.serverspnl.Name = "serverspnl";
-            this.serverspnl.Size = new System.Drawing.Size(474, 376);
+            this.serverspnl.Size = new System.Drawing.Size(474, 374);
             this.serverspnl.TabIndex = 0;
             // 
             // restartlogsrvbtn
@@ -491,7 +558,7 @@
             this.logpnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logpnl.Location = new System.Drawing.Point(0, 0);
             this.logpnl.Name = "logpnl";
-            this.logpnl.Size = new System.Drawing.Size(474, 376);
+            this.logpnl.Size = new System.Drawing.Size(474, 374);
             this.logpnl.TabIndex = 0;
             // 
             // logslbl
@@ -530,31 +597,21 @@
             this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // crashrestartlbl
+            // ttrbox
             // 
-            this.crashrestartlbl.AutoSize = true;
-            this.crashrestartlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.crashrestartlbl.Location = new System.Drawing.Point(4, 101);
-            this.crashrestartlbl.Name = "crashrestartlbl";
-            this.crashrestartlbl.Size = new System.Drawing.Size(127, 20);
-            this.crashrestartlbl.TabIndex = 6;
-            this.crashrestartlbl.Text = "Restart on crash";
-            // 
-            // crashrestart
-            // 
-            this.crashrestart.AutoSize = true;
-            this.crashrestart.Location = new System.Drawing.Point(138, 103);
-            this.crashrestart.Name = "crashrestart";
-            this.crashrestart.Size = new System.Drawing.Size(15, 14);
-            this.crashrestart.TabIndex = 7;
-            this.crashrestart.UseVisualStyleBackColor = true;
+            this.ttrbox.Location = new System.Drawing.Point(187, 153);
+            this.ttrbox.Mask = "00:00";
+            this.ttrbox.Name = "ttrbox";
+            this.ttrbox.Size = new System.Drawing.Size(47, 20);
+            this.ttrbox.TabIndex = 13;
+            this.ttrbox.ValidatingType = typeof(System.DateTime);
             // 
             // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
-            this.ClientSize = new System.Drawing.Size(670, 376);
+            this.ClientSize = new System.Drawing.Size(670, 374);
             this.Controls.Add(this.splitlayout);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -621,6 +678,11 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.CheckBox crashrestart;
         private System.Windows.Forms.Label crashrestartlbl;
+        private System.Windows.Forms.Label autorestartsrvslbl;
+        private System.Windows.Forms.CheckBox autorestartsrvs;
+        private System.Windows.Forms.Label ttrhelp;
+        private System.Windows.Forms.Label ttrlbl;
+        private System.Windows.Forms.MaskedTextBox ttrbox;
     }
 }
 
