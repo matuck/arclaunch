@@ -41,6 +41,7 @@
             this.settingsbtn = new System.Windows.Forms.Button();
             this.serversbtn = new System.Windows.Forms.Button();
             this.settingspnl = new System.Windows.Forms.Panel();
+            this.ttrbox = new System.Windows.Forms.MaskedTextBox();
             this.ttrhelp = new System.Windows.Forms.Label();
             this.ttrlbl = new System.Windows.Forms.Label();
             this.autorestartsrvslbl = new System.Windows.Forms.Label();
@@ -75,7 +76,8 @@
             this.systrayexit = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.ttrbox = new System.Windows.Forms.MaskedTextBox();
+            this.hidewindslbl = new System.Windows.Forms.Label();
+            this.hidewndchk = new System.Windows.Forms.CheckBox();
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
@@ -113,7 +115,7 @@
             this.splitlayout.Panel2.Controls.Add(this.settingspnl);
             this.splitlayout.Panel2.Controls.Add(this.serverspnl);
             this.splitlayout.Panel2.Controls.Add(this.logpnl);
-            this.splitlayout.Size = new System.Drawing.Size(670, 374);
+            this.splitlayout.Size = new System.Drawing.Size(670, 376);
             this.splitlayout.SplitterDistance = 192;
             this.splitlayout.TabIndex = 0;
             // 
@@ -256,6 +258,8 @@
             // settingspnl
             // 
             this.settingspnl.BackColor = System.Drawing.Color.Transparent;
+            this.settingspnl.Controls.Add(this.hidewndchk);
+            this.settingspnl.Controls.Add(this.hidewindslbl);
             this.settingspnl.Controls.Add(this.ttrbox);
             this.settingspnl.Controls.Add(this.ttrhelp);
             this.settingspnl.Controls.Add(this.ttrlbl);
@@ -271,8 +275,17 @@
             this.settingspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingspnl.Location = new System.Drawing.Point(0, 0);
             this.settingspnl.Name = "settingspnl";
-            this.settingspnl.Size = new System.Drawing.Size(474, 374);
+            this.settingspnl.Size = new System.Drawing.Size(474, 376);
             this.settingspnl.TabIndex = 0;
+            // 
+            // ttrbox
+            // 
+            this.ttrbox.Location = new System.Drawing.Point(187, 153);
+            this.ttrbox.Mask = "00:00";
+            this.ttrbox.Name = "ttrbox";
+            this.ttrbox.Size = new System.Drawing.Size(47, 20);
+            this.ttrbox.TabIndex = 13;
+            this.ttrbox.ValidatingType = typeof(System.DateTime);
             // 
             // ttrhelp
             // 
@@ -400,7 +413,7 @@
             this.serverspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverspnl.Location = new System.Drawing.Point(0, 0);
             this.serverspnl.Name = "serverspnl";
-            this.serverspnl.Size = new System.Drawing.Size(474, 374);
+            this.serverspnl.Size = new System.Drawing.Size(474, 376);
             this.serverspnl.TabIndex = 0;
             // 
             // restartlogsrvbtn
@@ -558,7 +571,7 @@
             this.logpnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logpnl.Location = new System.Drawing.Point(0, 0);
             this.logpnl.Name = "logpnl";
-            this.logpnl.Size = new System.Drawing.Size(474, 374);
+            this.logpnl.Size = new System.Drawing.Size(474, 376);
             this.logpnl.TabIndex = 0;
             // 
             // logslbl
@@ -597,21 +610,31 @@
             this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // ttrbox
+            // hidewindslbl
             // 
-            this.ttrbox.Location = new System.Drawing.Point(187, 153);
-            this.ttrbox.Mask = "00:00";
-            this.ttrbox.Name = "ttrbox";
-            this.ttrbox.Size = new System.Drawing.Size(47, 20);
-            this.ttrbox.TabIndex = 13;
-            this.ttrbox.ValidatingType = typeof(System.DateTime);
+            this.hidewindslbl.AutoSize = true;
+            this.hidewindslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hidewindslbl.Location = new System.Drawing.Point(5, 184);
+            this.hidewindslbl.Name = "hidewindslbl";
+            this.hidewindslbl.Size = new System.Drawing.Size(218, 20);
+            this.hidewindslbl.TabIndex = 14;
+            this.hidewindslbl.Text = "Hide Server Windows on start";
+            // 
+            // hidewndchk
+            // 
+            this.hidewndchk.AutoSize = true;
+            this.hidewndchk.Location = new System.Drawing.Point(229, 190);
+            this.hidewndchk.Name = "hidewndchk";
+            this.hidewndchk.Size = new System.Drawing.Size(15, 14);
+            this.hidewndchk.TabIndex = 15;
+            this.hidewndchk.UseVisualStyleBackColor = true;
             // 
             // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
-            this.ClientSize = new System.Drawing.Size(670, 374);
+            this.ClientSize = new System.Drawing.Size(670, 376);
             this.Controls.Add(this.splitlayout);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -683,6 +706,8 @@
         private System.Windows.Forms.Label ttrhelp;
         private System.Windows.Forms.Label ttrlbl;
         private System.Windows.Forms.MaskedTextBox ttrbox;
+        private System.Windows.Forms.CheckBox hidewndchk;
+        private System.Windows.Forms.Label hidewindslbl;
     }
 }
 

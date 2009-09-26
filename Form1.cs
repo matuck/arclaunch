@@ -250,6 +250,7 @@ namespace Arclaunch
             saveaconfigsetting("crashrestart", crashrestart.CheckState.ToString());
             saveaconfigsetting("autorestart", autorestartsrvs.CheckState.ToString());
             saveaconfigsetting("restarttime", ttrbox.Text);
+            saveaconfigsetting("hidewindows", hidewndchk.CheckState.ToString());
             MessageBox.Show("Settings Saved!");
 
             loadsettings();
@@ -587,6 +588,22 @@ namespace Arclaunch
             {
             }
             restartinsecs();
+            try
+            {
+                if (settings["hidewindows"].ToString() == "Checked")
+                {
+                    autorestartsrvs.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    autorestartsrvs.CheckState = CheckState.Unchecked;
+                }
+            }
+            catch
+            {
+                autorestartsrvs.CheckState = 0;
+                settings.Add("hidewindows", "Unchecked");
+            }
         }
         private int curtimeinsecs()
         {
@@ -789,6 +806,10 @@ namespace Arclaunch
                     myserv.pid = server.Id;
                     System.Threading.Thread.Sleep(500);
                     myserv.window = server.MainWindowHandle.ToInt32();
+                    if (settings["hidewindows"].ToString() == "Checked")
+                    {
+                        ShowWindow(myserv.window, SW_HIDE);
+                    }
                     Environment.CurrentDirectory = tempdir;
                     if (type == "logon")
                     {
