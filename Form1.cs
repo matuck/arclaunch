@@ -616,6 +616,7 @@ namespace Arclaunch
             // XML Document Saved
             xmldoc.Save(fsxml);
             fsxml.Close();
+            System.Threading.Thread.Sleep(10);
         }
         private void loadsettings()
         {
