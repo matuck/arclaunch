@@ -35,6 +35,15 @@ namespace Arclaunch
         private static extern int ShowWindow(int hwnd, int nCmdShow);
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool AttachConsole(int dwProcessId);
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        static extern bool FreeConsole();
+        [DllImport("user32.dll")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+        [DllImport("Kernel32")]
+		private static extern IntPtr GetConsoleWindow();
+
         #endregion
         public Arclaunch()
         {
@@ -753,8 +762,13 @@ namespace Arclaunch
                 {
                     try
                     {
-                        Process thisproc = Process.GetProcessById(myserv.pid);
-                        thisproc.Kill();
+                        Process thisproc = Process.GetProcessById(Convert.ToInt32(myserv.pid));
+                        //thisproc.Kill();
+                        AttachConsole(thisproc.Id);
+                        IntPtr handle = GetConsoleWindow();
+                        SetForegroundWindow(handle);
+                        SendKeys.Send("Shutdown{ENTER}");
+                        FreeConsole();
                     }
                     catch (ArgumentException)
                     {
