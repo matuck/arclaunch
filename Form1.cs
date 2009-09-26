@@ -623,12 +623,9 @@ namespace Arclaunch
         }
         private void counttorestart()
         {
-            if (countdowntimer != null)
+            if ((countdowntimer - 3) < 0)
             {
-                if ((countdowntimer - 3) < 0)
-                {
-                    autorestartservers();
-                }
+                autorestartservers();
             }
             if (restarttimeinsecs < curtimeinsecs())
             {
