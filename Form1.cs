@@ -226,7 +226,7 @@ namespace Arclaunch
         {
             if (autorestartsrvs.CheckState.ToString() == "Checked")
             {
-                settingspnl.Enabled = true;
+                ttrbox.Enabled = true;
                 ttrlbl.Enabled = true;
                 ttrhelp.Enabled = true;
             }
