@@ -263,7 +263,7 @@ namespace Arclaunch
             {
                 counttorestart();
             }
-            checkcrashes();
+           checkcrashes();
         }
         #region Show and Hide all windows.
         private void showwnds_Click(object sender, EventArgs e)
@@ -682,11 +682,17 @@ namespace Arclaunch
                 string[] thiskey = Regex.Split(key, ":");
                 if (serverstorestart[key].ToString() == "logon")
                 {
-                    startserver(thiskey[1], "logon");
+                    if (settings["crashrestart"].ToString() == "Checked")
+                    {
+                        startserver(thiskey[1], "logon");
+                    }
                 }
                 else
                 {
-                    startserver(thiskey[1], "world");
+                    if (settings["crashrestart"].ToString() == "Checked")
+                    {
+                        startserver(thiskey[1], "world");
+                    }
                 }
             }
         }
