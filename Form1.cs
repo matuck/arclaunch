@@ -151,15 +151,15 @@ namespace Arclaunch
         }
         private void stopworldsrvbtn_Click(object sender, EventArgs e)
         {
-            stopworldserver(worldlist.SelectedItem.ToString());
+            stopserver(worldlist.SelectedItem.ToString(), "world");
         }
         private void startworldsrvbtn_Click(object sender, EventArgs e)
         {
-            startworldserver(worldlist.SelectedItem.ToString());
+            startserver(worldlist.SelectedItem.ToString(), "world");
         }
         private void restartworldsrvbtn_Click(object sender, EventArgs e)
         {
-            restartworldserver(worldlist.SelectedItem.ToString());
+            restartserver(worldlist.SelectedItem.ToString(), "world");
         }
         private void aboutbtn_Click(object sender, EventArgs e)
         {
@@ -213,15 +213,15 @@ namespace Arclaunch
         }
         private void startlogsrvbtn_Click(object sender, EventArgs e)
         {
-            startlogserver(logonlist.SelectedItem.ToString());
+            startserver(logonlist.SelectedItem.ToString(), "logon");
         }
         private void stoplogsrvbtn_Click(object sender, EventArgs e)
         {
-            stoplogserver(logonlist.SelectedItem.ToString());
+            stopserver(logonlist.SelectedItem.ToString(), "logon");
         }
         private void restartlogsrvbtn_Click(object sender, EventArgs e)
         {
-            restartlogserver(logonlist.SelectedItem.ToString());
+            restartserver(logonlist.SelectedItem.ToString(), "logon");
         }
         private void worldlist_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -637,14 +637,21 @@ namespace Arclaunch
                 countdowntimer = restarttimeinsecs - curtimeinsecs();
             }
         }
-        private void stoplogserver(string srvtostop)
+        private void stopserver(string srvtostop, string type)
         {
             if (srvtostop != null)
             {
                 Server myserv = null;
                 try
                 {
-                    myserv = (Server)logonservers[srvtostop];
+                    if (type == "logon")
+                    {
+                        myserv = (Server)logonservers[srvtostop];
+                    }
+                    else
+                    {
+                        myserv = (Server)worldservers[srvtostop];
+                    }
                 }
                 catch (ArgumentException)
                 {
@@ -668,14 +675,21 @@ namespace Arclaunch
                 MessageBox.Show("No Server Selected!");
             }
         }
-        private void startlogserver(string srvtostart)
+        private void startserver(string srvtostart, string type)
         {
             if (srvtostart != null)
             {
                 Server myserv = null;
                 try
                 {
-                    myserv = (Server)logonservers[srvtostart];
+                    if (type == "logon")
+                    {
+                        myserv = (Server)logonservers[srvtostart];
+                    }
+                    else
+                    {
+                        myserv = (Server)worldservers[srvtostart];
+                    }
                 }
                 catch (ArgumentException)
                 {
@@ -691,7 +705,14 @@ namespace Arclaunch
                     System.Threading.Thread.Sleep(500);
                     myserv.window = server.MainWindowHandle.ToInt32();
                     Environment.CurrentDirectory = tempdir;
-                    logonservers[srvtostart] = myserv;
+                    if (type == "logon")
+                    {
+                        logonservers[srvtostart] = myserv;
+                    }
+                    else
+                    {
+                        worldservers[srvtostart] = myserv;
+                    }
                 }
                 else
                 {
@@ -703,81 +724,10 @@ namespace Arclaunch
                 MessageBox.Show("No Server Selected");
             }
         }
-        private void restartlogserver(string server)
+        private void restartserver(string server, string type)
         {
-            stoplogserver(server);
-            startlogserver(server);
-        }
-        private void stopworldserver(string srvtostop)
-        {
-            if (srvtostop != null)
-            {
-                Server myserv = null;
-                try
-                {
-                    myserv = (Server)worldservers[srvtostop];
-                }
-                catch (ArgumentException)
-                {
-                    MessageBox.Show("Server does not exist!");
-                }
-                if (myserv != null)
-                {
-                    try
-                    {
-                        Process thisproc = Process.GetProcessById(myserv.pid);
-                        thisproc.Kill();
-                    }
-                    catch (ArgumentException)
-                    {
-                        MessageBox.Show("Server is not running");
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("No Server Selected!");
-            }
-        }
-        private void startworldserver(string srvtostart)
-        {
-            if (srvtostart != null)
-            {
-                Server myserv = null;
-                try
-                {
-                    myserv = (Server)worldservers[srvtostart];
-                }
-                catch (ArgumentException)
-                {
-                }
-                if (myserv != null)
-                {
-                    Process server = new Process();
-                    server.StartInfo.FileName = myserv.path;
-                    string tempdir = Environment.CurrentDirectory;
-                    Environment.CurrentDirectory = Path.GetDirectoryName(myserv.path);
-                    server.Start();
-                    myserv.pid = server.Id;
-                    System.Threading.Thread.Sleep(500);
-                    myserv.window = server.MainWindowHandle.ToInt32();
-                    Environment.CurrentDirectory = tempdir;
-                    worldservers[srvtostart] = myserv;
-                }
-                else
-                {
-                    MessageBox.Show("Server Doesn't exist. Please delete this server");
-                }
-            }
-            else
-            {
-                MessageBox.Show("No Server Selected");
-            }
-        }
-        private void restartworldserver(string server)
-        {
-            stopworldserver(server);
-            startworldserver(server);
+            stopserver(server, type);
+            startserver(server, type);
         }
         private void autorestartservers()
         {
@@ -817,11 +767,11 @@ namespace Arclaunch
                 string[] thiskey = Regex.Split(key, ":");
                 if (serverstorestart[key].ToString() == "logon")
                 {
-                    restartlogserver(thiskey[1]);
+                    restartserver(thiskey[1], "logon");
                 }
                 else
                 {
-                    restartworldserver(thiskey[1]);
+                    restartserver(thiskey[1], "world");
                 }
             }
         }
