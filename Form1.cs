@@ -637,6 +637,8 @@ namespace Arclaunch
                 countdowntimer = restarttimeinsecs - curtimeinsecs();
             }
         }
+        #endregion 
+        #region To stop and start servers
         private void stopserver(string srvtostop, string type)
         {
             if (srvtostop != null)
@@ -775,6 +777,7 @@ namespace Arclaunch
                 }
             }
         }
-        #endregion 
+        #endregion
+
     }
 }
