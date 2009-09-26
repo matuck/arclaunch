@@ -686,12 +686,26 @@ namespace Arclaunch
                     {
                         startserver(thiskey[1], "logon");
                     }
+                    else
+                    {
+                        Server myserv = (Server)logonservers[thiskey[1]];
+                        myserv.pid = 0;
+                        myserv.window = 0;
+                        logonservers[thiskey[1]] = myserv;
+                    }
                 }
                 else
                 {
                     if (settings["crashrestart"].ToString() == "Checked")
                     {
                         startserver(thiskey[1], "world");
+                    }
+                    else
+                    {
+                        Server myserv = (Server)worldservers[thiskey[1]];
+                        myserv.pid = 0;
+                        myserv.window = 0;
+                        worldservers[thiskey[1]] = myserv;
                     }
                 }
             }
