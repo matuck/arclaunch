@@ -202,15 +202,6 @@ namespace Arclaunch
                 MessageBox.Show("No Server Selected");
             }
         }
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            checkserverbuttons();
-            checklogbuttons();
-            if (settings["autorestart"].ToString() == "Checked")
-            {
-                counttorestart();
-            }
-        }
         private void startlogsrvbtn_Click(object sender, EventArgs e)
         {
             startserver(logonlist.SelectedItem.ToString(), "logon");
@@ -264,6 +255,16 @@ namespace Arclaunch
             loadsettings();
         }
         #endregion
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            checkserverbuttons();
+            checklogbuttons();
+            if (settings["autorestart"].ToString() == "Checked")
+            {
+                counttorestart();
+            }
+            checkcrashes();
+        }
         #region Show and Hide all windows.
         private void showwnds_Click(object sender, EventArgs e)
         {
@@ -637,6 +638,58 @@ namespace Arclaunch
                 countdowntimer = restarttimeinsecs - curtimeinsecs();
             }
         }
+        private void checkcrashes()
+        {
+            Hashtable serverstorestart = new Hashtable();
+            foreach (Server thisserv in logonservers.Values)
+            {
+                if(thisserv.pid != 0)
+                {
+                    try
+                    {
+                        Process thisproc = Process.GetProcessById(thisserv.pid);
+                        if ((thisproc.ProcessName != Path.GetFileNameWithoutExtension(thisserv.path)))
+                        {
+                            serverstorestart.Add("logon:" + thisserv.name, "logon");
+                        }
+                    }
+                    catch
+                    {
+                        serverstorestart.Add("logon:" + thisserv.name, "logon");
+                    }
+                }
+            }
+            foreach (Server thisworldserv in worldservers.Values)
+            {
+                if (thisworldserv.pid != 0)
+                {
+                    try
+                    {
+                        Process thisproc = Process.GetProcessById(thisworldserv.pid);
+                        if ((thisproc.ProcessName != Path.GetFileNameWithoutExtension(thisworldserv.path)))
+                        {
+                            serverstorestart.Add("world:" + thisworldserv.name, "world");
+                        }
+                    }
+                    catch
+                    {
+                        serverstorestart.Add("world:" + thisworldserv.name, "world");
+                    }
+                }
+            }
+            foreach (string key in serverstorestart.Keys)
+            {
+                string[] thiskey = Regex.Split(key, ":");
+                if (serverstorestart[key].ToString() == "logon")
+                {
+                    startserver(thiskey[1], "logon");
+                }
+                else
+                {
+                    startserver(thiskey[1], "world");
+                }
+            }
+        }
         #endregion 
         #region To stop and start servers
         private void stopserver(string srvtostop, string type)
@@ -669,6 +722,16 @@ namespace Arclaunch
                     catch (ArgumentException)
                     {
                         MessageBox.Show("Server is not running");
+                    }
+                    myserv.pid = 0;
+                    myserv.window = 0;
+                    if (type == "logon")
+                    {
+                        logonservers[srvtostop] = myserv;
+                    }
+                    else
+                    {
+                        worldservers[srvtostop] = myserv;
                     }
                 }
             }
