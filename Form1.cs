@@ -329,9 +329,9 @@ namespace Arclaunch
                 Server myserver = new Server();
                 myserver.name = xmlnode[count].FirstChild.InnerText;
                 myserver.path = xmlnode[count].LastChild.InnerText;
-                string pid = System.IO.File.ReadAllText(Path.GetDirectoryName(myserver.path)+"\\arcemu.pid");
                 try
                 {
+                    string pid = System.IO.File.ReadAllText(Path.GetDirectoryName(myserver.path) + "\\arcemu.pid");
                     Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
                     if (thisproc.ProcessName == Path.GetFileNameWithoutExtension(myserver.path))
                     {
@@ -362,9 +362,9 @@ namespace Arclaunch
                 Server mylogserver = new Server();
                 mylogserver.name = xmllognode[count].FirstChild.InnerText;
                 mylogserver.path = xmllognode[count].LastChild.InnerText;
-                string pid = System.IO.File.ReadAllText(Path.GetDirectoryName(mylogserver.path) + "\\logonserver.pid");
                 try
                 {
+                    string pid = System.IO.File.ReadAllText(Path.GetDirectoryName(mylogserver.path) + "\\logonserver.pid");
                     Process thisproc = Process.GetProcessById(Convert.ToInt32(pid));
                     if (thisproc.ProcessName == Path.GetFileNameWithoutExtension(mylogserver.path))
                     {
@@ -767,15 +767,23 @@ namespace Arclaunch
                         AttachConsole(thisproc.Id);
                         IntPtr handle = GetConsoleWindow();
                         SetForegroundWindow(handle);
-                        SendKeys.Send("Shutdown{ENTER}");
+                        SendKeys.Send("^C");
                         FreeConsole();
+                        bool mytrue = true;
+                        while (mytrue)
+                        {
+                            if (thisproc.HasExited)
+                            {
+                                myserv.pid = 0;
+                                myserv.window = 0;
+                                mytrue = false;
+                            }
+                        }
                     }
                     catch (ArgumentException)
                     {
                         MessageBox.Show("Server is not running");
                     }
-                    myserv.pid = 0;
-                    myserv.window = 0;
                     if (type == "logon")
                     {
                         logonservers[srvtostop] = myserv;
