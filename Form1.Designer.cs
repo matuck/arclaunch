@@ -40,7 +40,12 @@
             this.logsbtn = new System.Windows.Forms.Button();
             this.settingsbtn = new System.Windows.Forms.Button();
             this.serversbtn = new System.Windows.Forms.Button();
+            this.logpnl = new System.Windows.Forms.Panel();
+            this.logbox = new System.Windows.Forms.RichTextBox();
+            this.logslbl = new System.Windows.Forms.Label();
             this.settingspnl = new System.Windows.Forms.Panel();
+            this.hidewndchk = new System.Windows.Forms.CheckBox();
+            this.hidewindslbl = new System.Windows.Forms.Label();
             this.ttrbox = new System.Windows.Forms.MaskedTextBox();
             this.ttrhelp = new System.Windows.Forms.Label();
             this.ttrlbl = new System.Windows.Forms.Label();
@@ -69,23 +74,19 @@
             this.worldlbl = new System.Windows.Forms.Label();
             this.worldlist = new System.Windows.Forms.ListBox();
             this.serverslbl = new System.Windows.Forms.Label();
-            this.logpnl = new System.Windows.Forms.Panel();
-            this.logslbl = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.systraymenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.systrayexit = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.hidewindslbl = new System.Windows.Forms.Label();
-            this.hidewndchk = new System.Windows.Forms.CheckBox();
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.logpnl.SuspendLayout();
             this.settingspnl.SuspendLayout();
             this.serverspnl.SuspendLayout();
-            this.logpnl.SuspendLayout();
             this.systraymenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -112,9 +113,9 @@
             // 
             this.splitlayout.Panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("splitlayout.Panel2.BackgroundImage")));
             this.splitlayout.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.splitlayout.Panel2.Controls.Add(this.logpnl);
             this.splitlayout.Panel2.Controls.Add(this.settingspnl);
             this.splitlayout.Panel2.Controls.Add(this.serverspnl);
-            this.splitlayout.Panel2.Controls.Add(this.logpnl);
             this.splitlayout.Size = new System.Drawing.Size(670, 376);
             this.splitlayout.SplitterDistance = 192;
             this.splitlayout.TabIndex = 0;
@@ -255,6 +256,36 @@
             this.serversbtn.UseVisualStyleBackColor = true;
             this.serversbtn.Click += new System.EventHandler(this.serversbtn_Click);
             // 
+            // logpnl
+            // 
+            this.logpnl.BackColor = System.Drawing.Color.Transparent;
+            this.logpnl.Controls.Add(this.logbox);
+            this.logpnl.Controls.Add(this.logslbl);
+            this.logpnl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logpnl.Location = new System.Drawing.Point(0, 0);
+            this.logpnl.Name = "logpnl";
+            this.logpnl.Size = new System.Drawing.Size(474, 376);
+            this.logpnl.TabIndex = 0;
+            // 
+            // logbox
+            // 
+            this.logbox.Location = new System.Drawing.Point(17, 45);
+            this.logbox.Name = "logbox";
+            this.logbox.ReadOnly = true;
+            this.logbox.Size = new System.Drawing.Size(445, 306);
+            this.logbox.TabIndex = 2;
+            this.logbox.Text = resources.GetString("logbox.Text");
+            // 
+            // logslbl
+            // 
+            this.logslbl.AutoSize = true;
+            this.logslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logslbl.Location = new System.Drawing.Point(12, 12);
+            this.logslbl.Name = "logslbl";
+            this.logslbl.Size = new System.Drawing.Size(59, 25);
+            this.logslbl.TabIndex = 1;
+            this.logslbl.Text = "Logs";
+            // 
             // settingspnl
             // 
             this.settingspnl.BackColor = System.Drawing.Color.Transparent;
@@ -277,6 +308,25 @@
             this.settingspnl.Name = "settingspnl";
             this.settingspnl.Size = new System.Drawing.Size(474, 376);
             this.settingspnl.TabIndex = 0;
+            // 
+            // hidewndchk
+            // 
+            this.hidewndchk.AutoSize = true;
+            this.hidewndchk.Location = new System.Drawing.Point(229, 190);
+            this.hidewndchk.Name = "hidewndchk";
+            this.hidewndchk.Size = new System.Drawing.Size(15, 14);
+            this.hidewndchk.TabIndex = 15;
+            this.hidewndchk.UseVisualStyleBackColor = true;
+            // 
+            // hidewindslbl
+            // 
+            this.hidewindslbl.AutoSize = true;
+            this.hidewindslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hidewindslbl.Location = new System.Drawing.Point(5, 184);
+            this.hidewindslbl.Name = "hidewindslbl";
+            this.hidewindslbl.Size = new System.Drawing.Size(218, 20);
+            this.hidewindslbl.TabIndex = 14;
+            this.hidewindslbl.Text = "Hide Server Windows on start";
             // 
             // ttrbox
             // 
@@ -564,26 +614,6 @@
             this.serverslbl.TabIndex = 0;
             this.serverslbl.Text = "Servers";
             // 
-            // logpnl
-            // 
-            this.logpnl.BackColor = System.Drawing.Color.Transparent;
-            this.logpnl.Controls.Add(this.logslbl);
-            this.logpnl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logpnl.Location = new System.Drawing.Point(0, 0);
-            this.logpnl.Name = "logpnl";
-            this.logpnl.Size = new System.Drawing.Size(474, 376);
-            this.logpnl.TabIndex = 0;
-            // 
-            // logslbl
-            // 
-            this.logslbl.AutoSize = true;
-            this.logslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.logslbl.Location = new System.Drawing.Point(12, 12);
-            this.logslbl.Name = "logslbl";
-            this.logslbl.Size = new System.Drawing.Size(59, 25);
-            this.logslbl.TabIndex = 1;
-            this.logslbl.Text = "Logs";
-            // 
             // notifyIcon1
             // 
             this.notifyIcon1.ContextMenuStrip = this.systraymenu;
@@ -610,25 +640,6 @@
             this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // hidewindslbl
-            // 
-            this.hidewindslbl.AutoSize = true;
-            this.hidewindslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hidewindslbl.Location = new System.Drawing.Point(5, 184);
-            this.hidewindslbl.Name = "hidewindslbl";
-            this.hidewindslbl.Size = new System.Drawing.Size(218, 20);
-            this.hidewindslbl.TabIndex = 14;
-            this.hidewindslbl.Text = "Hide Server Windows on start";
-            // 
-            // hidewndchk
-            // 
-            this.hidewndchk.AutoSize = true;
-            this.hidewndchk.Location = new System.Drawing.Point(229, 190);
-            this.hidewndchk.Name = "hidewndchk";
-            this.hidewndchk.Size = new System.Drawing.Size(15, 14);
-            this.hidewndchk.TabIndex = 15;
-            this.hidewndchk.UseVisualStyleBackColor = true;
-            // 
             // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -648,12 +659,12 @@
             this.splitlayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.logpnl.ResumeLayout(false);
+            this.logpnl.PerformLayout();
             this.settingspnl.ResumeLayout(false);
             this.settingspnl.PerformLayout();
             this.serverspnl.ResumeLayout(false);
             this.serverspnl.PerformLayout();
-            this.logpnl.ResumeLayout(false);
-            this.logpnl.PerformLayout();
             this.systraymenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -708,6 +719,7 @@
         private System.Windows.Forms.MaskedTextBox ttrbox;
         private System.Windows.Forms.CheckBox hidewndchk;
         private System.Windows.Forms.Label hidewindslbl;
+        private System.Windows.Forms.RichTextBox logbox;
     }
 }
 

@@ -60,6 +60,10 @@ namespace Arclaunch
             {
                 createconfigxml();
             }
+            if (!File.Exists("arclaunchlog.xml"))
+            {
+                createlogxml();
+            }
             loadsettings();
             loadhashtables();
             addlogonlistbox();
@@ -314,6 +318,14 @@ namespace Arclaunch
             xmlWriter.Formatting = Formatting.Indented;
             xmlWriter.WriteProcessingInstruction("xml", "version='1.0' encoding='utf-8' ");
             xmlWriter.WriteStartElement("Settings");
+            xmlWriter.Close();
+        }
+        private void createlogxml()
+        {
+            XmlTextWriter xmlWriter = new XmlTextWriter("arclaunchlog.xml", System.Text.Encoding.UTF8);
+            xmlWriter.Formatting = Formatting.Indented;
+            xmlWriter.WriteProcessingInstruction("xml", "version='1.0' encoding='utf-8' ");
+            xmlWriter.WriteStartElement("Logentrys");
             xmlWriter.Close();
         }
         private void loadhashtables()
@@ -736,6 +748,10 @@ namespace Arclaunch
                 }
             }
         }
+        private void createlogentry(int entrytype, string msg)
+        {
+            
+        }
         #endregion 
         #region To stop and start servers
         private void stopserver(string srvtostop, string type)
@@ -904,6 +920,6 @@ namespace Arclaunch
             }
         }
         #endregion
-
+        
     }
 }
