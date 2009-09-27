@@ -72,6 +72,7 @@ namespace Arclaunch
             serverspnl.Show();
             checkserverbuttons();
             checklogbuttons();
+            createlogentry("Arcluanch started");
             timer1.Enabled = true;
         }
 
@@ -748,9 +749,35 @@ namespace Arclaunch
                 }
             }
         }
-        private void createlogentry(int entrytype, string msg)
+        private void createlogentry(string msg)
         {
+            FileStream fs = new FileStream("arclaunchlog.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(fs);
+            fs.Close();
+            string date = DateTime.Now.ToString("MM/dd/yyyy H:mm:ss");
             
+            XmlElement newlogentry = xmldoc.CreateElement("Logentry");
+
+            // First Element - Date created
+            XmlElement dateelement = xmldoc.CreateElement("Date");
+            // Value given for the first element
+            dateelement.InnerText = date;
+            // Append the newly created element as a child element
+            newlogentry.AppendChild(dateelement);
+
+            // Second Element - Path - Created
+            XmlElement msgelement = xmldoc.CreateElement("Message");
+            // Value given for the second element
+            msgelement.InnerText = msg;
+            // Append the newly created element as a child element
+            newlogentry.AppendChild(msgelement);
+            xmldoc.DocumentElement.InsertAfter(newlogentry, xmldoc.DocumentElement.LastChild);
+            FileStream fsxml = new FileStream("arclaunchlog.xml", FileMode.Truncate, FileAccess.Write, FileShare.ReadWrite);
+            xmldoc.Save(fsxml);
+            fsxml.Close();
+            logbox.AppendText(date + " -> " + msg);
+            System.Threading.Thread.Sleep(10);
         }
         #endregion 
         #region To stop and start servers
