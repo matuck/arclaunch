@@ -674,7 +674,7 @@ namespace Arclaunch
                     try
                     {
                         Process thisproc = Process.GetProcessById(thisserv.pid);
-                        if ((thisproc.ProcessName != Path.GetFileNameWithoutExtension(thisserv.path)))
+                        if ((thisproc.ProcessName != Path.GetFileNameWithoutExtension(thisserv.path)) || (thisproc.Responding == false))
                         {
                             serverstorestart.Add("logon:" + thisserv.name, "logon");
                         }
@@ -692,7 +692,7 @@ namespace Arclaunch
                     try
                     {
                         Process thisproc = Process.GetProcessById(thisworldserv.pid);
-                        if ((thisproc.ProcessName != Path.GetFileNameWithoutExtension(thisworldserv.path)))
+                        if ((thisproc.ProcessName != Path.GetFileNameWithoutExtension(thisworldserv.path)) || (thisproc.Responding == false))
                         {
                             serverstorestart.Add("world:" + thisworldserv.name, "world");
                         }
