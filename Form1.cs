@@ -26,6 +26,7 @@ namespace Arclaunch
         private int countdowntimer = 86400;
         private const int maxsecsinday = 86400;
         private int restarttimeinsecs;
+        private int logcount;
         
         Hashtable worldservers = new Hashtable();//key will be server name. value will be instance of server class.
         Hashtable logonservers = new Hashtable();
@@ -72,6 +73,7 @@ namespace Arclaunch
             serverspnl.Show();
             checkserverbuttons();
             checklogbuttons();
+            loadlogxml();
             createlogentry("Arcluanch started");
             timer1.Enabled = true;
         }
@@ -265,9 +267,21 @@ namespace Arclaunch
             saveaconfigsetting("autorestart", autorestartsrvs.CheckState.ToString());
             saveaconfigsetting("restarttime", ttrbox.Text);
             saveaconfigsetting("hidewindows", hidewndchk.CheckState.ToString());
+            saveaconfigsetting("maxlogs", maxlogbox.Value.ToString());
+            saveaconfigsetting("logstartup",startupbox.CheckState.ToString());
+            saveaconfigsetting("logshutdown",shutdownbox.CheckState.ToString());
+            saveaconfigsetting("logautorestart",autorestartbox.CheckState.ToString());
+            saveaconfigsetting("logcrashes",crashbox.CheckState.ToString());
+            saveaconfigsetting("logsrvstarts",srvstartbox.CheckState.ToString());
+            saveaconfigsetting("logsrvstops",srvstopbox.CheckState.ToString());
+            saveaconfigsetting("logsrvrestarts",srvrestartbox.CheckState.ToString());
             MessageBox.Show("Settings Saved!");
 
             loadsettings();
+        }
+        private void Arclaunch_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            createlogentry("Arclaunch shutdown");
         }
         #endregion
         private void timer1_Tick(object sender, EventArgs e)
@@ -594,11 +608,17 @@ namespace Arclaunch
                 else
                 {
                     autorestartsrvs.CheckState = CheckState.Unchecked;
+                    ttrbox.Enabled = false;
+                    ttrlbl.Enabled = false;
+                    ttrhelp.Enabled = false;
                 }
             }
             catch
             {
                 autorestartsrvs.CheckState = 0;
+                ttrbox.Enabled = false;
+                ttrlbl.Enabled = false;
+                ttrhelp.Enabled = false;
                 settings.Add("autorestart", "Unchecked");
             }
             //set the time to restart box
@@ -614,17 +634,132 @@ namespace Arclaunch
             {
                 if (settings["hidewindows"].ToString() == "Checked")
                 {
-                    autorestartsrvs.CheckState = CheckState.Checked;
+                    hidewndchk.CheckState = CheckState.Checked;
                 }
                 else
                 {
-                    autorestartsrvs.CheckState = CheckState.Unchecked;
+                    hidewndchk.CheckState = CheckState.Unchecked;
                 }
             }
             catch
             {
                 autorestartsrvs.CheckState = 0;
+
                 settings.Add("hidewindows", "Unchecked");
+            }
+            try
+            {
+                if (settings["logstartup"].ToString() == "Checked")
+                {
+                    startupbox.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    startupbox.CheckState = CheckState.Unchecked;
+                }
+            }
+            catch
+            {
+                settings.Add("logstartup", "Checked");
+            }
+            try
+            {
+                if (settings["logshutdown"].ToString() == "Checked")
+                {
+                    shutdownbox.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    shutdownbox.CheckState = CheckState.Unchecked;
+                }
+            }
+            catch
+            {
+                settings.Add("logshutdown", "Checked");
+            }
+            try
+            {
+                if (settings["logautorestart"].ToString() == "Checked")
+                {
+                    autorestartbox.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    autorestartbox.CheckState = CheckState.Unchecked;
+                }
+            }
+            catch
+            {
+                settings.Add("logautorestart", "Checked");
+            }
+            try
+            {
+                if (settings["logcrashes"].ToString() == "Checked")
+                {
+                    crashbox.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    crashbox.CheckState = CheckState.Unchecked;
+                }
+            }
+            catch
+            {
+                settings.Add("logcrashes", "Checked");
+            }
+            try
+            {
+                if (settings["logsrvstarts"].ToString() == "Checked")
+                {
+                    srvstartbox.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    srvstartbox.CheckState = CheckState.Unchecked;
+                }
+            }
+            catch
+            {
+                settings.Add("logsrvstarts", "Checked");
+            }
+            try
+            {
+                if (settings["logsrvstops"].ToString() == "Checked")
+                {
+                    srvstopbox.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    srvstopbox.CheckState = CheckState.Unchecked;
+                }
+            }
+            catch
+            {
+                settings.Add("logsrvstops", "Checked");
+            }
+            try
+            {
+                if (settings["logsrvrestarts"].ToString() == "Checked")
+                {
+                    srvrestartbox.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    srvrestartbox.CheckState = CheckState.Unchecked;
+                }
+            }
+            catch
+            {
+                settings.Add("logsrvrestarts", "Checked");
+            }
+            try
+            {
+                maxlogbox.Value = Convert.ToInt32(settings["maxlogs"].ToString());
+            }
+            catch
+            {
+                maxlogbox.Value = 1000;
+                settings.Add("maxlogs", "1000");
             }
         }
         private int curtimeinsecs()
@@ -776,8 +911,26 @@ namespace Arclaunch
             FileStream fsxml = new FileStream("arclaunchlog.xml", FileMode.Truncate, FileAccess.Write, FileShare.ReadWrite);
             xmldoc.Save(fsxml);
             fsxml.Close();
-            logbox.AppendText(date + " -> " + msg);
+            logbox.AppendText(date + " -> " + msg +"\r\n");
+            logbox.ScrollToCaret();
             System.Threading.Thread.Sleep(10);
+        }
+        private void loadlogxml()
+        {
+            FileStream fs = new FileStream("arclaunchlog.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(fs);
+            fs.Close();
+            XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Logentry");
+            logcount = xmlnode.Count;
+            int count = 0; 
+            while (count < logcount)
+            {
+                string date = xmlnode[count].FirstChild.InnerText;
+                string msg = xmlnode[count].LastChild.InnerText;
+                logbox.AppendText(date + " -> " + msg + "\r\n");
+                count++;
+            }
         }
         #endregion 
         #region To stop and start servers
@@ -946,7 +1099,6 @@ namespace Arclaunch
                 }
             }
         }
-        #endregion
-        
+        #endregion 
     }
 }

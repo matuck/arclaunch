@@ -79,6 +79,16 @@
             this.systrayexit = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.numlogentrys = new System.Windows.Forms.Label();
+            this.maxlogbox = new System.Windows.Forms.NumericUpDown();
+            this.whattolog = new System.Windows.Forms.GroupBox();
+            this.startupbox = new System.Windows.Forms.CheckBox();
+            this.shutdownbox = new System.Windows.Forms.CheckBox();
+            this.autorestartbox = new System.Windows.Forms.CheckBox();
+            this.crashbox = new System.Windows.Forms.CheckBox();
+            this.srvrestartbox = new System.Windows.Forms.CheckBox();
+            this.srvstartbox = new System.Windows.Forms.CheckBox();
+            this.srvstopbox = new System.Windows.Forms.CheckBox();
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
@@ -88,6 +98,8 @@
             this.settingspnl.SuspendLayout();
             this.serverspnl.SuspendLayout();
             this.systraymenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxlogbox)).BeginInit();
+            this.whattolog.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitlayout
@@ -113,10 +125,10 @@
             // 
             this.splitlayout.Panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("splitlayout.Panel2.BackgroundImage")));
             this.splitlayout.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.splitlayout.Panel2.Controls.Add(this.logpnl);
             this.splitlayout.Panel2.Controls.Add(this.settingspnl);
+            this.splitlayout.Panel2.Controls.Add(this.logpnl);
             this.splitlayout.Panel2.Controls.Add(this.serverspnl);
-            this.splitlayout.Size = new System.Drawing.Size(670, 376);
+            this.splitlayout.Size = new System.Drawing.Size(670, 374);
             this.splitlayout.SplitterDistance = 192;
             this.splitlayout.TabIndex = 0;
             // 
@@ -264,7 +276,7 @@
             this.logpnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logpnl.Location = new System.Drawing.Point(0, 0);
             this.logpnl.Name = "logpnl";
-            this.logpnl.Size = new System.Drawing.Size(474, 376);
+            this.logpnl.Size = new System.Drawing.Size(474, 374);
             this.logpnl.TabIndex = 0;
             // 
             // logbox
@@ -274,7 +286,7 @@
             this.logbox.ReadOnly = true;
             this.logbox.Size = new System.Drawing.Size(445, 306);
             this.logbox.TabIndex = 2;
-            this.logbox.Text = resources.GetString("logbox.Text");
+            this.logbox.Text = "";
             // 
             // logslbl
             // 
@@ -289,6 +301,9 @@
             // settingspnl
             // 
             this.settingspnl.BackColor = System.Drawing.Color.Transparent;
+            this.settingspnl.Controls.Add(this.whattolog);
+            this.settingspnl.Controls.Add(this.maxlogbox);
+            this.settingspnl.Controls.Add(this.numlogentrys);
             this.settingspnl.Controls.Add(this.hidewndchk);
             this.settingspnl.Controls.Add(this.hidewindslbl);
             this.settingspnl.Controls.Add(this.ttrbox);
@@ -306,7 +321,7 @@
             this.settingspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingspnl.Location = new System.Drawing.Point(0, 0);
             this.settingspnl.Name = "settingspnl";
-            this.settingspnl.Size = new System.Drawing.Size(474, 376);
+            this.settingspnl.Size = new System.Drawing.Size(474, 374);
             this.settingspnl.TabIndex = 0;
             // 
             // hidewndchk
@@ -463,7 +478,7 @@
             this.serverspnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverspnl.Location = new System.Drawing.Point(0, 0);
             this.serverspnl.Name = "serverspnl";
-            this.serverspnl.Size = new System.Drawing.Size(474, 376);
+            this.serverspnl.Size = new System.Drawing.Size(474, 374);
             this.serverspnl.TabIndex = 0;
             // 
             // restartlogsrvbtn
@@ -640,12 +655,139 @@
             this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // numlogentrys
+            // 
+            this.numlogentrys.AutoSize = true;
+            this.numlogentrys.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numlogentrys.Location = new System.Drawing.Point(5, 224);
+            this.numlogentrys.Name = "numlogentrys";
+            this.numlogentrys.Size = new System.Drawing.Size(166, 20);
+            this.numlogentrys.TabIndex = 16;
+            this.numlogentrys.Text = "Number of log entry\'s :";
+            // 
+            // maxlogbox
+            // 
+            this.maxlogbox.Location = new System.Drawing.Point(177, 224);
+            this.maxlogbox.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.maxlogbox.Name = "maxlogbox";
+            this.maxlogbox.Size = new System.Drawing.Size(120, 20);
+            this.maxlogbox.TabIndex = 17;
+            this.maxlogbox.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // whattolog
+            // 
+            this.whattolog.Controls.Add(this.srvstopbox);
+            this.whattolog.Controls.Add(this.srvstartbox);
+            this.whattolog.Controls.Add(this.srvrestartbox);
+            this.whattolog.Controls.Add(this.crashbox);
+            this.whattolog.Controls.Add(this.autorestartbox);
+            this.whattolog.Controls.Add(this.shutdownbox);
+            this.whattolog.Controls.Add(this.startupbox);
+            this.whattolog.Location = new System.Drawing.Point(34, 247);
+            this.whattolog.Name = "whattolog";
+            this.whattolog.Size = new System.Drawing.Size(381, 75);
+            this.whattolog.TabIndex = 18;
+            this.whattolog.TabStop = false;
+            this.whattolog.Text = "What to log";
+            // 
+            // startupbox
+            // 
+            this.startupbox.AutoSize = true;
+            this.startupbox.Checked = true;
+            this.startupbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.startupbox.Location = new System.Drawing.Point(8, 15);
+            this.startupbox.Name = "startupbox";
+            this.startupbox.Size = new System.Drawing.Size(60, 17);
+            this.startupbox.TabIndex = 0;
+            this.startupbox.Text = "Startup";
+            this.startupbox.UseVisualStyleBackColor = true;
+            // 
+            // shutdownbox
+            // 
+            this.shutdownbox.AutoSize = true;
+            this.shutdownbox.Checked = true;
+            this.shutdownbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.shutdownbox.Location = new System.Drawing.Point(8, 38);
+            this.shutdownbox.Name = "shutdownbox";
+            this.shutdownbox.Size = new System.Drawing.Size(74, 17);
+            this.shutdownbox.TabIndex = 1;
+            this.shutdownbox.Text = "Shutdown";
+            this.shutdownbox.UseVisualStyleBackColor = true;
+            // 
+            // autorestartbox
+            // 
+            this.autorestartbox.AutoSize = true;
+            this.autorestartbox.Checked = true;
+            this.autorestartbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.autorestartbox.Location = new System.Drawing.Point(86, 13);
+            this.autorestartbox.Name = "autorestartbox";
+            this.autorestartbox.Size = new System.Drawing.Size(77, 17);
+            this.autorestartbox.TabIndex = 2;
+            this.autorestartbox.Text = "Autorestart";
+            this.autorestartbox.UseVisualStyleBackColor = true;
+            // 
+            // crashbox
+            // 
+            this.crashbox.AutoSize = true;
+            this.crashbox.Checked = true;
+            this.crashbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.crashbox.Location = new System.Drawing.Point(86, 36);
+            this.crashbox.Name = "crashbox";
+            this.crashbox.Size = new System.Drawing.Size(64, 17);
+            this.crashbox.TabIndex = 3;
+            this.crashbox.Text = "Crashes";
+            this.crashbox.UseVisualStyleBackColor = true;
+            // 
+            // srvrestartbox
+            // 
+            this.srvrestartbox.AutoSize = true;
+            this.srvrestartbox.Checked = true;
+            this.srvrestartbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.srvrestartbox.Location = new System.Drawing.Point(169, 13);
+            this.srvrestartbox.Name = "srvrestartbox";
+            this.srvrestartbox.Size = new System.Drawing.Size(97, 17);
+            this.srvrestartbox.TabIndex = 4;
+            this.srvrestartbox.Text = "Server Restart ";
+            this.srvrestartbox.UseVisualStyleBackColor = true;
+            // 
+            // srvstartbox
+            // 
+            this.srvstartbox.AutoSize = true;
+            this.srvstartbox.Checked = true;
+            this.srvstartbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.srvstartbox.Location = new System.Drawing.Point(169, 38);
+            this.srvstartbox.Name = "srvstartbox";
+            this.srvstartbox.Size = new System.Drawing.Size(87, 17);
+            this.srvstartbox.TabIndex = 5;
+            this.srvstartbox.Text = "Server Starts";
+            this.srvstartbox.UseVisualStyleBackColor = true;
+            // 
+            // srvstopbox
+            // 
+            this.srvstopbox.AutoSize = true;
+            this.srvstopbox.Checked = true;
+            this.srvstopbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.srvstopbox.Location = new System.Drawing.Point(272, 13);
+            this.srvstopbox.Name = "srvstopbox";
+            this.srvstopbox.Size = new System.Drawing.Size(87, 17);
+            this.srvstopbox.TabIndex = 6;
+            this.srvstopbox.Text = "Server Stops";
+            this.srvstopbox.UseVisualStyleBackColor = true;
+            // 
             // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
-            this.ClientSize = new System.Drawing.Size(670, 376);
+            this.ClientSize = new System.Drawing.Size(670, 374);
             this.Controls.Add(this.splitlayout);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -654,6 +796,7 @@
             this.Name = "Arclaunch";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "ArcLaunch";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Arclaunch_FormClosed);
             this.splitlayout.Panel1.ResumeLayout(false);
             this.splitlayout.Panel2.ResumeLayout(false);
             this.splitlayout.ResumeLayout(false);
@@ -666,6 +809,9 @@
             this.serverspnl.ResumeLayout(false);
             this.serverspnl.PerformLayout();
             this.systraymenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.maxlogbox)).EndInit();
+            this.whattolog.ResumeLayout(false);
+            this.whattolog.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -720,6 +866,16 @@
         private System.Windows.Forms.CheckBox hidewndchk;
         private System.Windows.Forms.Label hidewindslbl;
         private System.Windows.Forms.RichTextBox logbox;
+        private System.Windows.Forms.NumericUpDown maxlogbox;
+        private System.Windows.Forms.Label numlogentrys;
+        private System.Windows.Forms.GroupBox whattolog;
+        private System.Windows.Forms.CheckBox shutdownbox;
+        private System.Windows.Forms.CheckBox startupbox;
+        private System.Windows.Forms.CheckBox srvstopbox;
+        private System.Windows.Forms.CheckBox srvstartbox;
+        private System.Windows.Forms.CheckBox srvrestartbox;
+        private System.Windows.Forms.CheckBox crashbox;
+        private System.Windows.Forms.CheckBox autorestartbox;
     }
 }
 
