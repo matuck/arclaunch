@@ -283,6 +283,100 @@ namespace Arclaunch
         {
             createlogentry("Arclaunch shutdown");
         }
+        private void stopallsrvs_Click(object sender, EventArgs e)
+        {
+            Hashtable serverstostop = new Hashtable();
+            foreach (Server thisserv in logonservers.Values)
+            {
+                try
+                {
+                    Process thisproc = Process.GetProcessById(thisserv.pid);
+                    if ((thisserv.pid != 0) && (thisproc.ProcessName == Path.GetFileNameWithoutExtension(thisserv.path)))
+                    {
+                        serverstostop.Add("logon:" + thisserv.name, "logon");
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+            foreach (Server thisworldserv in worldservers.Values)
+            {
+                try
+                {
+                    Process thisworldproc = Process.GetProcessById(thisworldserv.pid);
+                    if ((thisworldserv.pid != 0) && (thisworldproc.ProcessName == Path.GetFileNameWithoutExtension(thisworldserv.path)))
+                    {
+                        serverstostop.Add("world:" + thisworldserv.name, "world");
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+            foreach (string key in serverstostop.Keys)
+            {
+                string[] thiskey = Regex.Split(key, ":");
+                if (serverstostop[key].ToString() == "logon")
+                {
+                    stopserver(thiskey[1], "logon");
+                }
+                else
+                {
+                    stopserver(thiskey[1], "world");
+                }
+                System.Threading.Thread.Sleep(100);
+            }
+        }
+        private void startallsrvs_Click(object sender, EventArgs e)
+        {
+            Hashtable serverstostart = new Hashtable();
+            foreach (Server thisserv in logonservers.Values)
+            {
+                try
+                {
+                    Process thisproc = Process.GetProcessById(thisserv.pid);
+                    if (thisserv.pid == 0)
+                    {
+                        serverstostart.Add("logon:" + thisserv.name, "logon");
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+            foreach (Server thisworldserv in worldservers.Values)
+            {
+                try
+                {
+                    Process thisworldproc = Process.GetProcessById(thisworldserv.pid);
+                    if (thisworldserv.pid == 0)
+                    {
+                        serverstostart.Add("world:" + thisworldserv.name, "world");
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+            foreach (string key in serverstostart.Keys)
+            {
+                string[] thiskey = Regex.Split(key, ":");
+                if (serverstostart[key].ToString() == "logon")
+                {
+                    startserver(thiskey[1], "logon");
+                }
+                else
+                {
+                    startserver(thiskey[1], "world");
+                }
+                System.Threading.Thread.Sleep(100);
+            }
+        }
         #endregion
         private void timer1_Tick(object sender, EventArgs e)
         {

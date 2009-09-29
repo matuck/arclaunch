@@ -89,6 +89,10 @@
             this.systrayexit = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.stopallsrvs = new System.Windows.Forms.Button();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.startallsrvs = new System.Windows.Forms.Button();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.splitlayout.Panel1.SuspendLayout();
             this.splitlayout.Panel2.SuspendLayout();
             this.splitlayout.SuspendLayout();
@@ -100,6 +104,8 @@
             this.logpnl.SuspendLayout();
             this.serverspnl.SuspendLayout();
             this.systraymenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // splitlayout
@@ -112,6 +118,10 @@
             // 
             this.splitlayout.Panel1.BackColor = System.Drawing.Color.Transparent;
             this.splitlayout.Panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("splitlayout.Panel1.BackgroundImage")));
+            this.splitlayout.Panel1.Controls.Add(this.pictureBox4);
+            this.splitlayout.Panel1.Controls.Add(this.startallsrvs);
+            this.splitlayout.Panel1.Controls.Add(this.pictureBox3);
+            this.splitlayout.Panel1.Controls.Add(this.stopallsrvs);
             this.splitlayout.Panel1.Controls.Add(this.hidewnds);
             this.splitlayout.Panel1.Controls.Add(this.showwnds);
             this.splitlayout.Panel1.Controls.Add(this.aboutbtn);
@@ -782,6 +792,66 @@
             this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // stopallsrvs
+            // 
+            this.stopallsrvs.BackColor = System.Drawing.Color.Transparent;
+            this.stopallsrvs.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("stopallsrvs.BackgroundImage")));
+            this.stopallsrvs.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.stopallsrvs.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.stopallsrvs.FlatAppearance.BorderSize = 0;
+            this.stopallsrvs.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.stopallsrvs.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.stopallsrvs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.stopallsrvs.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.stopallsrvs.Location = new System.Drawing.Point(12, 238);
+            this.stopallsrvs.Name = "stopallsrvs";
+            this.stopallsrvs.Padding = new System.Windows.Forms.Padding(1);
+            this.stopallsrvs.Size = new System.Drawing.Size(167, 23);
+            this.stopallsrvs.TabIndex = 8;
+            this.stopallsrvs.Text = "Stop All Servers";
+            this.stopallsrvs.UseVisualStyleBackColor = true;
+            this.stopallsrvs.Click += new System.EventHandler(this.stopallsrvs_Click);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(12, 213);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(167, 22);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 9;
+            this.pictureBox3.TabStop = false;
+            // 
+            // startallsrvs
+            // 
+            this.startallsrvs.BackColor = System.Drawing.Color.Transparent;
+            this.startallsrvs.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("startallsrvs.BackgroundImage")));
+            this.startallsrvs.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.startallsrvs.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.startallsrvs.FlatAppearance.BorderSize = 0;
+            this.startallsrvs.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.startallsrvs.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.startallsrvs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.startallsrvs.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.startallsrvs.Location = new System.Drawing.Point(12, 267);
+            this.startallsrvs.Name = "startallsrvs";
+            this.startallsrvs.Padding = new System.Windows.Forms.Padding(1);
+            this.startallsrvs.Size = new System.Drawing.Size(167, 23);
+            this.startallsrvs.TabIndex = 10;
+            this.startallsrvs.Text = "Start All Servers";
+            this.startallsrvs.UseVisualStyleBackColor = true;
+            this.startallsrvs.Click += new System.EventHandler(this.startallsrvs_Click);
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(12, 296);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(167, 22);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 11;
+            this.pictureBox4.TabStop = false;
+            // 
             // Arclaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -812,6 +882,8 @@
             this.serverspnl.ResumeLayout(false);
             this.serverspnl.PerformLayout();
             this.systraymenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -876,6 +948,10 @@
         private System.Windows.Forms.CheckBox srvrestartbox;
         private System.Windows.Forms.CheckBox crashbox;
         private System.Windows.Forms.CheckBox autorestartbox;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.Button startallsrvs;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Button stopallsrvs;
     }
 }
 
