@@ -825,11 +825,13 @@ namespace Arclaunch
                         if ((thisproc.ProcessName != Path.GetFileNameWithoutExtension(thisserv.path)) || (thisproc.Responding == false))
                         {
                             serverstorestart.Add("logon:" + thisserv.name, "logon");
+                            createlogentry("logon Server " + thisserv.name + " has crashed.");
                         }
                     }
                     catch
                     {
                         serverstorestart.Add("logon:" + thisserv.name, "logon");
+                        createlogentry("logon Server " + thisserv.name + " has crashed.");
                     }
                 }
             }
@@ -843,11 +845,13 @@ namespace Arclaunch
                         if ((thisproc.ProcessName != Path.GetFileNameWithoutExtension(thisworldserv.path)) || (thisproc.Responding == false))
                         {
                             serverstorestart.Add("world:" + thisworldserv.name, "world");
+                            createlogentry("world Server " + thisworldserv.name + " has crashed.");
                         }
                     }
                     catch
                     {
                         serverstorestart.Add("world:" + thisworldserv.name, "world");
+                        createlogentry("world Server " + thisworldserv.name + " has crashed.");
                     }
                 }
             }
@@ -886,7 +890,7 @@ namespace Arclaunch
         }
         private void createlogentry(string msg)
         {
-            FileStream fs = new FileStream("arclaunchlog.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            FileStream fs = new FileStream(Application.StartupPath + "\\arclaunchlog.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.Load(fs);
             fs.Close();
@@ -908,7 +912,7 @@ namespace Arclaunch
             // Append the newly created element as a child element
             newlogentry.AppendChild(msgelement);
             xmldoc.DocumentElement.InsertAfter(newlogentry, xmldoc.DocumentElement.LastChild);
-            FileStream fsxml = new FileStream("arclaunchlog.xml", FileMode.Truncate, FileAccess.Write, FileShare.ReadWrite);
+            FileStream fsxml = new FileStream(Application.StartupPath + "\\arclaunchlog.xml", FileMode.Truncate, FileAccess.Write, FileShare.ReadWrite);
             xmldoc.Save(fsxml);
             fsxml.Close();
             logbox.AppendText(date + " -> " + msg +"\r\n");
@@ -917,7 +921,7 @@ namespace Arclaunch
         }
         private void loadlogxml()
         {
-            FileStream fs = new FileStream("arclaunchlog.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            FileStream fs = new FileStream(Application.StartupPath+"\\arclaunchlog.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.Load(fs);
             fs.Close();
@@ -963,7 +967,8 @@ namespace Arclaunch
                         AttachConsole(thisproc.Id);
                         IntPtr handle = GetConsoleWindow();
                         SetForegroundWindow(handle);
-                        SendKeys.Send("^C");
+                        System.Threading.Thread.Sleep(100);
+                        SendKeys.Send("Shutdown{ENTER}");
                         FreeConsole();
                         bool mytrue = true;
                         while (mytrue)
@@ -973,6 +978,7 @@ namespace Arclaunch
                                 myserv.pid = 0;
                                 myserv.window = 0;
                                 mytrue = false;
+                                createlogentry(type + " Server " + srvtostop + " has been stopped.");
                             }
                         }
                     }
@@ -1028,6 +1034,7 @@ namespace Arclaunch
                     {
                         ShowWindow(myserv.window, SW_HIDE);
                     }
+                    createlogentry(type + " Server " + srvtostart + " has been started.");
                     Environment.CurrentDirectory = tempdir;
                     if (type == "logon")
                     {
@@ -1050,6 +1057,7 @@ namespace Arclaunch
         }
         private void restartserver(string server, string type)
         {
+            createlogentry(type + " Server " + server + " restart has been intiated.");
             stopserver(server, type);
             startserver(server, type);
         }
@@ -1091,10 +1099,12 @@ namespace Arclaunch
                 string[] thiskey = Regex.Split(key, ":");
                 if (serverstorestart[key].ToString() == "logon")
                 {
+                    createlogentry("logon Server " + thiskey[1] + "autorestart of server intiated.");
                     restartserver(thiskey[1], "logon");
                 }
                 else
                 {
+                    createlogentry("world Server " + thiskey[1] + "autorestart of server intiated.");
                     restartserver(thiskey[1], "world");
                 }
             }
