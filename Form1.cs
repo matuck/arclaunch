@@ -890,10 +890,36 @@ namespace Arclaunch
         }
         private void createlogentry(string msg)
         {
+            int maxlogs = Convert.ToInt32(settings["maxlogs"]);
+            int overlogcount = 0;
+            int count = 0;
             FileStream fs = new FileStream(Application.StartupPath + "\\arclaunchlog.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.Load(fs);
             fs.Close();
+            XmlNodeList xmlnode = xmldoc.SelectNodes("Logentrys/Logentry");
+            logcount = xmlnode.Count;
+            if (maxlogs < logcount)
+            {
+                overlogcount = logcount - maxlogs;
+            }
+            foreach (XmlNode mynode in xmlnode)
+            {
+                if (count < overlogcount)
+                {
+                    mynode.ParentNode.RemoveChild(mynode);
+                    logbox.ReadOnly = false;
+                    logbox.SelectionStart = 0;
+                    logbox.SelectionLength = logbox.Text.IndexOf("\n", 0) + 1;
+                    logbox.SelectedText = "";
+                    logbox.ReadOnly = true;
+                }
+                else
+                {
+                    break;
+                }
+                count++;
+            }
             string date = DateTime.Now.ToString("MM/dd/yyyy H:mm:ss");
             
             XmlElement newlogentry = xmldoc.CreateElement("Logentry");
@@ -921,20 +947,35 @@ namespace Arclaunch
         }
         private void loadlogxml()
         {
+            int overlogcount = 0;
             FileStream fs = new FileStream(Application.StartupPath+"\\arclaunchlog.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.Load(fs);
             fs.Close();
-            XmlNodeList xmlnode = xmldoc.GetElementsByTagName("Logentry");
+            XmlNodeList xmlnode = xmldoc.SelectNodes("Logentrys/Logentry");
             logcount = xmlnode.Count;
-            int count = 0; 
-            while (count < logcount)
+            int count = 0;
+            int maxlogs = Convert.ToInt32(settings["maxlogs"]);
+            if (maxlogs < logcount)
             {
-                string date = xmlnode[count].FirstChild.InnerText;
-                string msg = xmlnode[count].LastChild.InnerText;
-                logbox.AppendText(date + " -> " + msg + "\r\n");
+                overlogcount = logcount - maxlogs;
+            }
+            foreach (XmlNode mynode in xmlnode)
+            {
+                if (count < overlogcount+1)
+                {
+                    mynode.ParentNode.RemoveChild(mynode);
+                }
+                else
+                {
+                    string date = mynode.FirstChild.InnerText;
+                    string msg = mynode.LastChild.InnerText;
+                    logbox.AppendText(date + " -> " + msg + "\r\n");
+                    
+                }
                 count++;
             }
+            xmldoc.Save(Application.StartupPath + "\\arclaunchlog.xml");
         }
         #endregion 
         #region To stop and start servers
